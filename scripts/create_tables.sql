@@ -4,6 +4,11 @@
 -- - Describir tabla una vez conectado a la DB: describe table <nombre de tabla>
 -- - Eliminar tabla una vez conectado a la DB: drop table <nombre de tabla>
 
+-- Create the DB
+CREATE DATABASE test
+
+-- Connect to the DB to edit it
+conect to test
 
 -- Tabla ELECCION
 -- Si es Federal: 0
