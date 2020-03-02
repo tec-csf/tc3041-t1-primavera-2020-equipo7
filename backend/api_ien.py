@@ -16,7 +16,7 @@ app.config['DB2_HOSTNAME']='localhost'
 app.config['DB2_PORT']='50000'
 app.config['DB2_PROTOCOL']='TCPIP'
 app.config['DB2_USER']='db2inst1'
-app.config['DB2_PASSWORD']='ihm'
+app.config['DB2_PASSWORD']='password'
 
 db = DB2(app)
 
@@ -49,7 +49,6 @@ def dashboard():
     cur = db.connection.cursor()
     cur.execute("SELECT * FROM products")
     products = cur.fetchall()
-    # print(prou)
     products_list = []
 
     for product in products:

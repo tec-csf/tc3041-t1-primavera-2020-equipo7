@@ -44,7 +44,7 @@ Como parte de la entrega de la tarea, se debe incluir la siguiente información:
 
 * Diagrama del *Modelo Entidad-Relación Extendido*.
 * *Scripts* para generar la base de datos, cargar datos y ejecutar consultas.
-* Archivos CSV con los datos a cargar en al base de datos.
+* Archivos CSV con los datos a cargar en la base de datos.
 * Guía de configuración, instalación y despliegue de la aplicación en la plataforma en la nube  seleccionada.
 * El código debe estar documentado siguiendo los estándares definidos para el lenguaje de programación seleccionado.
 
@@ -70,10 +70,24 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 
 ### 2.4 Backend
 
+El backend utilizado es la combinación del framework de Flask y Python. Dentro de Python, se instaló un módulo para la conexión con db2: flask_db2.
+
 *[Incluya aquí una explicación de la solución utilizada para el backend de la tarea. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
 
 #### 2.4.1 Lenguaje de programación
 #### 2.4.2 Framework
+El framework utilizado permite el desarrollo de aplicaciones, y de la conexión con alguna base de datos.
+
+En nuestro caso, utilizamos el DBMS de db2, junto con una imagen en Docker.
+
+```py
+from flask import Flask, jsonify, redirect
+from flask_db2 import DB2
+
+app = Flask(__name__)
+#después se procede a configurar la conexión de db2
+```
+
 #### 2.4.3 Librerías de funciones o dependencias
 
 ## 2.5 Pasos a seguir para utilizar la aplicación
