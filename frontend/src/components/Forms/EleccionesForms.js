@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { es } from "date-fns/locale";
 import { DateRangePicker, START_DATE, END_DATE } from "react-nice-dates";
-import { Form, Button } from "semantic-ui-react";
+import { useForm } from 'react-hook-form'
 import PropTypes from "prop-types";
+import { Form, Button, Message } from "semantic-ui-react";
 //own
 import Mask from "../../util/GetMethod";
 //hoc
@@ -20,27 +21,47 @@ const EleccionesForm = props => {
 	};
 
 	// Controls for show
-	const onSubmitHandler = () => {
-		console.log(
-			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
-		);
-		props.handleClose();
-	};
-
 	const ParentComponent = props.isEditing ? Mask : React.Fragment;
 	const propsForComponent = props.isEditing
 		? { callback: getDetailsFromChild, id: props.id }
 		: null;
 
+	// Forms Validation
+	const { register, handleSubmit, errors } = useForm()
+	const onSubmitHandler = data => {
+		console.log(
+			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
+			);
+		console.log(data);
+		//console.log('dates:', startDate, endDate)
+		props.handleClose();
+	}
+
 	return (
 		<ParentComponent {...propsForComponent}>
-			<Form onSubmit={onSubmitHandler}>
+			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
 				<Form.Group widths="equal">
-					<Form.Field label="Tipo de Elecciones" control="select">
-						<option value="f">Federal</option>
-						<option value="m">Municipal</option>
+					<Form.Field>
+						<label> Tipo de Elecciones </label>
+						<select name='tipo_elecciones' ref={register({ required: true, pattern: /^(f|m)$/ })}>
+							<option value='f'>Federal</option>
+							<option value='m'>Municipal</option>
+						</select>
+						{ errors.tipo_elecciones && errors.tipo_elecciones.type === 'required' && <Message negative>
+							<Message.Header>Debes seleccionar un tipo</Message.Header>
+							<p> Para agregar una nueva elección es necesario seleccionar un tipo </p>
+						</Message> }
+						{ errors.tipo_elecciones && errors.tipo_elecciones.type === 'pattern' && <Message negative>
+							<Message.Header>Algo anda mal</Message.Header>
+							<p> No es normal que hayan cambiado los valores, vuelve a abrir el modal de nuevo </p>
+						</Message> }
+						{ (errors.fecha_inicio || errors.fecha_fin) && <Message negative>
+							<Message.Header>Los campos fecha deben estar llenos</Message.Header>
+							<p> Para agregar una nueva elección es necesario llenar los dos campos de fecha </p>
+						</Message> }
 					</Form.Field>
 					<Form.Field>
+						<b>Duración de las elecciones</b> (inclusivo - exclusivo)
 						<DateRangePicker
 							startDate={startDate}
 							endDate={endDate}
@@ -53,16 +74,18 @@ const EleccionesForm = props => {
 							{({ startDateInputProps, endDateInputProps, focus }) => (
 								<div className="date-range">
 									<input
+										name='fecha_inicio'
 										className={
 											"input" + (focus === START_DATE ? " -focused" : "")
 										}
-										{...startDateInputProps}
+										{ ...{...startDateInputProps, ref:register({required: true})} }
 										placeholder="Fecha de inicio"
 									/>
 									<span className="date-range_arrow" />
 									<input
+										name='fecha_fin'
 										className={"input" + (focus === END_DATE ? " -focused" : "")}
-										{...endDateInputProps}
+										{ ...{...endDateInputProps, ref:register({required: true})} }
 										placeholder="Fecha de fin"
 									/>
 								</div>
