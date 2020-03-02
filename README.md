@@ -3,10 +3,10 @@
 ---
 
 ##### Integrantes:
-1. *[Poner aquí Nombre y Apellidos del integrante 1]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
-2. *[Poner aquí Nombre y Apellidos del integrante 2]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
-3. *[Poner aquí Nombre y Apellidos del integrante 3]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
-4. *[Poner aquí Nombre y Apellidos del integrante 4]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
+1. *Alejandra Nissan Leizorek* - *A01024682* - *CSF*
+2. *Yann Le Lorier Bárcena* - *A01025977* - *CSF*
+3. *Isaac Harari Masri* - *A01024688* - *CSF*
+4. *Roberto Gervacio Guendulay* - *A01025780* - *CSF*
 
 ---
 ## 1. Aspectos generales
@@ -52,7 +52,7 @@ Como parte de la entrega de la tarea, se debe incluir la siguiente información:
 
 A continuación aparecen descritos los diferentes elementos que forman parte de la solución de la tarea.
 
-### 2.1 Modelo de la *base de datos* 
+### 2.1 Modelo de la *base de datos*
 
 *[Incluya aquí el Diagrama Entidad-Relación Extendido y explique las jerarquías modeladas así como las restricciones existentes*
 
