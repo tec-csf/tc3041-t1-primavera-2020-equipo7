@@ -16,7 +16,9 @@ import Votantes from './pages/Votantes/index';
 // -- partidos
 import Partidos from './pages/Partidos/index';
 // -- colegios
+import Colegios from './pages/Colegios/index';
 // -- mesas
+import Mesas from './pages/Mesas/index';
 // -- css
 import 'react-nice-dates/build/style.css';
 
@@ -49,11 +51,11 @@ const App = () => {
 
 							<Route path='/partidos' exact component={Partidos} />
 
+							<Route path='/colegios' exact component={Colegios} /> } />
+
+							<Route path='/mesas' exact component={Mesas} />
+
 							{/*<Route path='/apoderados' exact render={ () => 0 } />
-
-							<Route path='/colegios' exact component={} /> } />
-
-							<Route path='/mesas' exact component={} />
 
 							<Route path='/presidentes' exact component={} />
 
