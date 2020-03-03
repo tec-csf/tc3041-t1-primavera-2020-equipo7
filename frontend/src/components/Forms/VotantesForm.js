@@ -10,7 +10,7 @@ import Mask from "../../util/GetMethod";
 //context
 //css
 
-const EleccionesForm = props => {
+const VotantesForm = props => {
 	// for dates | aqui se pone con new Date()
 	const [startDate, setStartDate] = useState();
 	const [endDate, setEndDate] = useState();
@@ -108,7 +108,7 @@ const EleccionesForm = props => {
 	);
 };
 
-EleccionesForm.propTypes = {
+VotantesForm.propTypes = {
 	/** id for get details */
 	id: PropTypes.string,
 	/** Para saber si se debe hacer un request para obtener info */
@@ -117,4 +117,4 @@ EleccionesForm.propTypes = {
 	handleClose: PropTypes.func.isRequired
 };
 
-export default EleccionesForm;
+export default VotantesForm;

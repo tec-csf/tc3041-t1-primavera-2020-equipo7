@@ -1,9 +1,9 @@
 import React from 'react';
 import { Header, Container } from 'semantic-ui-react';
 //own
-import Table from '../../components/Tables/EleccionesTable';
+import Table from '../../components/Tables/PartidosTable';
 import New from '../../components/Forms/_CU';
-import ElectionsForms from '../../components/Forms/EleccionesForms';
+import ElectionsForms from '../../components/Forms/PartidosForm';
 import Copyright from '../../components/Credits';
 //hoc
 //context
@@ -13,9 +13,9 @@ const Elecciones = () => {
 
 	return (
 		<Container>
-			<Header size="huge"> Elecciones </Header>
+			<Header size="huge"> Partidos </Header>
 			<Copyright />
-			<New message='Crear Nuevas Elecciones' Form={ElectionsForms} />
+			<New message='Agregar Nuevo Partido' Form={ElectionsForms} />
 			<Table />
 		</Container>
 	);

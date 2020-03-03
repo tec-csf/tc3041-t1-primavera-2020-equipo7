@@ -30,7 +30,7 @@ const SidebarNav = props => {
 					<Icon name='box' /> Votos Federales
 				</Menu.Item>
 				<Menu.Item as={NavLink} to="/votosmunicipales" exact>
-					<Icon name='box' /> Votos Municipal
+					<Icon name='box' /> Votos Municipales
 				</Menu.Item>
 				<Menu.Item as={NavLink} to="/votantes" exact>
 					<Icon name='address card' /> Votantes

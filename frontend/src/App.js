@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // ui
-import { Segment, Sidebar, Button, Icon } from 'semantic-ui-react';
+import { Segment, Sidebar, Button, Icon, Container } from 'semantic-ui-react';
 // own
 import SidebarNav from './components/Sidebar/Sidebar';
 // own containers
@@ -9,6 +9,14 @@ import SidebarNav from './components/Sidebar/Sidebar';
 import Dashboard from './pages/Dashboard';
 // -- elecciones
 import Elecciones from './pages/Elecciones/index';
+// -- votos
+import Votos from './pages/Votos/index';
+// -- votantes
+import Votantes from './pages/Votantes/index';
+// -- partidos
+import Partidos from './pages/Partidos/index';
+// -- colegios
+// -- mesas
 // -- css
 import 'react-nice-dates/build/style.css';
 
@@ -33,15 +41,15 @@ const App = () => {
 
 							<Route path='/elecciones' exact component={Elecciones}/>
 
-							{/* <Route path='/votosfederales' exact render={ () => 0 } />
+							<Route path='/votosfederales' exact render={ () => <Votos type='Federales'/> } />
 
-							<Route path='/votosmunicipales' exact render={ () => 0 } />
+							<Route path='/votosmunicipales' exact render={ () => <Votos type='Municipales'/> } />
 
-							<Route path='/votantes' exact render={ () => 0 } />
+							<Route path='/votantes' exact component={Votantes} />
 
-							<Route path='/partidos' exact render={ () => 0 } />
+							<Route path='/partidos' exact component={Partidos} />
 
-							<Route path='/apoderados' exact render={ () => 0 } />
+							{/*<Route path='/apoderados' exact render={ () => 0 } />
 
 							<Route path='/colegios' exact component={} /> } />
 
@@ -53,7 +61,12 @@ const App = () => {
 
 							<Route path='/suplentes' exact component={} /> */}
 
-							<Route render={ () => <h1> Bad route </h1> }/>
+							<Route render={ () => <Container>
+								<h1> Hmm... creo que en esta URL no hay nada <span role="img" aria-label="whoknows"> 🤷‍♂️️ </span> </h1>
+								{setSideBarVisible(true)}
+								<h2> <span role='img' aria-label='left'> 👈️ </span> Aqui hay un menú para que no te pierdas </h2>
+							</Container> }/>
+
 						</Switch>
 				</Segment>
 			</Sidebar.Pusher>
