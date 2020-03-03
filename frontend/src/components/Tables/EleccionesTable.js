@@ -1,10 +1,10 @@
 import React from 'react';
 import { Table }  from 'semantic-ui-react';
 // own
-import RudButton from '../_shared/RUD_Button';
+import RudButton from './_shared/RUD_Button';
 
-import Details from '../../Details/EleccionesDetails';
-import Edit from '../../Forms/EleccionesForms';
+import Details from './../Details/EleccionesDetails';
+import Edit from './../Forms/EleccionesForms';
 
 /**
  * Es la tabla que se usa para el index de de las elecciones

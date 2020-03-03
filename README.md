@@ -52,7 +52,7 @@ Como parte de la entrega de la tarea, se debe incluir la siguiente información:
 
 A continuación aparecen descritos los diferentes elementos que forman parte de la solución de la tarea.
 
-### 2.1 Modelo de la *base de datos* 
+### 2.1 Modelo de la *base de datos*
 
 *[Incluya aquí el Diagrama Entidad-Relación Extendido y explique las jerarquías modeladas así como las restricciones existentes*
 

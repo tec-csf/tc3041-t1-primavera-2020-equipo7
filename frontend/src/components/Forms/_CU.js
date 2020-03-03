@@ -16,7 +16,7 @@ const CUModal = (props) => {
 	return <Modal trigger={
 			props.isEditing ?
 			<Button icon onClick={handleOpen}> <Icon name='edit' /> </Button> :
-			<Button primary icon labelPosition='left' onClick={handleOpen}> <Icon name='add' /> Crear {props.message} </Button>
+			<Button primary icon labelPosition='left' onClick={handleOpen}> <Icon name='add' /> {props.message} </Button>
 			}
 			closeIcon
 			centered={false}

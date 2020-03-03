@@ -42,7 +42,17 @@ const EleccionesForm = props => {
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
 				<Form.Group widths="equal">
 					<Form.Field>
-						<label> Tipo de Elecciones </label>
+						<label> Siglas </label>
+						<input type='text'> </input>
+					</Form.Field>
+					<Form.Field>
+						<label> Nombre </label>
+						<input type='text'> </input>
+					</Form.Field>
+				</Form.Group>
+				<Form.Group widths="equal">
+					<Form.Field>
+						<label> Presidente </label>
 						<select name='tipo_elecciones' ref={register({ required: true, pattern: /^(f|m)$/ })}>
 							<option value='f'>Federal</option>
 							<option value='m'>Municipal</option>
