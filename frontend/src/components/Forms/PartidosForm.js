@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { es } from "date-fns/locale";
-import { DateRangePicker, START_DATE, END_DATE } from "react-nice-dates";
+import { format } from 'date-fns';
+import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
 import { useForm } from 'react-hook-form'
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
@@ -10,10 +11,17 @@ import Mask from "../../util/GetMethod";
 //context
 //css
 
-const EleccionesForm = props => {
+const PartidosForm = props => {
+
 	// for dates | aqui se pone con new Date()
 	const [startDate, setStartDate] = useState();
 	const [endDate, setEndDate] = useState();
+	const [focus, setFocus] = useState(START_DATE);
+	const [isValidDate, setIsValidDate] = useState(true);
+	
+	const handleFocusChange = newFocus => {
+		setFocus(newFocus || START_DATE);
+	}
 
 	// if on edit mode
 	const getDetailsFromChild = data => {
@@ -29,78 +37,62 @@ const EleccionesForm = props => {
 	// Forms Validation
 	const { register, handleSubmit, errors } = useForm()
 	const onSubmitHandler = data => {
+		setIsValidDate(startDate && endDate);
+		if (!(startDate && endDate)) return;
 		console.log(
 			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
 			);
-		console.log(data);
-		//console.log('dates:', startDate, endDate)
+		console.log(data, startDate, endDate);
 		props.handleClose();
 	}
-
+	console.log(errors)
 	return (
 		<ParentComponent {...propsForComponent}>
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
 				<Form.Group widths="equal">
-					<Form.Field>
+					<Form.Field width='4' required>
 						<label> Siglas </label>
-						<input type='text'> </input>
+						<input type='text' name='siglas' ref={register({ required: true })}/>
+						{ errors.siglas && errors.siglas.type === 'required' && <Message negative>
+							<Message.Header>Siglas es un campo requerido</Message.Header>
+						</Message> }
 					</Form.Field>
-					<Form.Field>
+					<Form.Field required>
 						<label> Nombre </label>
-						<input type='text'> </input>
+						<input type='text' name='nombre_partido' ref={register({ required: true })}/>
+						{ errors.nombre_partido && errors.nombre_partido.type === 'required' && <Message negative>
+							<Message.Header>Se debe proporcionar el nombre del partido</Message.Header>
+						</Message> }
 					</Form.Field>
 				</Form.Group>
 				<Form.Group widths="equal">
-					<Form.Field>
+					<Form.Field required>
 						<label> Presidente </label>
-						<select name='tipo_elecciones' ref={register({ required: true, pattern: /^(f|m)$/ })}>
-							<option value='f'>Federal</option>
-							<option value='m'>Municipal</option>
-						</select>
-						{ errors.tipo_elecciones && errors.tipo_elecciones.type === 'required' && <Message negative>
-							<Message.Header>Debes seleccionar un tipo</Message.Header>
-							<p> Para agregar una nueva elección es necesario seleccionar un tipo </p>
+						<input type='text' name='presi' ref={register({ required: true })}/>
+						{ errors.presi && errors.presi.type === 'required' && <Message negative>
+							<Message.Header>El nombre del presidente es necesario</Message.Header>
 						</Message> }
-						{ errors.tipo_elecciones && errors.tipo_elecciones.type === 'pattern' && <Message negative>
-							<Message.Header>Algo anda mal</Message.Header>
-							<p> No es normal que hayan cambiado los valores, vuelve a abrir el modal de nuevo </p>
-						</Message> }
-						{ (errors.fecha_inicio || errors.fecha_fin) && <Message negative>
-							<Message.Header>Los campos fecha deben estar llenos</Message.Header>
+						{ (!isValidDate && !(startDate && endDate)) 
+							&& <Message negative>
+							<Message.Header>Seleccione un periodo para la elección</Message.Header>
 							<p> Para agregar una nueva elección es necesario llenar los dos campos de fecha </p>
 						</Message> }
 					</Form.Field>
-					<Form.Field>
-						<b>Duración de las elecciones</b> (inclusivo - exclusivo)
-						<DateRangePicker
+					<Form.Field required>
+						<label>Periodo </label>
+						<p>Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
+						<p>Fecha de fin: {endDate ? format(endDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
+						<i>nota: (i-e)</i>
+						<DateRangePickerCalendar
 							startDate={startDate}
 							endDate={endDate}
+							focus={focus}
 							onStartDateChange={setStartDate}
 							onEndDateChange={setEndDate}
-							minimumDate={new Date()}
-							format="dd MMM yyyy"
+							onFocusChange={handleFocusChange}
 							locale={es}
-						>
-							{({ startDateInputProps, endDateInputProps, focus }) => (
-								<div className="date-range">
-									<input
-										name='fecha_inicio'
-										className={
-											"input" + (focus === START_DATE ? " -focused" : "")
-										}
-										{ ...{...startDateInputProps, ref:register({required: true})} }
-										placeholder="Fecha de inicio"
-									/>
-									<span className="date-range_arrow" />
-									<input
-										name='fecha_fin'
-										className={"input" + (focus === END_DATE ? " -focused" : "")}
-										{ ...{...endDateInputProps, ref:register({required: true})} }
-										placeholder="Fecha de fin"
-									/>
-								</div>
-							)}
-						</DateRangePicker>
+							minimumDate={new Date()}
+						/>
 					</Form.Field>
 				</Form.Group>
 				<Button
@@ -118,7 +110,7 @@ const EleccionesForm = props => {
 	);
 };
 
-EleccionesForm.propTypes = {
+PartidosForm.propTypes = {
 	/** id for get details */
 	id: PropTypes.string,
 	/** Para saber si se debe hacer un request para obtener info */
@@ -127,4 +119,4 @@ EleccionesForm.propTypes = {
 	handleClose: PropTypes.func.isRequired
 };
 
-export default EleccionesForm;
+export default PartidosForm;

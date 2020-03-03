@@ -9,7 +9,7 @@ import Mask from '../../util/GetMethod';
 const EleccionesDetalles = (props) => {
 
 	const getDetailsFromChild = data => {
-		console.log('my hijo me mando', data);
+		console.log('get from son:', data);
 	}
 
 	return <Mask callback={getDetailsFromChild} id={props.id}>
