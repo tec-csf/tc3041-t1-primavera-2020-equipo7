@@ -6,8 +6,9 @@ Alejandra Nissan
 Isaac Harari
 Yann Le Lorier
 """
-from flask import Flask, jsonify, redirect
+from flask import Flask, jsonify, redirect, request, url_for #request handler, getting url in a function
 from flask_db2 import DB2
+import locale, time
 
 app = Flask(__name__)
 
@@ -25,43 +26,220 @@ db = DB2(app)
 # @app.route('/<int:year>/<int:month>/<title>')
 # def article(year, month, title):
 
-@app.route('/insert/')
-def insert():
+# @app.route('/insert/')
+# def insert():
+#     cur = db.connection.cursor()
+#     cur.execute("INSERT INTO products (id, description, start_date, end_date) VALUES (3, 'bacacho', '2020-04-24', '2020-05-11')")
+
+#     return redirect("http://127.0.0.1:5000/")
+
+
+# @app.route('/update/<name_product>')
+# def update(name_product):
+#     cur = db.connection.cursor()
+#     print(name_product)
+#     update_command = "UPDATE products FOR PORTION OF BUSINESS_TIME FROM '2020-04-28' TO '2020-05-09' SET description = '{}' WHERE id = 3".format(name_product)
+#     cur.execute(update_command)
+
+    # return redirect("http://127.0.0.1:5000/")
+
+@app.route('/elecciones/')
+def page_elecciones():
     cur = db.connection.cursor()
-    cur.execute("INSERT INTO products (id, description, start_date, end_date) VALUES (3, 'bacacho', '2020-04-24', '2020-05-11')")
+    show_command = "SELECT id_eleccion, descripcion, tipo, fecha_eleccion_inicio, fecha_eleccion_final FROM ELECCION"
+    cur.execute(show_command)
+    elecciones = cur.fetchall()
+    elecciones_list = []
 
-    return redirect("http://127.0.0.1:5000/")
+    for eleccion in elecciones:
+        elecciones_list.append(
+            {"id": eleccion[0],
+                "descripcion": eleccion[1],
+                "tipo": eleccion[2],
+                "fecha_inicio": eleccion[3],
+                "fecha_final": eleccion[4]
+            }
+        )
+
+    return jsonify(elecciones_list)
+    # cur = db.connection.cursor()
+    
+    # create_eleccion = ""
+    # if request.method == "POST":
+    #     desc_eleccion = request.form['campana']
+    #     tipo = request.form['tipo_elecciones']
+    #     cur.execute(create_eleccion)
+    #     return redirect('/elecciones/')
 
 
-@app.route('/update/<name_product>')
-def update(name_product):
+@app.route('/votosfederales/', methods=["GET","POST"])
+def page_votosF():
     cur = db.connection.cursor()
-    print(name_product)
-    update_command = "UPDATE products FOR PORTION OF BUSINESS_TIME FROM '2020-04-28' TO '2020-05-09' SET description = '{}' WHERE id = 3".format(name_product)
-    cur.execute(update_command)
+    show_command = "SELECT id_mesa, siglas, tipo_voto, fecha_hora_voto FROM V_FEDERAL"
+    cur.execute(show_command)
+    v_federales = cur.fetchall()
+    v_federales_list = []
 
-    return redirect("http://127.0.0.1:5000/")
+    for voto in v_federales:
+        v_federales_list.append(
+            {"id_mesa": voto[0],
+                "siglas": voto[1],
+                "tipo": voto[2],
+                "fecha_hora": voto[3]
+            }
+        )
 
+    return jsonify(v_federales_list)
+    # create_command = ""
+    # delete_command = ""
+    # if request.method == "POST":
+    #     elecciones_descripcion = request.form['elecciones']
+    #     colegio = request.form['colegio']
+    #     mesa = request.form['mesa']
+    #     tipo = request.form['tipo_voto']
+    #     siglas = request.form['partido']
+    #     cur.execute(create_command)
 
+        # return jsonify()
+
+@app.route('/votosmunicipales/', methods=["GET","POST"])
+def page_votosM():
+    cur = db.connection.cursor()
+    show_command = "SELECT id_mesa, siglas, tipo_voto, fecha_hora_voto FROM V_MUNICIPAL"
+    cur.execute(show_command)
+    v_municipales = cur.fetchall()
+    v_municipales_list = []
+
+    for voto in v_municipales:
+        v_municipales_list.append(
+            {"id_mesa": voto[0],
+                "siglas": voto[1],
+                "tipo": voto[2],
+                "fecha_hora": voto[3]
+            }
+        )
+        return jsonify(v_municipales_list)
+    # create_command = ""
+    # if request.method == "POST":
+    #     elecciones_descripcion = request.form['elecciones']
+    #     colegio = request.form['colegio']
+    #     mesa = request.form['mesa']
+    #     tipo = request.form['tipo_voto']
+    #     siglas = request.form['partido']
+    #     cur.execute(create_command)
+    #     return redirect('/votosmunicipales/')
+
+@app.route('/votantes/', methods=["GET", "POST"])
+def page_votantes():
+    cur = db.connection.cursor()
+    show_command = "SELECT ife_pasaporte, nombre, id_mesa, tipo, fecha_votante_inicio, fecha_votante_final, id_superior FROM VOTANTE"
+    cur.execute(show_command)
+    votantes = cur.fetchall()
+    votantes_list = []
+
+    for votantes in votantes:
+        votantes_list.append(
+            {"id": votantes[0],
+                "nombre": votantes[1],
+                "id_mesa": votantes[2],
+                "tipo": votantes[3],
+                "fecha_inicio": votantes[4],
+                "fecha_final": votantes[5],
+                "id_sup": votantes[6]
+            }
+        )
+    
+    return jsonify(votantes_list)
+    # create_command = ""
+    # if request.method == "POST":
+    #     elecciones = request.form['elecciones']
+    #     colegio = request.form['colegio']
+    #     mesa = request.form['mesa']
+    #     nombre = request.form['nombre']
+    #     direccion = request.form['direccion']
+    #     fecha_nac = request.form['fecha']
+    #     fecha_registro = request.form['fecha_registro']
+    
+    #     cur.execute(create_command)
+    #     return redirect('/votantes/')
+
+@app.route('/partidos/', methods=["GET", "POST"])
+def page_partidos():
+    cur = db.connection.cursor()
+    show_command = ""
+    create_command = ""
+    if request.method == "POST":
+        siglas = request.form['siglas']
+        nombre = request.form['nombre']
+        presidente = request.form['presidente']
+        fecha_inicio = request.form['fecha_inicio']
+        fecha_fin = request.form['fecha_fin']
+        cur.execute(create_command)
+        return redirect('/partidos/') 
+
+@app.route('/colegios/', methods=["GET", "POST"])
+def page_colegios():
+    cur = db.connection.cursor()
+    show_command = ""
+    create_command = ""
+    if request.method == "POST":
+        id_colegio = request.form['colegio']
+        desc_elecc = request.form['elecciones']
+        fecha_inicio = request.form['fecha_inicio']
+        fecha_fin = request.form['fecha_fin']
+        cur.execute(create_command)
+        return redirect('/colegios/') 
+
+@app.route('/mesas/', methods=["GET", "POST"])
+def page_mesas():
+    cur = db.connection.cursor()
+    show_command = ""
+    create_command = ""
+    if request.method == "POST":
+        id_mesa = request.form['mesa']
+        desc_elecc = request.form['elecciones']
+        fecha_inicio = request.form['fecha_inicio']
+        fecha_fin = request.form['fecha_fin']
+        cur.execute(create_command)
+        return redirect('/mesas/')
+
+# @app.route("/get_my_ip", methods=["GET"])
+# def get_my_ip():
+#     return jsonify({'ip': request.remote_addr}), 200}
 
 @app.route('/')
 def dashboard():
     cur = db.connection.cursor()
-    cur.execute("SELECT * FROM products")
-    products = cur.fetchall()
-    products_list = []
+    show_command = "SELECT id_eleccion, descripcion, tipo, fecha_eleccion_inicio, fecha_eleccion_final FROM ELECCION"
+    cur.execute(show_command)
+    elecciones = cur.fetchall()
+    elecciones_list = []
 
-    for product in products:
-        products_list.append(
-            {"id": product[0],
-                "description": product[1],
-                "start_date": product[2],
-                "end_date": product[3],
+    for eleccion in elecciones:
+        elecciones_list.append(
+            {"id": eleccion[0],
+                "descripcion": eleccion[1],
+                "tipo": eleccion[2],
+                "fecha_inicio": eleccion[3],
+                "fecha_final": eleccion[4]
             }
         )
 
+    return jsonify(elecciones_list)
 
-    return jsonify(products_list)
+# def json_items(query, cur, keys):
+#     cur.execute(query)
+#     db_items = cur.fetchall()
+#     items_list = []
+#     i = 0
+#     for item in db_items:
+#         items_list.append(
+#             {
+#                 "{}: {}".format(keys[i], item[i])
+#             }
+#         )
+#         i += 1
+#     return jsonify(items_list)
 
 if __name__ == "__main__":
     app.run(debug=True)
