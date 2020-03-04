@@ -5,7 +5,7 @@ sudo docker run -itd --name tarea1bd --privileged=true -p 50000:50000 -e LICENSE
 --Conectandote a la base de datos--
 sudo docker exec -ti tarea1bd bash -c "su - db2inst1"
 
-CREATE TABLE eleccion(id_eleccion INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1), fecha_eleccion_inicio DATE NOT NULL, fecha_eleccion_final DATE NOT NULL, descripcion VARCHAR(30), tipo VARCHAR(10),sys_eleccion_inicio TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW BEGIN, sys_eleccion_final TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW END, trans_id_eleccion TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS TRANSACTION START ID, PERIOD SYSTEM_TIME(sys_eleccion_inicio, sys_eleccion_final), PERIOD BUSINESS_TIME(fecha_eleccion_inicio, fecha_eleccion_final), PRIMARY KEY (id_eleccion, fecha_eleccion_inicio, fecha_eleccion_final))
+CREATE TABLE eleccion(id_eleccion INT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1), fecha_eleccion_inicio DATE NOT NULL, fecha_eleccion_final DATE NOT NULL, descripcion VARCHAR(30) NOT NULL, tipo VARCHAR(10) NOT NULL, sys_eleccion_inicio TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW BEGIN, sys_eleccion_final TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS ROW END, trans_id_eleccion TIMESTAMP(12) NOT NULL GENERATED ALWAYS AS TRANSACTION START ID, PERIOD SYSTEM_TIME(sys_eleccion_inicio, sys_eleccion_final), PERIOD BUSINESS_TIME(fecha_eleccion_inicio, fecha_eleccion_final), PRIMARY KEY (id_eleccion, fecha_eleccion_inicio, fecha_eleccion_final))
 
 CREATE TABLE hist_eleccion like eleccion
 

@@ -1,10 +1,12 @@
 -- ELECCIONES
-INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion) VALUES ('2015-06-01', '2015-06-11', 'Junio 2015');
-INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion) VALUES ('2018-05-07', '2018-05-17', 'Mayo 2018');
-INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion) VALUES ('2022-06-01', '2022-06-11', 'Junio 2022');
-INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion) VALUES ('2025-04-02', '2025-04-08', 'Abril 2025');
+INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2015-06-01', '2015-06-11', 'Junio 2015', 'Federal');
+INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2018-05-07', '2018-05-17', 'Mayo 2018', 'Municipal');
+INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2022-06-01', '2022-06-11', 'Junio 2022', 'Municipal');
+INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2025-04-02', '2025-04-08', 'Abril 2025', 'Federal');
 -- One line command
-INSERT INTO eleccion (id_eleccion, fecha_eleccion_inicio, fecha_eleccion_final) VALUES (1, '2015-06-01', '2015-06-11'), (2, '2018-05-07', '2018-05-17'), (3, '2022-06-01', '2022-06-11'), (4, '2025-04-02', '2025-04-08');
+-- INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion) VALUES ('2015-06-01', '2015-06-11', 'Junio 2015'), ('2018-05-07', '2018-05-17', 'Mayo 2018'), ('2022-06-01', '2022-06-11', 'Junio 2022'), ('2025-04-02', '2025-04-08', 'Abril 2025')
+-- UPDATE eleccion SET fecha_eleccion_inicio='{}', fecha_eleccion_final='{}', descripcion='{}', tipo='{}' WHERE id_eleccion = 5
+-- UPDATE eleccion SET fecha_eleccion_inicio='2020-02-03', fecha_eleccion_final='2020-02-20', descripcion='Febrero 2021', tipo='Municipal' WHERE id_eleccion = 5
 -- Todos funcionan
 
 
