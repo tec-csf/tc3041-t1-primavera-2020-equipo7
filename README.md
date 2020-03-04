@@ -70,9 +70,7 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 
 ### 2.4 Backend
 
-El backend utilizado es la combinación del framework de Flask y Python. Dentro de Python, se instaló un módulo para la conexión con db2: flask_db2.
-
-*[Incluya aquí una explicación de la solución utilizada para el backend de la tarea. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
+El backend utilizado es la combinación del framework de Flask y Python. Dentro de Python, se instalaron dos módulos para la conexión con db2: flask_db2 y ibm_db2.
 
 #### 2.4.1 Lenguaje de programación
 #### 2.4.2 Framework
@@ -85,10 +83,13 @@ from flask import Flask, jsonify, redirect
 from flask_db2 import DB2
 
 app = Flask(__name__)
-#después se procede a configurar la conexión de db2
+#después se procede a configurar la conexión de db2, como el password y la conexión del puerto
 ```
 
 #### 2.4.3 Librerías de funciones o dependencias
+Las dependencias del sistema se pueden ver en el siguiente diagrama:
+
+
 
 ## 2.5 Pasos a seguir para utilizar la aplicación
 
@@ -96,4 +97,7 @@ app = Flask(__name__)
 
 ## 3. Referencias
 
-*[Incluya aquí las referencias a sitios de interés, datasets y cualquier otra información que haya utilizado para realizar la tarea y que le puedan ser de utilidad a otras personas que quieran usarlo como referencia]*
+* &nbsp;&nbsp;Matchett, R. (2012, April 30). Temporal Tables in DB2. Retrieved March 3, 2020, from https://www.ibmbigdatahub.com/blog/temporal-tables-db2 
+* &nbsp;&nbsp;IBM Mainframe. (2010, March 9). Self Referencing Constraints? Retrieved March 3, 2020, from https://ibmmainframes.com/about47273.html 
+
+
