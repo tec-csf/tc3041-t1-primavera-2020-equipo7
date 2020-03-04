@@ -49,6 +49,10 @@ const EleccionesForm = props => {
 	return (
 		<ParentComponent {...propsForComponent}>
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
+				<Form.Field required>
+					<label> Campaña (descripción) </label>
+					<input name='campana' ref={register({required: true})}/>
+				</Form.Field>
 				<Form.Group widths="equal">
 					<Form.Field required>
 						<label> Tipo de Elecciones </label>
@@ -60,6 +64,10 @@ const EleccionesForm = props => {
 						{ errors.tipo_elecciones && errors.tipo_elecciones.type === 'required' && <Message negative>
 							<Message.Header>Debes seleccionar un tipo</Message.Header>
 							<p> Para agregar una nueva elección es necesario seleccionar un tipo </p>
+						</Message> }
+						{ errors.campana && errors.campana.type === 'required' && <Message negative>
+							<Message.Header>Es necesaria una descripción/comentario</Message.Header>
+							<p> Se utilizará como referencia </p>
 						</Message> }
 						{ errors.tipo_elecciones && errors.tipo_elecciones.type === 'pattern' && <Message negative>
 							<Message.Header>Opciones no válidas</Message.Header>

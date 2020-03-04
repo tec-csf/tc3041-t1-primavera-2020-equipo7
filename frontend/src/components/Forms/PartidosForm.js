@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { es } from "date-fns/locale";
 import { format } from 'date-fns';
-import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
+import { DatePickerCalendar } from "react-nice-dates";
 import { useForm } from 'react-hook-form'
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
@@ -15,13 +15,7 @@ const PartidosForm = props => {
 
 	// for dates | aqui se pone con new Date()
 	const [startDate, setStartDate] = useState();
-	const [endDate, setEndDate] = useState();
-	const [focus, setFocus] = useState(START_DATE);
 	const [isValidDate, setIsValidDate] = useState(true);
-	
-	const handleFocusChange = newFocus => {
-		setFocus(newFocus || START_DATE);
-	}
 
 	// if on edit mode
 	const getDetailsFromChild = data => {
@@ -37,12 +31,12 @@ const PartidosForm = props => {
 	// Forms Validation
 	const { register, handleSubmit, errors } = useForm()
 	const onSubmitHandler = data => {
-		setIsValidDate(startDate && endDate);
-		if (!(startDate && endDate)) return;
+		setIsValidDate(startDate);
+		if (!(startDate)) return;
 		console.log(
 			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
 			);
-		console.log(data, startDate, endDate);
+		console.log(data, startDate);
 		props.handleClose();
 	}
 	console.log(errors)
@@ -72,27 +66,17 @@ const PartidosForm = props => {
 						{ errors.presi && errors.presi.type === 'required' && <Message negative>
 							<Message.Header>El nombre del presidente es necesario</Message.Header>
 						</Message> }
-						{ (!isValidDate && !(startDate && endDate)) 
+						{ (!isValidDate && !(startDate)) 
 							&& <Message negative>
-							<Message.Header>Seleccione un periodo para la elección</Message.Header>
-							<p> Para agregar una nueva elección es necesario llenar los dos campos de fecha </p>
+							<Message.Header>Seleccione una fecha de inicio para el partido</Message.Header>
 						</Message> }
 					</Form.Field>
 					<Form.Field required>
-						<label>Periodo </label>
-						<p>Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
-						<p>Fecha de fin: {endDate ? format(endDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
-						<i>nota: (i-e)</i>
-						<DateRangePickerCalendar
-							startDate={startDate}
-							endDate={endDate}
-							focus={focus}
-							onStartDateChange={setStartDate}
-							onEndDateChange={setEndDate}
-							onFocusChange={handleFocusChange}
-							locale={es}
-							minimumDate={new Date()}
-						/>
+						<label>Periodo del partido</label>
+						<p>
+							Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}
+						</p>
+						<DatePickerCalendar date={startDate} onDateChange={setStartDate} locale={es} minimunDate={new Date()}/>
 					</Form.Field>
 				</Form.Group>
 				<Button
