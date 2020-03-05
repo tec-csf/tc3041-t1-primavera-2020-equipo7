@@ -9,8 +9,10 @@ Yann Le Lorier
 from flask import Flask, jsonify, redirect, request, url_for #request handler, getting url in a function
 from flask_db2 import DB2
 import locale, time
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['DB2_DATABASE']='testdb'
 app.config['DB2_HOSTNAME']='localhost'
@@ -47,6 +49,7 @@ def handle_invalid_usage(error):
 ################################################################
 #                       ELECCION
 ################################################################
+# @cross_origin()
 @app.route('/elecciones/', methods=['GET', 'POST'])
 def all_eleccion():
     cur = db.connection.cursor()
@@ -81,7 +84,29 @@ def all_eleccion():
                 }
             )
 
-            return jsonify(elecciones_list)
+        return jsonify(elecciones_list)
+
+#ELECCION
+# @app.route('/elecciones/')
+# def all_elecciones():
+
+#     show_command = "SELECT id_eleccion, descripcion, tipo, fecha_eleccion_inicio, fecha_eleccion_final FROM ELECCION"
+#     cur.execute(show_command)
+#     elecciones = cur.fetchall()
+#     elecciones_list = []
+
+
+#     for eleccion in elecciones:
+#         elecciones_list.append(
+#             {"id": eleccion[0],
+#                 "descripcion": eleccion[1],
+#                 "tipo": eleccion[2],
+#                 "fecha_inicio": eleccion[3],
+#                 "fecha_final": eleccion[4]
+#             }
+#         )
+
+#     return jsonify(elecciones_list)
 
 @app.route('/elecciones/<int:id_eleccion>/', methods=['GET', 'POST', 'DELETE'])
 def one_eleccion(id_eleccion):
@@ -142,6 +167,74 @@ def one_eleccion(id_eleccion):
             )
     return jsonify(elecciones_list)
 
+#MESA
+@app.route('/mesas/')
+def all_mesas():
+    cur = db.connection.cursor()
+    show_command = "select descripcion, id_colegio, id_mesa, fecha_mesa_inicio, fecha_mesa_final from mesa inner join colegio on mesa.id_mesa_colegio = colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion = eleccion.id_eleccion"
+    cur.execute(show_command)
+    mesas = cur.fetchall()
+    print(mesas)
+    mesas_list = []
+
+    for mesa in mesas:
+        mesas_list.append(
+            {"eleccion": mesa[0],
+                "id_colegio": mesa[1],
+                "id": mesa[2],
+                "fecha_inicio": mesa[3],
+                "fecha_final": mesa[4]
+            }
+        )
+
+    return jsonify(mesas_list)
+
+@app.route('/mesas/<int:id_mesa>/', methods=['GET', 'DELETE'])
+def one_mesa(id_mesa):
+    cur = db.connection.cursor()
+    if request.method == 'DELETE':
+        print(id_mesa)
+        print()
+        print()
+        print()
+        delete_command = "DELETE FROM mesa WHERE id_mesa = {}".format(id_mesa)
+        cur.execute(delete_command)
+
+        
+        return redirect("http://127.0.0.1:5000/mesas")
+
+    else:
+        mesas_list = []
+        show_command = "SELECT id_mesa, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa FROM MESA WHERE id_mesa={}".format(id_mesa)
+        show_command_hist = "SELECT id_mesa, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa FROM hist_mesa WHERE id_mesa={}".format(id_mesa)
+        cur.execute(show_command)
+        mesas = cur.fetchall()
+
+        for mesa in mesas:
+            mesas_list.append(
+                {"id": mesa[0],
+                "fecha_inicio": mesa[1],
+                "fecha_final": mesa[2],
+                "sys_inicio": mesa[3],
+                "sys_final": mesa[4],
+                "trans_mesa": mesa[5]
+                }
+            )
+
+        cur.execute(show_command_hist)
+        mesas_hist = cur.fetchall()
+
+        for i in range( len(mesas_hist)-1 ,-1,-1):
+            mesas_list.append(
+                {"id": mesas_hist[i][0],
+                "fecha_inicio": mesas_hist[i][1],
+                "fecha_final": mesa_hist[i][2],
+                "sys_inicio": mesas_hist[i][3],
+                "sys_final": mesas_hist[i][4],
+                "trans_id": mesa_hist[i][5]
+                }
+            )
+    return jsonify(mesas_list) 
 ################################################################
 #                       COLEGIO
 ################################################################
@@ -410,7 +503,8 @@ def dashboard():
 ########################################### MAIN ################################
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run( port=5001, debug=True)
     # create_command = ""
     # if request.method == "POST":
     #     elecciones = request.form['elecciones']
