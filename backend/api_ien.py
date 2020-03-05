@@ -43,6 +43,8 @@ db = DB2(app)
 
     # return redirect("http://127.0.0.1:5000/")
 
+################################################# FUNCTIONS ######################################################
+
 @app.route('/elecciones/')
 def all_elecciones():
     cur = db.connection.cursor()
@@ -63,8 +65,7 @@ def all_elecciones():
 
     return jsonify(elecciones_list)
 
-
-@app.route('/elecciones/<int:id_eleccion>/', methods=['GET', 'POST'])
+@app.route('/elecciones/<int:id_eleccion>/', methods=['GET', 'POST', 'DELETE'])
 def one_eleccion(id_eleccion):
     cur = db.connection.cursor()
     if request.method == 'POST':
@@ -79,6 +80,17 @@ def one_eleccion(id_eleccion):
                                                                                                                                                         id_eleccion)
         cur.execute(update_command)                
         return redirect("http://127.0.0.1:5000/elecciones")
+
+    elif request.method == 'DELETE':
+        print(id_eleccion)
+        print()
+        print()
+        print()
+        delete_command = "DELETE FROM eleccion WHERE id_eleccion = {}".format(id_eleccion)
+        cur.execute(delete_command)
+
+        return redirect("http://127.0.0.1:5000/elecciones")
+
     else:
         elecciones_list = []
         show_command = "SELECT id_eleccion, fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo, sys_eleccion_inicio, sys_eleccion_final, trans_id_eleccion FROM ELECCION WHERE id_eleccion={}".format(id_eleccion)
@@ -127,7 +139,6 @@ def one_eleccion(id_eleccion):
     #     cur.execute(create_eleccion)
     #     return redirect('/elecciones/')
 
-
 @app.route('/votosfederales/', methods=["GET","POST"])
 def page_votosF():
     cur = db.connection.cursor()
@@ -147,7 +158,6 @@ def page_votosF():
 
     return jsonify(v_federales_list)
 
-
 @app.route('/votosmunicipales/', methods=["GET","POST"])
 def page_votosM():
     cur = db.connection.cursor()
@@ -164,7 +174,7 @@ def page_votosM():
                 "fecha_hora": voto[3]
             }
         )
-        return jsonify(v_municipales_list)
+    return jsonify(v_municipales_list)
     # create_command = ""
     # if request.method == "POST":
     #     elecciones_descripcion = request.form['elecciones']
@@ -183,15 +193,15 @@ def page_votantes():
     votantes = cur.fetchall()
     votantes_list = []
 
-    for votantes in votantes:
+    for votante in votantes:
         votantes_list.append(
-            {"id": votantes[0],
-                "nombre": votantes[1],
-                "id_mesa": votantes[2],
-                "tipo": votantes[3],
-                "fecha_inicio": votantes[4],
-                "fecha_final": votantes[5],
-                "id_sup": votantes[6]
+            {"id": votante[0],
+                "nombre": votante[1],
+                "id_mesa": votante[2],
+                "tipo": votante[3],
+                "fecha_inicio": votante[4],
+                "fecha_final": votante[5],
+                "id_sup": votante[6]
             }
         )
 
@@ -212,8 +222,28 @@ def page_votantes():
 @app.route('/partidos/', methods=["GET", "POST"])
 def page_partidos():
     cur = db.connection.cursor()
-    show_command = ""
-    create_command = ""
+    show_command = "SELECT  FROM PARTIDO"
+
+    cur.execute(show_command)
+    partidos = cur.fetchall()
+    partidos_list = []
+
+    for partido in partidos:
+        partidos_list.append(
+            {"siglas": partido[0],
+                "nombre": partido[1],
+                "id_mesa": partido[2],
+                "tipo": partido[3],
+                "fecha_inicio": partido[4],
+                "fecha_final": partido[5],
+                "id_sup": partido[6]
+            }
+        )
+
+    return jsonify(partidos_list)
+
+
+    # create_command = ""
     # if request.method == "POST":
     #     siglas = request.form['siglas']
     #     nombre = request.form['nombre']
@@ -231,15 +261,15 @@ def page_colegios():
     colegios = cur.fetchall()
     colegios_list = []
 
-    for colegios in colegios:
+    for colegio in colegios:
         colegios_list.append(
-            {"id": colegios[0],
-                "nombre": colegios[1],
-                "id_mesa": colegios[2],
-                "tipo": colegios[3],
-                "fecha_inicio": colegios[4],
-                "fecha_final": colegios[5],
-                "id_sup": colegios[6]
+            {"id": colegio[0],
+                "nombre": colegio[1],
+                "id_mesa": colegio[2],
+                "tipo": colegio[3],
+                "fecha_inicio": colegio[4],
+                "fecha_final": colegio[5],
+                "id_sup": colegio[6]
             }
         )
 
@@ -268,10 +298,6 @@ def page_mesas():
         cur.execute(create_command)
         return redirect('/mesas/')
 
-# @app.route("/get_my_ip", methods=["GET"])
-# def get_my_ip():
-#     return jsonify({'ip': request.remote_addr}), 200}
-
 @app.route('/')
 def dashboard():
     cur = db.connection.cursor()
@@ -293,31 +319,7 @@ def dashboard():
     return jsonify(elecciones_list)
 
 
-    # for votantes in votantes:
-    #     votantes_list.append(
-    #         {"id": votantes[0],
-    #             "nombre": votantes[1],
-    #             "id_mesa": votantes[2],
-    #             "tipo": votantes[3],
-    #             "fecha_inicio": votantes[4],
-    #             "fecha_final": votantes[5],
-    #             "id_sup": votantes[6]
-    #         }
-    #     )
-
-    # return jsonify(votantes_list)
-    # create_command = ""
-    # if request.method == "POST":
-    #     elecciones = request.form['elecciones']
-    #     colegio = request.form['colegio']
-    #     mesa = request.form['mesa']
-    #     nombre = request.form['nombre']
-    #     direccion = request.form['direccion']
-    #     fecha_nac = request.form['fecha']
-    #     fecha_registro = request.form['fecha_registro']
-
-    #     cur.execute(create_command)
-    #     return redirect('/votantes/')
+########################################### MAIN ################################
 
 if __name__ == "__main__":
     app.run(debug=True)
