@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 //context
 //css
 
-const CUModal = (props) => {
+const CUModal = props => {
 
 	// Control the modal
 	const [isOpenModel, setModelState] = useState(false);
@@ -36,7 +36,7 @@ const CUModal = (props) => {
 
 CUModal.propTypes = {
 	/** Id para hacer el Update */
-	id: PropTypes.string,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	/** Form for edit o create*/
 	Form: PropTypes.elementType.isRequired,
 	/** Leyenda del boton, solo cuando no se esta editando */

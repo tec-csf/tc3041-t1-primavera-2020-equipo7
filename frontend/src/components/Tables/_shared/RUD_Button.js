@@ -25,7 +25,7 @@ const CrudButton = (props) => {
 			}
 			{
 				props.onDelete &&
-				<DeleteModal message={props.onDelete} id={props.id}/>
+				<DeleteModal message={props.onDelete} id={props.id} refresh={props.refresh}/>
 			}
 		</Button.Group>
 	</Table.Cell>
@@ -34,7 +34,7 @@ const CrudButton = (props) => {
 
 CrudButton.propTypes = {
 	/** El id para hacer el request al API solo para eliminar */
-	id: PropTypes.string.isRequired,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	/** Mensaje que se muestra cuando aparece el dialogo de elimar*/
 	onDelete: PropTypes.string,
 	/** Title para ver detalles, necesario si se manda un onShow() */
@@ -43,6 +43,8 @@ CrudButton.propTypes = {
 	onShow: PropTypes.elementType,
 	/** Componente que se rendera cuando se hara una edición */
 	onEdit: PropTypes.elementType,
+	/** refresh index */
+	refresh: PropTypes.func
 }
 
 /** @component */

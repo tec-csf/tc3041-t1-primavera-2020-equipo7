@@ -6,20 +6,20 @@ import Mask from '../../util/GetMethod';
 //context
 //css
 
-const VotosDetalles = (props) => {
+const MesaDetalles = (props) => {
 
 	const getDetailsFromChild = data => {
-		console.log('obteniendo del son', data);
+		console.log('getting from son:', data);
 	}
 
 	return <Mask callback={getDetailsFromChild} id={props.id}>
-		<p> Mostrando aqui los detalles de un voto </p>
+		<p> Mostrando aquí los detalles la mesa </p>
 	</Mask>;
 }
 
-VotosDetalles.propTypes = {
+MesaDetalles.propTypes = {
 	/** id for get details */
-	id: PropTypes.string.isRequired
+	id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
 }
 
-export default VotosDetalles;
+export default MesaDetalles;

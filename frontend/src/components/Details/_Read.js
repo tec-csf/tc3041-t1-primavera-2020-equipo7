@@ -31,7 +31,7 @@ const ReadModal = (props) => {
 
 ReadModal.propTypes = {
 	/** El id para hacer el request al API solo para eliminar */
-	id: PropTypes.string.isRequired,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	/** Es un header dentro del modal */
 	title: PropTypes.string,
 	/** Body si details esta disponible */

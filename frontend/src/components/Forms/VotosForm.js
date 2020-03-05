@@ -36,6 +36,17 @@ const EleccionesForm = props => {
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
 				<Form.Group widths="equal">
 					<Form.Field required>
+						<label> Elecciones </label>
+						<select name='elecciones' ref={register({ required: true })}>
+							<option value=''>--seleccione--</option>
+							<option value='1'>junio 15</option>
+							<option value='2'>marzo 16</option>
+						</select>
+						{ errors.elecciones && errors.elecciones.type === 'required' && <Message negative>
+							<Message.Header>El colegio debe pertenecer a unas elecciones</Message.Header>
+						</Message> }
+					</Form.Field>
+					<Form.Field required>
 						<label> Colegio </label>
 						<select name='colegio' ref={register({ required: true })}>
 							<option value=''>--Selecciona--</option>
@@ -65,7 +76,6 @@ const EleccionesForm = props => {
 						<label> Tipo Voto </label>
 						<select name='tipo_voto' ref={register({ required: true })}>
 							<option value=''>--Selecciona--</option>
-							<option value='b'>Blanco</option>
 							<option value='n'>Nulo</option>
 							<option value='ok'>Bueno</option>
 						</select>
@@ -80,6 +90,7 @@ const EleccionesForm = props => {
 							<option value=''>--Selecciona--</option>
 							<option value='A'>Partido A</option>
 							<option value='B'>Partido B</option>
+							<option value='NA'>No aplica</option>
 						</select>
 						{ errors.partido && errors.partido.type === 'required' && <Message negative>
 							<Message.Header>Debes seleccionar un partido</Message.Header>

@@ -16,7 +16,9 @@ import Votantes from './pages/Votantes/index';
 // -- partidos
 import Partidos from './pages/Partidos/index';
 // -- colegios
+import Colegios from './pages/Colegios/index';
 // -- mesas
+import Mesas from './pages/Mesas/index';
 // -- css
 import 'react-nice-dates/build/style.css';
 
@@ -45,21 +47,22 @@ const App = () => {
 
 							<Route path='/votosmunicipales' exact render={ () => <Votos type='Municipales'/> } />
 
-							<Route path='/votantes' exact component={Votantes} />
+							<Route path='/votantes' exact render={() => <Votantes type='votante'/>} />
 
 							<Route path='/partidos' exact component={Partidos} />
 
-							{/*<Route path='/apoderados' exact render={ () => 0 } />
+							<Route path='/colegios' exact component={Colegios} /> } />
 
-							<Route path='/colegios' exact component={} /> } />
+							<Route path='/mesas' exact component={Mesas} />
 
-							<Route path='/mesas' exact component={} />
+							<Route path='/presidentes' exact render={() => <Votantes type='presidente'/>} />
 
-							<Route path='/presidentes' exact component={} />
+							<Route path='/vocales' exact render={() => <Votantes type='vocal'/>} />
 
-							<Route path='/vocales' exact component={} />
+							<Route path='/suplentes' exact render={() => <Votantes type='suplente'/>} />
 
-							<Route path='/suplentes' exact component={} /> */}
+							<Route path='/apoderados' exact render={ () => <Votantes type='apoderado'/> } />
+						 */}
 
 							<Route render={ () => <Container>
 								<h1> Hmm... creo que en esta URL no hay nada <span role="img" aria-label="whoknows"> 🤷‍♂️️ </span> </h1>

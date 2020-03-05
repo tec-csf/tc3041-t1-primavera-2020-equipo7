@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { es } from "date-fns/locale";
 import { format } from 'date-fns';
-import { DatePickerCalendar } from "react-nice-dates";
+import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
 import { useForm } from 'react-hook-form'
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
@@ -11,11 +11,17 @@ import Mask from "../../util/GetMethod";
 //context
 //css
 
-const PartidosForm = props => {
+const MesasForm = props => {
 
 	// for dates | aqui se pone con new Date()
 	const [startDate, setStartDate] = useState();
+	const [endDate, setEndDate] = useState();
+	const [focus, setFocus] = useState(START_DATE);
 	const [isValidDate, setIsValidDate] = useState(true);
+	
+	const handleFocusChange = newFocus => {
+		setFocus(newFocus || START_DATE);
+	}
 
 	// if on edit mode
 	const getDetailsFromChild = data => {
@@ -31,52 +37,43 @@ const PartidosForm = props => {
 	// Forms Validation
 	const { register, handleSubmit, errors } = useForm()
 	const onSubmitHandler = data => {
-		setIsValidDate(startDate);
-		if (!(startDate)) return;
+		setIsValidDate(startDate && endDate);
+		if (!(startDate && endDate)) return;
 		console.log(
 			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
 			);
-		console.log(data, startDate);
+		console.log(data, startDate, endDate);
 		props.handleClose();
 	}
-	console.log(errors)
+	
 	return (
 		<ParentComponent {...propsForComponent}>
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
-				<Form.Group widths="equal">
-					<Form.Field width='4' required>
-						<label> Siglas </label>
-						<input type='text' name='siglas' ref={register({ required: true })}/>
-						{ errors.siglas && errors.siglas.type === 'required' && <Message negative>
-							<Message.Header>Siglas es un campo requerido</Message.Header>
-						</Message> }
-					</Form.Field>
+				<Form.Group widths="4">
 					<Form.Field required>
-						<label> Nombre </label>
-						<input type='text' name='nombre_partido' ref={register({ required: true })}/>
-						{ errors.nombre_partido && errors.nombre_partido.type === 'required' && <Message negative>
-							<Message.Header>Se debe proporcionar el nombre del partido</Message.Header>
+						<label> Identificador </label>
+						<input type='text' name='id_mesa' ref={register({ required: true })}/>
+						{ errors.id_mesa && errors.id_mesa.type === 'required' && <Message negative>
+							<Message.Header>Es necesario un identificador</Message.Header>
 						</Message> }
 					</Form.Field>
 				</Form.Group>
 				<Form.Group widths="equal">
 					<Form.Field required>
-						<label> Presidente </label>
-						<input type='text' name='presi' ref={register({ required: true })}/>
-						{ errors.presi && errors.presi.type === 'required' && <Message negative>
-							<Message.Header>El nombre del presidente es necesario</Message.Header>
+						<label> Elecciones </label>
+						<select name='elecciones' ref={register({ required: true })}>
+							<option value=''>--seleccione--</option>
+							<option value='1'>junio 15</option>
+							<option value='2'>marzo 16</option>
+						</select>
+						{ errors.elecciones && errors.elecciones.type === 'required' && <Message negative>
+							<Message.Header>La mesa debe pertenecer a unas elecciones</Message.Header>
 						</Message> }
-						{ (!isValidDate && !(startDate)) 
+						{ (!isValidDate && !(startDate && endDate)) 
 							&& <Message negative>
-							<Message.Header>Seleccione una fecha de inicio para el partido</Message.Header>
+							<Message.Header>Seleccione un periodo para la mesa</Message.Header>
+							<p> Para agregar una nueva mesa es necesario elegir un periodo de fechas </p>
 						</Message> }
-					</Form.Field>
-					<Form.Field required>
-						<label>Periodo del partido</label>
-						<p>
-							Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}
-						</p>
-						<DatePickerCalendar date={startDate} onDateChange={setStartDate} locale={es} minimunDate={new Date()}/>
 					</Form.Field>
 				</Form.Group>
 				<Button
@@ -94,13 +91,13 @@ const PartidosForm = props => {
 	);
 };
 
-PartidosForm.propTypes = {
+MesasForm.propTypes = {
 	/** id for get details */
-	id: PropTypes.string,
+	id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	/** Para saber si se debe hacer un request para obtener info */
 	isEditing: PropTypes.bool,
 	/** To close the modal */
 	handleClose: PropTypes.func.isRequired
 };
 
-export default PartidosForm;
+export default MesasForm;
