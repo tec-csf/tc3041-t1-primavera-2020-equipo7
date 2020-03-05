@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { Modal, Button, Icon, Header, Loader, Dimmer } from 'semantic-ui-react';
 //own
@@ -7,7 +8,7 @@ import { Modal, Button, Icon, Header, Loader, Dimmer } from 'semantic-ui-react';
 //context
 //css
 
-const DeleteModal = (props) => {
+const DeleteModal = props => {
 
 	// Control the modal
 	const [isOpenModel, setModelState] = useState(false);
@@ -17,9 +18,15 @@ const DeleteModal = (props) => {
 	const [isDeleting, setDelitingState] = useState(false);
 	const deleteRecord = () => {
 		setDelitingState(true);
-		console.log('Borranding', props.match.path, '/', props.id);
-		setDelitingState(false);
-		handleClose()
+		//console.log('Borranding', (props.match.path + '/' + props.id));
+		axios.delete(props.match.path + '/' + props.id)
+			.then(res => {
+				console.log(res);
+				setDelitingState(false);
+				props.refresh();
+				handleClose();
+			})
+			.catch(err => console.log('deleting ', err));
 	}
 
 	return <Modal trigger={
@@ -51,10 +58,12 @@ const DeleteModal = (props) => {
 }
 
 DeleteModal.propTypes = {
+	/** Id para hacer el Delete */
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	/** Mensaje dentro del contenido del diálogo */
 	message: PropTypes.string.isRequired,
-	/** Id para hacer el Delete */
-	id: PropTypes.string.isRequired,
+	/** refresh index */
+	refresh: PropTypes.func.isRequired
 }
 
 export default withRouter(DeleteModal);

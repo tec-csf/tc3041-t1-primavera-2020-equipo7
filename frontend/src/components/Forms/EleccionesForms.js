@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { es } from "date-fns/locale";
 import { format } from 'date-fns';
 import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
 //own
@@ -24,9 +24,13 @@ const EleccionesForm = props => {
 	}
 
 	// if on edit mode
+	const [eleccion, setEleccion] = useState();
 	const getDetailsFromChild = data => {
-		console.log("load to edit", data);
-	};
+		setEleccion(data);
+		console.log('editing :', data);
+		setStartDate(new Date(data.fecha_inicio.replace('00:00:00 GMT', '')));
+		setEndDate(new Date(data.fecha_final.replace('00:00:00 GMT', '')));
+	}
 
 	// Controls for show
 	const ParentComponent = props.isEditing ? Mask : React.Fragment;
@@ -35,7 +39,7 @@ const EleccionesForm = props => {
 		: null;
 
 	// Forms Validation
-	const { register, handleSubmit, errors } = useForm()
+	const { register, handleSubmit, errors } = useForm();
 	const onSubmitHandler = data => {
 		setIsValidDate(startDate && endDate);
 		if (!(startDate && endDate)) return;
@@ -48,15 +52,27 @@ const EleccionesForm = props => {
 	
 	return (
 		<ParentComponent {...propsForComponent}>
-			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
+			{ ((!props.isEditing) || (eleccion && eleccion.tipo)) && <Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
 				<Form.Field required>
 					<label> Campaña (descripción) </label>
-					<input name='campana' ref={register({required: true})}/>
+					<input
+						name='descripcion'
+						ref={register({required: true})}
+						defaultValue={eleccion ? eleccion.descripcion : null}
+					/>
+					{ errors.descripcion && errors.descripcion.type === 'required' && <Message negative>
+					<Message.Header>Es necesaria una descripción/comentario</Message.Header>
+					<p> Se utilizará como referencia </p>
+				</Message> }
 				</Form.Field>
 				<Form.Group widths="equal">
 					<Form.Field required>
 						<label> Tipo de Elecciones </label>
-						<select name='tipo_elecciones' ref={register({ required: true, pattern: /^(f|m)$/ })}>
+						<select
+							name='tipo_elecciones'
+							ref={register({ required: true, pattern: /^(f|m)$/ })}
+							defaultValue={eleccion ? eleccion.tipo.charAt(0).toLowerCase() : null}
+						>
 							<option value=''>--seleccione--</option>
 							<option value='f'>Federal</option>
 							<option value='m'>Municipal</option>
@@ -64,10 +80,6 @@ const EleccionesForm = props => {
 						{ errors.tipo_elecciones && errors.tipo_elecciones.type === 'required' && <Message negative>
 							<Message.Header>Debes seleccionar un tipo</Message.Header>
 							<p> Para agregar una nueva elección es necesario seleccionar un tipo </p>
-						</Message> }
-						{ errors.campana && errors.campana.type === 'required' && <Message negative>
-							<Message.Header>Es necesaria una descripción/comentario</Message.Header>
-							<p> Se utilizará como referencia </p>
 						</Message> }
 						{ errors.tipo_elecciones && errors.tipo_elecciones.type === 'pattern' && <Message negative>
 							<Message.Header>Opciones no válidas</Message.Header>
@@ -92,7 +104,7 @@ const EleccionesForm = props => {
 							onEndDateChange={setEndDate}
 							onFocusChange={handleFocusChange}
 							locale={es}
-							minimumDate={new Date()}
+							minimumDate={props.isEditing ? startDate : new Date()}
 						/>
 					</Form.Field>
 				</Form.Group>
@@ -106,14 +118,14 @@ const EleccionesForm = props => {
 				/>
 				<br />
 				<br />
-			</Form>
+			</Form>}
 		</ParentComponent>
 	);
 };
 
 EleccionesForm.propTypes = {
 	/** id for get details */
-	id: PropTypes.string,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	/** Para saber si se debe hacer un request para obtener info */
 	isEditing: PropTypes.bool,
 	/** To close the modal */

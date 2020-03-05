@@ -1,0 +1,32 @@
+{
+	"elecciones": [
+		{
+			"descripcion": "Junio 2015", 
+			"fecha_final": "Thu, 11 Jun 2015 00:00:00 GMT", 
+			"fecha_inicio": "Mon, 01 Jun 2015 00:00:00 GMT", 
+			"id": 5, 
+			"tipo": "Federal"
+		}, 
+		{
+			"descripcion": "Mayo 2018", 
+			"fecha_final": "Thu, 17 May 2018 00:00:00 GMT", 
+			"fecha_inicio": "Mon, 07 May 2018 00:00:00 GMT", 
+			"id": 6, 
+			"tipo": "Municipal"
+		}, 
+		{
+			"descripcion": "Junio 2022", 
+			"fecha_final": "Sat, 11 Jun 2022 00:00:00 GMT", 
+			"fecha_inicio": "Wed, 01 Jun 2022 00:00:00 GMT", 
+			"id": 7, 
+			"tipo": "Municipal"
+		}, 
+		{
+			"descripcion": "Abril 2025", 
+			"fecha_final": "Tue, 08 Apr 2025 00:00:00 GMT", 
+			"fecha_inicio": "Wed, 02 Apr 2025 00:00:00 GMT", 
+			"id": 9, 
+			"tipo": "Federal"
+		}
+	]
+}
