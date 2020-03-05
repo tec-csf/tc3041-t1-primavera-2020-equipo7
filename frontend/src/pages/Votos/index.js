@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Container, Loader } from 'semantic-ui-react';
+import { Header, Container } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 //own
@@ -7,6 +7,8 @@ import Table from '../../components/Tables/VotosTable';
 import New from '../../components/Forms/_CU';
 import VotosForms from '../../components/Forms/VotosForm';
 import Copyright from '../../components/Credits';
+import Loader from '../../components/Loader';
+
 //hoc
 //context
 //css

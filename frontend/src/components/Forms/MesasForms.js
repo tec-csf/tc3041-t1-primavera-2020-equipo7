@@ -75,22 +75,6 @@ const MesasForm = props => {
 							<p> Para agregar una nueva mesa es necesario elegir un periodo de fechas </p>
 						</Message> }
 					</Form.Field>
-					<Form.Field required>
-						<label>Periodo </label>
-						<p>Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
-						<p>Fecha de fin: {endDate ? format(endDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
-						<i>nota: (i-e)</i>
-						<DateRangePickerCalendar
-							startDate={startDate}
-							endDate={endDate}
-							focus={focus}
-							onStartDateChange={setStartDate}
-							onEndDateChange={setEndDate}
-							onFocusChange={handleFocusChange}
-							locale={es}
-							minimumDate={new Date()}
-						/>
-					</Form.Field>
 				</Form.Group>
 				<Button
 					positive
@@ -109,7 +93,7 @@ const MesasForm = props => {
 
 MesasForm.propTypes = {
 	/** id for get details */
-	id: PropTypes.string,
+	id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	/** Para saber si se debe hacer un request para obtener info */
 	isEditing: PropTypes.bool,
 	/** To close the modal */

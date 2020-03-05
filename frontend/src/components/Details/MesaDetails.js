@@ -19,7 +19,7 @@ const MesaDetalles = (props) => {
 
 MesaDetalles.propTypes = {
 	/** id for get details */
-	id: PropTypes.string.isRequired
+	id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
 }
 
 export default MesaDetalles;

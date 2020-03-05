@@ -9,31 +9,36 @@ import Edit from './../Forms/MesasForms';
 /**
  * Es la tabla que se usa para el index de de las mesas
 */
-const EleccionesTabla = () => <Table celled padded>
-	<Table.Header>
-		<Table.Row>
-			<Table.HeaderCell>Mesa</Table.HeaderCell>
-			<Table.HeaderCell>Elección</Table.HeaderCell>
-			<Table.HeaderCell>Fecha inicio</Table.HeaderCell>
-			<Table.HeaderCell>Fecha fin</Table.HeaderCell>
-			<Table.HeaderCell>######</Table.HeaderCell>
-		</Table.Row>
-	</Table.Header>
-	<Table.Body>
-		<Table.Row>
-			<Table.Cell>A</Table.Cell>
-			<Table.Cell>Junio 2018</Table.Cell>
-			<Table.Cell>16-06-2018</Table.Cell>
-			<Table.Cell>16-07-2018</Table.Cell>
-			<RudButton
-				id='1'
-				onDelete='Mesa A'
-				title='Mesa A'
-				onShow={Details}
-				onEdit={Edit}
-			/>
-		</Table.Row>
-	</Table.Body>
-</Table>;
+const EleccionesTabla = props => {
+	return <Table celled padded>
+		<Table.Header>
+			<Table.Row>
+				<Table.HeaderCell>Mesa</Table.HeaderCell>
+				<Table.HeaderCell>Elección</Table.HeaderCell>
+				<Table.HeaderCell>Fecha inicio</Table.HeaderCell>
+				<Table.HeaderCell>Fecha fin</Table.HeaderCell>
+				<Table.HeaderCell>######</Table.HeaderCell>
+			</Table.Row>
+		</Table.Header>
+		<Table.Body>
+			{ props.info.map( item => {
+					return <Table.Row key={item.id}>
+						<Table.Cell>{item.id}</Table.Cell>
+						<Table.Cell>{item.eleccion}</Table.Cell>
+						<Table.Cell>{item.fecha_inicio.replace('00:00:00 GMT', '')}</Table.Cell>
+						<Table.Cell>{item.fecha_final.replace('00:00:00 GMT', '')}</Table.Cell>
+						<RudButton
+							id={item.id}
+							refresh={props.loadInfo}
+							onDelete={'Mesa ' + item.id}
+							title={'Mesa ' + item.id}
+							onShow={Details}
+							onEdit={Edit}
+						/>
+					</Table.Row>
+				} ) }
+		</Table.Body>
+	</Table>;
+}
 
 export default EleccionesTabla;
