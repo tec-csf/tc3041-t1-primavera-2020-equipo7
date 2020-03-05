@@ -19,7 +19,7 @@ const VotosDetalles = (props) => {
 
 VotosDetalles.propTypes = {
 	/** id for get details */
-	id: PropTypes.string.isRequired
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 }
 
 export default VotosDetalles;

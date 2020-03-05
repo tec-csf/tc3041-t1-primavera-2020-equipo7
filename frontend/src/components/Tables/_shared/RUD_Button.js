@@ -44,7 +44,7 @@ CrudButton.propTypes = {
 	/** Componente que se rendera cuando se hara una edición */
 	onEdit: PropTypes.elementType,
 	/** refresh index */
-	refresh: PropTypes.func.isRequired
+	refresh: PropTypes.func
 }
 
 /** @component */
