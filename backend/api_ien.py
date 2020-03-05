@@ -12,12 +12,12 @@ import locale, time
 
 app = Flask(__name__)
 
-app.config['DB2_DATABASE']='tarea1bd'
+app.config['DB2_DATABASE']='testdb'
 app.config['DB2_HOSTNAME']='localhost'
 app.config['DB2_PORT']='50000'
 app.config['DB2_PROTOCOL']='TCPIP'
 app.config['DB2_USER']='db2inst1'
-app.config['DB2_PASSWORD']='ihm'
+app.config['DB2_PASSWORD']='password'
 
 db = DB2(app)
 
@@ -76,7 +76,7 @@ def one_eleccion(id_eleccion):
                                                                                                                                                                 fecha_eleccion_final,
                                                                                                                                                                 descripcion,
                                                                                                                                                                 tipo,
-                                                                                                                                                                id_eleccion)
+                                                                                                                                                        id_eleccion)
         cur.execute(update_command)                
         return redirect("http://127.0.0.1:5000/elecciones")
     else:
@@ -214,27 +214,46 @@ def page_partidos():
     cur = db.connection.cursor()
     show_command = ""
     create_command = ""
-    if request.method == "POST":
-        siglas = request.form['siglas']
-        nombre = request.form['nombre']
-        presidente = request.form['presidente']
-        fecha_inicio = request.form['fecha_inicio']
-        fecha_fin = request.form['fecha_fin']
-        cur.execute(create_command)
-        return redirect('/partidos/')
+    # if request.method == "POST":
+    #     siglas = request.form['siglas']
+    #     nombre = request.form['nombre']
+    #     presidente = request.form['presidente']
+    #     fecha_inicio = request.form['fecha_inicio']
+    #     fecha_fin = request.form['fecha_fin']
+    #     cur.execute(create_command)
+    #     return redirect('/partidos/')
 
 @app.route('/colegios/', methods=["GET", "POST"])
 def page_colegios():
     cur = db.connection.cursor()
     show_command = ""
-    create_command = ""
-    if request.method == "POST":
-        id_colegio = request.form['colegio']
-        desc_elecc = request.form['elecciones']
-        fecha_inicio = request.form['fecha_inicio']
-        fecha_fin = request.form['fecha_fin']
-        cur.execute(create_command)
-        return redirect('/colegios/')
+    cur.execute(show_command)
+    colegios = cur.fetchall()
+    colegios_list = []
+
+    for colegios in colegios:
+        colegios_list.append(
+            {"id": colegios[0],
+                "nombre": colegios[1],
+                "id_mesa": colegios[2],
+                "tipo": colegios[3],
+                "fecha_inicio": colegios[4],
+                "fecha_final": colegios[5],
+                "id_sup": colegios[6]
+            }
+        )
+
+    return jsonify(colegios_list)
+    
+    
+    # create_command = ""
+    # if request.method == "POST":
+    #     id_colegio = request.form['colegio']
+    #     desc_elecc = request.form['elecciones']
+    #     fecha_inicio = request.form['fecha_inicio']
+    #     fecha_fin = request.form['fecha_fin']
+    #     cur.execute(create_command)
+    #     return redirect('/colegios/')
 
 @app.route('/mesas/', methods=["GET", "POST"])
 def page_mesas():
@@ -273,19 +292,44 @@ def dashboard():
 
     return jsonify(elecciones_list)
 
-# def json_items(query, cur, keys):
-#     cur.execute(query)
-#     db_items = cur.fetchall()
-#     items_list = []
-#     i = 0
-#     for item in db_items:
-#         items_list.append(
-#             {
-#                 "{}: {}".format(keys[i], item[i])
-#             }
-#         )
-#         i += 1
-#     return jsonify(items_list)
+
+    # for votantes in votantes:
+    #     votantes_list.append(
+    #         {"id": votantes[0],
+    #             "nombre": votantes[1],
+    #             "id_mesa": votantes[2],
+    #             "tipo": votantes[3],
+    #             "fecha_inicio": votantes[4],
+    #             "fecha_final": votantes[5],
+    #             "id_sup": votantes[6]
+    #         }
+    #     )
+
+    # return jsonify(votantes_list)
+    # create_command = ""
+    # if request.method == "POST":
+    #     elecciones = request.form['elecciones']
+    #     colegio = request.form['colegio']
+    #     mesa = request.form['mesa']
+    #     nombre = request.form['nombre']
+    #     direccion = request.form['direccion']
+    #     fecha_nac = request.form['fecha']
+    #     fecha_registro = request.form['fecha_registro']
+
+    #     cur.execute(create_command)
+    #     return redirect('/votantes/')
 
 if __name__ == "__main__":
     app.run(debug=True)
+    # create_command = ""
+    # if request.method == "POST":
+    #     elecciones = request.form['elecciones']
+    #     colegio = request.form['colegio']
+    #     mesa = request.form['mesa']
+    #     nombre = request.form['nombre']
+    #     direccion = request.form['direccion']
+    #     fecha_nac = request.form['fecha']
+    #     fecha_registro = request.form['fecha_registro']
+
+    #     cur.execute(create_command)
+    #     return redirect('/votantes/')
