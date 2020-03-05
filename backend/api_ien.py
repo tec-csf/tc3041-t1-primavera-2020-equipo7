@@ -21,49 +21,67 @@ app.config['DB2_PASSWORD']='password'
 
 db = DB2(app)
 
-# @app.route('/user/<username>')
-# def profile(username):
-# @app.route('/<int:year>/<int:month>/<title>')
-# def article(year, month, title):
+class InvalidUsage(Exception):
+    status_code = 400
 
-# @app.route('/insert/')
-# def insert():
-#     cur = db.connection.cursor()
-#     cur.execute("INSERT INTO products (id, description, start_date, end_date) VALUES (3, 'bacacho', '2020-04-24', '2020-05-11')")
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
 
-#     return redirect("http://127.0.0.1:5000/")
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv['message'] = self.message
+        return rv
 
-
-# @app.route('/update/<name_product>')
-# def update(name_product):
-#     cur = db.connection.cursor()
-#     print(name_product)
-#     update_command = "UPDATE products FOR PORTION OF BUSINESS_TIME FROM '2020-04-28' TO '2020-05-09' SET description = '{}' WHERE id = 3".format(name_product)
-#     cur.execute(update_command)
-
-    # return redirect("http://127.0.0.1:5000/")
+@app.errorhandler(InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 ################################################# FUNCTIONS ######################################################
 
-@app.route('/elecciones/')
-def all_elecciones():
+################################################################
+#                       ELECCION
+################################################################
+@app.route('/elecciones/', methods=['GET', 'POST'])
+def all_eleccion():
     cur = db.connection.cursor()
-    show_command = "SELECT id_eleccion, descripcion, tipo, fecha_eleccion_inicio, fecha_eleccion_final FROM ELECCION"
-    cur.execute(show_command)
-    elecciones = cur.fetchall()
-    elecciones_list = []
 
-    for eleccion in elecciones:
-        elecciones_list.append(
-            {"id": eleccion[0],
-                "descripcion": eleccion[1],
-                "tipo": eleccion[2],
-                "fecha_inicio": eleccion[3],
-                "fecha_final": eleccion[4]
-            }
-        )
+    if request.method == 'POST':
+        fecha_eleccion_inicio = request.form['fecha_inicio']
+        fecha_eleccion_final = request.form['fecha_fin']
+        descripcion = request.form['descripcion']
+        tipo = request.form['tipo_elecciones']
 
-    return jsonify(elecciones_list)
+        insert_command = "INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('{}', '{}', '{}', '{}')".format(fecha_eleccion_inicio,
+                                                                                                                                                        fecha_eleccion_final,
+                                                                                                                                                        descripcion,
+                                                                                                                                                        tipo)
+        cur.execute(insert_command)
+
+        return redirect("http://127.0.0.1:5000/")
+
+    else:
+        show_command = "SELECT id_eleccion, descripcion, tipo, fecha_eleccion_inicio, fecha_eleccion_final FROM ELECCION"
+        cur.execute(show_command)
+        elecciones = cur.fetchall()
+        elecciones_list = []
+
+        for eleccion in elecciones:
+            elecciones_list.append(
+                {"id": eleccion[0],
+                    "descripcion": eleccion[1],
+                    "tipo": eleccion[2],
+                    "fecha_inicio": eleccion[3],
+                    "fecha_final": eleccion[4]
+                }
+            )
+
+            return jsonify(elecciones_list)
 
 @app.route('/elecciones/<int:id_eleccion>/', methods=['GET', 'POST', 'DELETE'])
 def one_eleccion(id_eleccion):
@@ -78,14 +96,10 @@ def one_eleccion(id_eleccion):
                                                                                                                                                                 descripcion,
                                                                                                                                                                 tipo,
                                                                                                                                                         id_eleccion)
-        cur.execute(update_command)                
+        cur.execute(update_command)
         return redirect("http://127.0.0.1:5000/elecciones")
 
     elif request.method == 'DELETE':
-        print(id_eleccion)
-        print()
-        print()
-        print()
         delete_command = "DELETE FROM eleccion WHERE id_eleccion = {}".format(id_eleccion)
         cur.execute(delete_command)
 
@@ -128,18 +142,124 @@ def one_eleccion(id_eleccion):
             )
     return jsonify(elecciones_list)
 
+################################################################
+#                       COLEGIO
+################################################################
+@app.route('/colegios/', methods=["GET", "POST"])
+def all_colegio():
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        id = request.form['id']
+        fecha_colegio_inicio = request.form['fecha_inicio']
+        fecha_colegio_final = request.form['fecha_fin']
+        id_eleccion = request.form['id_eleccion']
+
+        insert_command = "INSERT INTO colegio (id_colegio, fecha_colegio_inicio, fecha_colegio_final, id_colegio_eleccion) VALUES ({}, '{}', '{}', {});".format(id,
+                                                                                                                                                        fecha_colegio_inicio,
+                                                                                                                                                        fecha_colegio_final,
+                                                                                                                                                        id_eleccion)
+
+        try:
+            cur.execute(insert_command)
+        except:
+            raise InvalidUsage('Error al crear el colegio')
+
+        return redirect("http://127.0.0.1:5000/colegios")
+
+    else:
+        select_colegios_command = "SELECT id_colegio, fecha_colegio_inicio, fecha_colegio_final, id_colegio_eleccion FROM colegio"
+        cur.execute(select_colegios_command)
+        colegios = cur.fetchall()
+        colegios_list = []
+
+        for colegio in colegios:
+            id_colegio_eleccion = colegio[3]
+            get_eleccion_of_colegio_command = "SELECT descripcion FROM ELECCION WHERE id_eleccion={}".format(id_colegio_eleccion)
+            cur.execute(get_eleccion_of_colegio_command)
+            eleccion = cur.fetchall()[0]
+
+            colegios_list.append(
+                {"id": colegio[0],
+                    "fecha_inicio": colegio[1],
+                    "fecha_final": colegio[2],
+                    "id_eleccion": id_colegio_eleccion,
+                    #                [primera tupla] [primer elemento]
+                    "descripcion_eleccion": eleccion[0]
+                }
+            )
+
+        return jsonify(colegios_list)
+
+def one_eleccion(id_eleccion):
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        id = request.form['id']
+        fecha_colegio_inicio = request.form['fecha_inicio']
+        fecha_colegio_final = request.form['fecha_fin']
+        id_eleccion = request.form['id_eleccion']
+        update_command = "UPDATE colegio SET fecha_colegio_inicio='{}', fecha_colegio_final='{}', id_colegio_eleccion={} WHERE id_colegio = {}".format(fecha_colegio_inicio,
+                                                                                                                                                    fecha_colegio_final,
+                                                                                                                                                    id_eleccion,
+                                                                                                                                                    id)
+        cur.execute(update_command)
+        return redirect("http://127.0.0.1:5000/elecciones")
+
+    else:
+        pass
+    # elif request.method == 'DELETE':
+    #     delete_command = "DELETE FROM eleccion WHERE id_eleccion = {}".format(id_eleccion)
+    #     cur.execute(delete_command)
+    #
+    #     return redirect("http://127.0.0.1:5000/elecciones")
+    #
+    # else:
+    #     elecciones_list = []
+    #     show_command = "SELECT id_eleccion, fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo, sys_eleccion_inicio, sys_eleccion_final, trans_id_eleccion FROM ELECCION WHERE id_eleccion={}".format(id_eleccion)
+    #     show_command_hist = "SELECT id_eleccion, fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo, sys_eleccion_inicio, sys_eleccion_final, trans_id_eleccion FROM hist_eleccion WHERE id_eleccion={}".format(id_eleccion)
+    #     cur.execute(show_command)
+    #     elecciones = cur.fetchall()
+    #
+    #     for eleccion in elecciones:
+    #         elecciones_list.append(
+    #             {"id": eleccion[0],
+    #             "fecha_inicio": eleccion[1],
+    #             "fecha_final": eleccion[2],
+    #             "descripcion": eleccion[3],
+    #             "tipo": eleccion[4],
+    #             "sys_inicio": eleccion[5],
+    #             "sys_final": eleccion[6],
+    #             "trans_id": eleccion[7]
+    #             }
+    #         )
+    #
+    #     cur.execute(show_command_hist)
+    #     elecciones_hist = cur.fetchall()
+    #
+    #     for i in range(len(elecciones_hist)-1,-1,-1):
+    #         elecciones_list.append(
+    #             {"id": elecciones_hist[i][0],
+    #             "fecha_inicio": elecciones_hist[i][1],
+    #             "fecha_final": elecciones_hist[i][2],
+    #             "descripcion": elecciones_hist[i][3],
+    #             "tipo": elecciones_hist[i][4],
+    #             "sys_inicio": elecciones_hist[i][5],
+    #             "sys_final": elecciones_hist[i][6],
+    #             "trans_id": elecciones_hist[i][7]
+    #             }
+    #         )
+    return jsonify(elecciones_list)
 
 
-    # cur = db.connection.cursor()
-
-    # create_eleccion = ""
+    # create_command = ""
     # if request.method == "POST":
-    #     desc_eleccion = request.form['campana']
-    #     tipo = request.form['tipo_elecciones']
-    #     cur.execute(create_eleccion)
-    #     return redirect('/elecciones/')
+    #     id_colegio = request.form['colegio']
+    #     desc_elecc = request.form['elecciones']
+    #     fecha_inicio = request.form['fecha_inicio']
+    #     fecha_fin = request.form['fecha_fin']
+    #     cur.execute(create_command)
+    #     return redirect('/colegios/')
 
-@app.route('/votosfederales/', methods=["GET","POST"])
+@app.route('/votos/federales/', methods=["GET","POST"])
 def page_votosF():
     cur = db.connection.cursor()
     show_command = "SELECT id_mesa, siglas, tipo_voto, fecha_hora_voto FROM V_FEDERAL"
@@ -158,7 +278,7 @@ def page_votosF():
 
     return jsonify(v_federales_list)
 
-@app.route('/votosmunicipales/', methods=["GET","POST"])
+@app.route('/votos/municipales/', methods=["GET","POST"])
 def page_votosM():
     cur = db.connection.cursor()
     show_command = "SELECT id_mesa, siglas, tipo_voto, fecha_hora_voto FROM V_MUNICIPAL"
@@ -252,38 +372,6 @@ def page_partidos():
     #     fecha_fin = request.form['fecha_fin']
     #     cur.execute(create_command)
     #     return redirect('/partidos/')
-
-@app.route('/colegios/', methods=["GET", "POST"])
-def page_colegios():
-    cur = db.connection.cursor()
-    show_command = ""
-    cur.execute(show_command)
-    colegios = cur.fetchall()
-    colegios_list = []
-
-    for colegio in colegios:
-        colegios_list.append(
-            {"id": colegio[0],
-                "nombre": colegio[1],
-                "id_mesa": colegio[2],
-                "tipo": colegio[3],
-                "fecha_inicio": colegio[4],
-                "fecha_final": colegio[5],
-                "id_sup": colegio[6]
-            }
-        )
-
-    return jsonify(colegios_list)
-    
-    
-    # create_command = ""
-    # if request.method == "POST":
-    #     id_colegio = request.form['colegio']
-    #     desc_elecc = request.form['elecciones']
-    #     fecha_inicio = request.form['fecha_inicio']
-    #     fecha_fin = request.form['fecha_fin']
-    #     cur.execute(create_command)
-    #     return redirect('/colegios/')
 
 @app.route('/mesas/', methods=["GET", "POST"])
 def page_mesas():
