@@ -9,17 +9,18 @@ Yann Le Lorier
 from flask import Flask, jsonify, redirect, request, url_for #request handler, getting url in a function
 from flask_db2 import DB2
 import locale, time
-from flask_cors import CORS
+from flask_cors import CORS #pip3 install flask-cors
 
 app = Flask(__name__)
 CORS(app)
+#CORS(app, resources={r"/*": {"origins": "*"}})
 
 app.config['DB2_DATABASE']='testdb'
 app.config['DB2_HOSTNAME']='localhost'
 app.config['DB2_PORT']='50000'
 app.config['DB2_PROTOCOL']='TCPIP'
 app.config['DB2_USER']='db2inst1'
-app.config['DB2_PASSWORD']='password'
+app.config['DB2_PASSWORD']='123465'
 
 db = DB2(app)
 
@@ -49,11 +50,10 @@ def handle_invalid_usage(error):
 ################################################################
 #                       ELECCION
 ################################################################
-# @cross_origin()
 @app.route('/elecciones/', methods=['GET', 'POST'])
 def all_eleccion():
     cur = db.connection.cursor()
-
+    print('aqui')
     if request.method == 'POST':
         fecha_eleccion_inicio = request.form['fecha_inicio']
         fecha_eleccion_final = request.form['fecha_fin']
@@ -504,7 +504,7 @@ def dashboard():
 
 if __name__ == "__main__":
     #app.run(debug=True)
-    app.run( port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
     # create_command = ""
     # if request.method == "POST":
     #     elecciones = request.form['elecciones']

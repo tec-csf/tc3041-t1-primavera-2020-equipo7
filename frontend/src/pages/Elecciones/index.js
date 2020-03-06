@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header, Container } from 'semantic-ui-react';
-import axios from 'axios';
+import axios from '../../axios';
 //own
 import Table from '../../components/Tables/EleccionesTable';
 import New from '../../components/Forms/_CU';
@@ -19,7 +19,8 @@ class Elecciones extends React.Component {
 	}
 
 	loadData = () => {
-		axios.get('elecciones')
+
+		axios.get('/elecciones/')
 		.then(res => {
 			this.setState({ loading: false, all_elecciones: res.data });
 		})
