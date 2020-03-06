@@ -12,6 +12,7 @@ const EleccionesDetalles = (props) => {
 	const [elecciones, setElecciones] = useState();
 
 	const getDetailsFromChild = data => {
+		console.log(typeof(data))
 		if(typeof(data) === 'object'){
 			const dataList = [];
 			dataList.push(data);

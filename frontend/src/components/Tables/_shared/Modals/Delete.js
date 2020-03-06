@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import axios from '../../../../axios';
 import { withRouter } from 'react-router-dom';
 import { Modal, Button, Icon, Header, Loader, Dimmer } from 'semantic-ui-react';
 //own
@@ -19,14 +19,17 @@ const DeleteModal = props => {
 	const deleteRecord = () => {
 		setDelitingState(true);
 		//console.log('Borranding', (props.match.path + '/' + props.id));
-		axios.delete(props.match.path + '/' + props.id)
+		axios.delete(props.match.path + '/' + props.id + '/')
 			.then(res => {
 				console.log(res);
 				setDelitingState(false);
 				props.refresh();
 				handleClose();
 			})
-			.catch(err => console.log('deleting ', err));
+			.catch(err => {
+				console.log(err);
+				console.log(err.response);
+			}) //.then(() => {handleClose(); props.refresh();});
 	}
 
 	return <Modal trigger={

@@ -2,7 +2,7 @@ import React from 'react';
 import { Loader, Dimmer, Container } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import axios from '../axios';
 //own
 //hoc
 //context
@@ -13,8 +13,8 @@ class GetMethod extends React.Component {
 	state = { isLoading : true }
 
 	componentDidMount() {
-
-		axios.get(this.props.match.path + '/' + this.props.id)
+		console.log(this.props.match.path + '/' + this.props.id + '/')
+		axios.get(this.props.match.path + '/' + this.props.id + '/')
 		.then(res => {
 			//console.log(typeof(res));
 			//console.log('Details', this.props.match.path + '/' + this.props.id)

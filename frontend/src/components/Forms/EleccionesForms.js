@@ -5,6 +5,7 @@ import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
 import { useForm } from 'react-hook-form';
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
+import axios from '../../axios';
 //own
 import Mask from "../../util/GetMethod";
 //hoc
@@ -43,11 +44,20 @@ const EleccionesForm = props => {
 	const onSubmitHandler = data => {
 		setIsValidDate(startDate && endDate);
 		if (!(startDate && endDate)) return;
-		console.log(
-			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
-			);
-		console.log(data, startDate, endDate);
-		props.handleClose();
+
+		const info_to_send = { ...data, "fecha_inicio" : startDate, "fecha_fin" : endDate }
+
+		//if(!props.isEditing){
+			axios.post('/elecciones/67/' , info_to_send)
+				.then(res => {
+					console.log(res);
+					props.handleClose();
+				})
+				.catch(err => {
+					console.log(err);
+					console.log(err.response);
+				})
+		//}
 	}
 	
 	return (
