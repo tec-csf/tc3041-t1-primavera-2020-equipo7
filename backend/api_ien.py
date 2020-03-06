@@ -96,7 +96,7 @@ def all_eleccion():
 @app.route('/elecciones/<int:id_eleccion>/', methods=['GET', 'POST', 'DELETE'])
 def one_eleccion(id_eleccion):
     cur = db.connection.cursor()
-    
+
     if request.method == 'POST':
         dict_new_eleccion = request.get_json()
 
@@ -161,74 +161,8 @@ def one_eleccion(id_eleccion):
                 "trans_id": elecciones_hist[i][7]
                 }
             )
-    return jsonify(elecciones_list)
+    return jsonify(elecciones_list)\
 
-
-#MESA
-@app.route('/mesas/')
-def all_mesas():
-    cur = db.connection.cursor()
-    show_command = "select descripcion, id_colegio, id_mesa, fecha_mesa_inicio, fecha_mesa_final from mesa inner join colegio on mesa.id_mesa_colegio = colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion = eleccion.id_eleccion"
-    cur.execute(show_command)
-    mesas = cur.fetchall()
-    print(mesas)
-    mesas_list = []
-
-    for mesa in mesas:
-        mesas_list.append(
-            {"eleccion": mesa[0],
-                "id_colegio": mesa[1],
-                "id": mesa[2],
-                "fecha_inicio": mesa[3],
-                "fecha_final": mesa[4]
-            }
-        )
-
-    return jsonify(mesas_list)
-
-@app.route('/mesas/<int:id_mesa>/', methods=['GET', 'DELETE'])
-def one_mesa(id_mesa):
-    cur = db.connection.cursor()
-    if request.method == 'DELETE':
-
-        delete_command = "DELETE FROM mesa WHERE id_mesa = {}".format(id_mesa)
-        cur.execute(delete_command)
-
-
-        return redirect("http://127.0.0.1:5000/mesas")
-
-    else:
-        mesas_list = []
-        show_command = "SELECT id_mesa, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa FROM MESA WHERE id_mesa={}".format(id_mesa)
-        show_command_hist = "SELECT id_mesa, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa FROM hist_mesa WHERE id_mesa={}".format(id_mesa)
-        cur.execute(show_command)
-        mesas = cur.fetchall()
-
-        for mesa in mesas:
-            mesas_list.append(
-                {"id": mesa[0],
-                "fecha_inicio": mesa[1],
-                "fecha_final": mesa[2],
-                "sys_inicio": mesa[3],
-                "sys_final": mesa[4],
-                "trans_mesa": mesa[5]
-                }
-            )
-
-        cur.execute(show_command_hist)
-        mesas_hist = cur.fetchall()
-
-        for i in range( len(mesas_hist)-1 ,-1,-1):
-            mesas_list.append(
-                {"id": mesas_hist[i][0],
-                "fecha_inicio": mesas_hist[i][1],
-                "fecha_final": mesa_hist[i][2],
-                "sys_inicio": mesas_hist[i][3],
-                "sys_final": mesas_hist[i][4],
-                "trans_id": mesa_hist[i][5]
-                }
-            )
-    return jsonify(mesas_list)
 
 ################################################################
 #                       COLEGIO
@@ -353,14 +287,72 @@ def one_colegio(id_colegio):
     return jsonify(colegios_list)
 
 
-    # create_command = ""
-    # if request.method == "POST":
-    #     id_colegio = request.form['colegio']
-    #     desc_elecc = request.form['elecciones']
-    #     fecha_inicio = request.form['fecha_inicio']
-    #     fecha_fin = request.form['fecha_fin']
-    #     cur.execute(create_command)
-    #     return redirect('/colegios/')
+#MESA
+@app.route('/mesas/')
+def all_mesas():
+    cur = db.connection.cursor()
+    show_command = "select descripcion, id_colegio, id_mesa, fecha_mesa_inicio, fecha_mesa_final from mesa inner join colegio on mesa.id_mesa_colegio = colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion = eleccion.id_eleccion"
+    cur.execute(show_command)
+    mesas = cur.fetchall()
+    print(mesas)
+    mesas_list = []
+
+    for mesa in mesas:
+        mesas_list.append(
+            {"eleccion": mesa[0],
+                "id_colegio": mesa[1],
+                "id": mesa[2],
+                "fecha_inicio": mesa[3],
+                "fecha_final": mesa[4]
+            }
+        )
+
+    return jsonify(mesas_list)
+
+@app.route('/mesas/<int:id_mesa>/', methods=['GET', 'DELETE'])
+def one_mesa(id_mesa):
+    cur = db.connection.cursor()
+    if request.method == 'DELETE':
+
+        delete_command = "DELETE FROM mesa WHERE id_mesa = {}".format(id_mesa)
+        cur.execute(delete_command)
+
+
+        return redirect("http://127.0.0.1:5000/mesas")
+
+    else:
+        mesas_list = []
+        show_command = "SELECT id_mesa, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa FROM MESA WHERE id_mesa={}".format(id_mesa)
+        show_command_hist = "SELECT id_mesa, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa FROM hist_mesa WHERE id_mesa={}".format(id_mesa)
+        cur.execute(show_command)
+        mesas = cur.fetchall()
+
+        for mesa in mesas:
+            mesas_list.append(
+                {"id": mesa[0],
+                "fecha_inicio": mesa[1],
+                "fecha_final": mesa[2],
+                "sys_inicio": mesa[3],
+                "sys_final": mesa[4],
+                "trans_mesa": mesa[5]
+                }
+            )
+
+        cur.execute(show_command_hist)
+        mesas_hist = cur.fetchall()
+
+        for i in range( len(mesas_hist)-1 ,-1,-1):
+            mesas_list.append(
+                {"id": mesas_hist[i][0],
+                "fecha_inicio": mesas_hist[i][1],
+                "fecha_final": mesa_hist[i][2],
+                "sys_inicio": mesas_hist[i][3],
+                "sys_final": mesas_hist[i][4],
+                "trans_id": mesa_hist[i][5]
+                }
+            )
+    return jsonify(mesas_list)
+
 
 @app.route('/votos/federales/', methods=["GET","POST"])
 def page_votosF():
@@ -381,32 +373,6 @@ def page_votosF():
 
     return jsonify(v_federales_list)
 
-@app.route('/votos/municipales/', methods=["GET","POST"])
-def page_votosM():
-    cur = db.connection.cursor()
-    show_command = "SELECT id_mesa, siglas, tipo_voto, fecha_hora_voto FROM V_MUNICIPAL"
-    cur.execute(show_command)
-    v_municipales = cur.fetchall()
-    v_municipales_list = []
-
-    for voto in v_municipales:
-        v_municipales_list.append(
-            {"id_mesa": voto[0],
-                "siglas": voto[1],
-                "tipo": voto[2],
-                "fecha_hora": voto[3]
-            }
-        )
-    return jsonify(v_municipales_list)
-    # create_command = ""
-    # if request.method == "POST":
-    #     elecciones_descripcion = request.form['elecciones']
-    #     colegio = request.form['colegio']
-    #     mesa = request.form['mesa']
-    #     tipo = request.form['tipo_voto']
-    #     siglas = request.form['partido']
-    #     cur.execute(create_command)
-    #     return redirect('/votosmunicipales/')
 
 @app.route('/votantes/', methods=["GET", "POST"])
 def page_votantes():
@@ -429,18 +395,7 @@ def page_votantes():
         )
 
     return jsonify(votantes_list)
-    # create_command = ""
-    # if request.method == "POST":
-    #     elecciones = request.form['elecciones']
-    #     colegio = request.form['colegio']
-    #     mesa = request.form['mesa']
-    #     nombre = request.form['nombre']
-    #     direccion = request.form['direccion']
-    #     fecha_nac = request.form['fecha']
-    #     fecha_registro = request.form['fecha_registro']
 
-    #     cur.execute(create_command)
-    #     return redirect('/votantes/')
 
 @app.route('/partidos/', methods=["GET", "POST"])
 def page_partidos():
@@ -465,16 +420,6 @@ def page_partidos():
 
     return jsonify(partidos_list)
 
-
-    # create_command = ""
-    # if request.method == "POST":
-    #     siglas = request.form['siglas']
-    #     nombre = request.form['nombre']
-    #     presidente = request.form['presidente']
-    #     fecha_inicio = request.form['fecha_inicio']
-    #     fecha_fin = request.form['fecha_fin']
-    #     cur.execute(create_command)
-    #     return redirect('/partidos/')
 
 @app.route('/mesas/', methods=["GET", "POST"])
 def page_mesas():
