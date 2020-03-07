@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { START_DATE } from "react-nice-dates";
+import React from "react";
 import { useForm } from 'react-hook-form'
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
@@ -10,16 +9,6 @@ import Mask from "../../util/GetMethod";
 //css
 
 const MesasForm = props => {
-
-	// for dates | aqui se pone con new Date()
-	const [startDate, setStartDate] = useState();
-	const [endDate, setEndDate] = useState();
-	const [focus, setFocus] = useState(START_DATE);
-	const [isValidDate, setIsValidDate] = useState(true);
-	
-	const handleFocusChange = newFocus => {
-		setFocus(newFocus || START_DATE);
-	}
 
 	// if on edit mode
 	const getDetailsFromChild = data => {
@@ -35,12 +24,10 @@ const MesasForm = props => {
 	// Forms Validation
 	const { register, handleSubmit, errors } = useForm()
 	const onSubmitHandler = data => {
-		setIsValidDate(startDate && endDate);
-		if (!(startDate && endDate)) return;
 		console.log(
 			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
 			);
-		console.log(data, startDate, endDate);
+		console.log(data);
 		props.handleClose();
 	}
 	
@@ -66,11 +53,6 @@ const MesasForm = props => {
 						</select>
 						{ errors.elecciones && errors.elecciones.type === 'required' && <Message negative>
 							<Message.Header>La mesa debe pertenecer a unas elecciones</Message.Header>
-						</Message> }
-						{ (!isValidDate && !(startDate && endDate)) 
-							&& <Message negative>
-							<Message.Header>Seleccione un periodo para la mesa</Message.Header>
-							<p> Para agregar una nueva mesa es necesario elegir un periodo de fechas </p>
 						</Message> }
 					</Form.Field>
 				</Form.Group>

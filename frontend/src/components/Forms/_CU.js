@@ -29,7 +29,7 @@ const CUModal = props => {
 			content={props.isEditing ? '¿Esta seguro que desea actualizar?' : props.message}
 		/>
 		<Modal.Content>
-			{<props.Form id={props.id} isEditing={props.isEditing} handleClose={() => handleClose()} />}
+			{<props.Form id={props.id} isEditing={props.isEditing} handleClose={() => handleClose()} refresh={props.refresh} />}
 		</Modal.Content>
 	</Modal>
 }
@@ -43,6 +43,8 @@ CUModal.propTypes = {
 	message: PropTypes.string,
 	/** Para saber si se debe hacer un request para obtener info */
 	isEditing: PropTypes.bool,
+	/** Para hacer un reload de la info */
+	refresh: PropTypes.func
 }
 
 export default CUModal;

@@ -12,21 +12,17 @@ const EleccionesDetalles = (props) => {
 	const [elecciones, setElecciones] = useState();
 
 	const getDetailsFromChild = data => {
-		console.log(typeof(data))
-		if(typeof(data) === 'object'){
-			const dataList = [];
-			dataList.push(data);
-			setElecciones(dataList);
-		}else{
-			setElecciones(data);
-		}
-		console.log('detailing:', data);
+		setElecciones(data);
+		// console.log('detailing:', data);
 	}
 
 	return <Mask callback={getDetailsFromChild} id={props.id}>
 		{ elecciones && elecciones.map( (eleccion, i) => {
 			return <div key={i}>
-			{ (elecciones.length > 1 && i === 1) ? <Header size='huge'> Historial </Header> : null }
+			{
+				(elecciones.length > 1 && i === 1) &&
+				<React.Fragment> <hr/> <Header size='huge'> Historial </Header> </React.Fragment> 
+			}
 				<p> <b> id: </b> {eleccion.id} </p>
 				<p> <b> descripción: </b> {eleccion.descripcion} </p>
 				<p> <b> fecha de incio: </b> {eleccion.fecha_inicio} </p>

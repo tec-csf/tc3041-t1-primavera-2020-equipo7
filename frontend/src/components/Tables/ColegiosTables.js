@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table }  from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 // own
 import RudButton from './_shared/RUD_Button';
 
@@ -9,7 +10,7 @@ import Edit from './../Forms/ColegiosForm';
 /**
  * Es la tabla que se usa para el index de de los colegios
 */
-const ColegiosTabla = () => <Table celled padded>
+const ColegiosTabla = props => <Table celled padded>
 	<Table.Header>
 		<Table.Row>
 			<Table.HeaderCell>Colegio</Table.HeaderCell>
@@ -20,20 +21,30 @@ const ColegiosTabla = () => <Table celled padded>
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
-		<Table.Row>
-			<Table.Cell>1</Table.Cell>
-			<Table.Cell>Junio 2018</Table.Cell>
-			<Table.Cell>16-06-2018</Table.Cell>
-			<Table.Cell>16-07-2018</Table.Cell>
-			<RudButton
-				id='1'
-				onDelete='Colegios 1'
-				title='Colegios 1'
-				onShow={Details}
-				onEdit={Edit}
-			/>
-		</Table.Row>
+			{ props.info.map( item => {
+				return <Table.Row key={item.id}>
+					<Table.Cell>{item.id}</Table.Cell>
+					<Table.Cell>{item.descripcion_eleccion}</Table.Cell>
+					<Table.Cell>{item.fecha_inicio.replace('00:00:00 GMT', '')}</Table.Cell>
+					<Table.Cell>{item.fecha_final.replace('00:00:00 GMT', '')}</Table.Cell>
+					<RudButton
+						id={item.id}
+						refresh={props.loadInfo}
+						onDelete={'Colegio ' + item.id}
+						title={'Colegio ' + item.id}
+						onShow={Details}
+						onEdit={Edit}
+					/>
+				</Table.Row>
+			} ) }
 	</Table.Body>
 </Table>;
+
+ColegiosTabla.propTypes = {
+	/** To show info */
+	info: PropTypes.array.isRequired,
+	/** To load info when updating or deleting */
+	loadInfo: PropTypes.func.isRequired
+}
 
 export default ColegiosTabla;

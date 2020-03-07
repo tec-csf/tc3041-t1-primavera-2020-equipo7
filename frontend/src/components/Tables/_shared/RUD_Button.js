@@ -21,7 +21,7 @@ const CrudButton = (props) => {
 			}
 			{
 				props.onEdit &&
-				<EditModal id={props.id} Form={props.onEdit} isEditing/>
+				<EditModal id={props.id} Form={props.onEdit} isEditing refresh={props.refresh}/>
 			}
 			{
 				props.onDelete &&

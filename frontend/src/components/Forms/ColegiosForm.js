@@ -109,7 +109,7 @@ const ColegiosForm = props => {
 
 ColegiosForm.propTypes = {
 	/** id for get details */
-	id: PropTypes.string,
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	/** Para saber si se debe hacer un request para obtener info */
 	isEditing: PropTypes.bool,
 	/** To close the modal */

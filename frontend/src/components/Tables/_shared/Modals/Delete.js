@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from '../../../../axios';
 import { withRouter } from 'react-router-dom';
-import { Modal, Button, Icon, Header, Loader, Dimmer } from 'semantic-ui-react';
+import { Modal, Button, Icon, Header, Loader, Dimmer, Message } from 'semantic-ui-react';
 //own
 //hoc
 //context
@@ -16,20 +16,22 @@ const DeleteModal = props => {
 	const handleClose = () => setModelState(false);
 
 	const [isDeleting, setDelitingState] = useState(false);
+	const [errorDeleting, setErrorDeleting] = useState(false);
+
 	const deleteRecord = () => {
 		setDelitingState(true);
 		//console.log('Borranding', (props.match.path + '/' + props.id));
 		axios.delete(props.match.path + '/' + props.id + '/')
 			.then(res => {
-				console.log(res);
-				setDelitingState(false);
+				console.log('Deleting success:', res);
 				props.refresh();
 				handleClose();
 			})
 			.catch(err => {
-				console.log(err);
-				console.log(err.response);
-			}) //.then(() => {handleClose(); props.refresh();});
+				console.log('Deleting failed:', err);
+				console.log('Error response:', err.response);
+				setErrorDeleting(err.response.data.error === 'Collection not found');
+			}).then(() => setDelitingState(false))
 	}
 
 	return <Modal trigger={
@@ -46,17 +48,28 @@ const DeleteModal = props => {
 		{
 			isDeleting ?
 			<Dimmer active> <Loader /> </Dimmer> : 
-			<p> Se borrará el registro: "{props.message}" y todas sus dependencias</p>
+				errorDeleting ?
+				<Message negative>
+				<Message.Header>Algo salio mal..</Message.Header>
+					<p>No se puede borrar este registro, es probable que tenga dependencias</p>
+				</Message> :
+				<p> Se borrará el registro: "{props.message}" y todas sus dependencias</p>
 		}
 	</Modal.Content>
-	<Modal.Actions>
+	{!errorDeleting ? <Modal.Actions>
 		<Button color='red' onClick={handleClose}>
 			<Icon name='remove' /> No
 		</Button>
 		<Button color='green' onClick={deleteRecord}>
 			<Icon name='checkmark' /> Si
 		</Button>
+	</Modal.Actions>:
+	<Modal.Actions>
+	<Button color='red' onClick={handleClose}>
+		<Icon name='remove' /> Cerrar
+	</Button>
 	</Modal.Actions>
+	}
 </Modal>;
 }
 

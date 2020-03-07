@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
 import axios from '../../axios';
+import { withRouter } from 'react-router-dom';
 //own
 import Mask from "../../util/GetMethod";
 //hoc
@@ -27,10 +28,10 @@ const EleccionesForm = props => {
 	// if on edit mode
 	const [eleccion, setEleccion] = useState();
 	const getDetailsFromChild = data => {
-		setEleccion(data);
-		console.log('editing :', data);
-		setStartDate(new Date(data.fecha_inicio.replace('00:00:00 GMT', '')));
-		setEndDate(new Date(data.fecha_final.replace('00:00:00 GMT', '')));
+		setEleccion(data[0]);
+		console.log('editing :', data[0]);
+		setStartDate(new Date(data[0].fecha_inicio.replace('00:00:00 GMT', '')));
+		setEndDate(new Date(data[0].fecha_final.replace('00:00:00 GMT', '')));
 	}
 
 	// Controls for show
@@ -45,19 +46,33 @@ const EleccionesForm = props => {
 		setIsValidDate(startDate && endDate);
 		if (!(startDate && endDate)) return;
 
-		const info_to_send = { ...data, "fecha_inicio" : startDate, "fecha_fin" : endDate }
+		let info_to_send;
 
-		//if(!props.isEditing){
-			axios.post('/elecciones/67/' , info_to_send)
+		if(props.isEditing){
+			info_to_send =  { ...data }
+			axios.post(props.match.path + '/' + props.id + '/', info_to_send)
 				.then(res => {
-					console.log(res);
+					console.log('Updating success:', res);
+					props.refresh();
 					props.handleClose();
 				})
 				.catch(err => {
-					console.log(err);
-					console.log(err.response);
+					console.log('Updating', err);
+					console.log('err response:', err.response);
 				})
-		//}
+		}else {
+			info_to_send =  { ...data, "fecha_inicio" : startDate, "fecha_fin" : endDate }
+			axios.post(props.match.path + '/', info_to_send)
+				.then(res => {
+					console.log('Creating success:', res);
+					props.refresh();
+					props.handleClose();
+				})
+				.catch(err => {
+					console.log('Creating', err);
+					console.log('err response:', err.response);
+				})
+		}
 	}
 	
 	return (
@@ -106,7 +121,7 @@ const EleccionesForm = props => {
 						<p>Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
 						<p>Fecha de fin: {endDate ? format(endDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
 						<i>nota: (i-e)</i>
-						<DateRangePickerCalendar
+						{ !props.isEditing && <DateRangePickerCalendar
 							startDate={startDate}
 							endDate={endDate}
 							focus={focus}
@@ -114,8 +129,8 @@ const EleccionesForm = props => {
 							onEndDateChange={setEndDate}
 							onFocusChange={handleFocusChange}
 							locale={es}
-							minimumDate={props.isEditing ? startDate : new Date()}
-						/>
+							minimumDate={new Date()}
+						/>}
 					</Form.Field>
 				</Form.Group>
 				<Button
@@ -142,4 +157,4 @@ EleccionesForm.propTypes = {
 	handleClose: PropTypes.func.isRequired
 };
 
-export default EleccionesForm;
+export default withRouter(EleccionesForm);

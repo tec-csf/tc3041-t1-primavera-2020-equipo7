@@ -16,12 +16,12 @@ CORS(app)
 #CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-app.config['DB2_DATABASE']='tarea1bd'
+app.config['DB2_DATABASE']='testdb'
 app.config['DB2_HOSTNAME']='localhost'
 app.config['DB2_PORT']='50000'
 app.config['DB2_PROTOCOL']='TCPIP'
 app.config['DB2_USER']='db2inst1'
-app.config['DB2_PASSWORD']='ihm'
+app.config['DB2_PASSWORD']='password'
 
 db = DB2(app)
 
@@ -197,7 +197,7 @@ def all_colegio():
         return res
 
     else:
-        select_colegios_command = "SELECT id_colegio, fecha_colegio_inicio, fecha_colegio_final, id_colegio_eleccion FROM colegio"
+        select_colegios_command = "SELECT id_colegio, fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion FROM colegio"
         cur.execute(select_colegios_command)
         colegios = cur.fetchall()
         colegios_list = []
@@ -212,6 +212,7 @@ def all_colegio():
                 {"id": colegio[0],
                     "fecha_inicio": colegio[1],
                     "fecha_final": colegio[2],
+                    "descripcion": colegio[3],
                     "descripcion_eleccion": eleccion[0]
                     # "id_eleccion": id_colegio_eleccion,
                     #                [primera tupla] [primer elemento]
@@ -461,20 +462,19 @@ def one_mesa(id_mesa):
 def all_partido():
     cur = db.connection.cursor()
     if request.method == 'POST':
-        dict_new_colegio = request.get_json()
+        dict_new_partido = request.get_json()
 
-        siglas = dict_new_colegio['siglas']
-        nombre = dict_new_colegio['nombre']
-        presidente = dict_new_colegio['presidente']
-        fecha_partido_inicio = dict_new_colegio['fecha_inicio']
-        fecha_partido_final = dict_new_colegio['fecha_final']
+        siglas = dict_new_partido['siglas']
+        nombre = dict_new_partido['nombre']
+        presidente = dict_new_partido['presidente']
+        fecha_inicio = dict_new_partido['fecha_inicio']
+        fecha_final = dict_new_partido['fecha_final']
 
-        insert_command = "INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES  ('{}', '{}', '{}', '{}', '{}');".format(siglas,
+        insert_command = "INSERT INTO PARTIDO (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES  ('{}', '{}', '{}', '{}', '{}');".format(siglas,
                                                                                                                                                                     nombre,
                                                                                                                                                                     presidente,
                                                                                                                                                                     fecha_inicio,
                                                                                                                                                                     fecha_final)
-
         try:
             cur.execute(insert_command)
             res = make_response(jsonify({"message": "Collection created"}), 201)
@@ -484,7 +484,7 @@ def all_partido():
         return res
 
     else:
-        show_command = "select siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final from partido"
+        show_command = "SELECT siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final FROM PARTIDO"
         cur.execute(show_command)
         partidos = cur.fetchall()
 
@@ -503,18 +503,18 @@ def all_partido():
         return jsonify(partidos_list)
 
 @app.route('/partidos/<siglas>/', methods=['GET', 'POST', 'DELETE'])
-def one_mesa(siglas):
+def one_partido(siglas):
     cur = db.connection.cursor()
     if request.method == 'POST':
         # Agarras lo que te pasan del front
-        dict_new_eleccion = request.get_json()
-        new_siglas = dict_new_colegio['siglas']
-        nombre = dict_new_colegio['nombre']
-        presidente = dict_new_colegio['presidente']
+        dict_new_partido = request.get_json()
+        new_siglas = dict_new_partido['siglas']
+        nombre = dict_new_partido['nombre_partido']
+        presidente = dict_new_partido['presi']
 
         # Obtienes las nuevas (no a la fuerza deben de ser nuevas, pueden ser las mismas) fechas
-        fecha_mesa_inicio = colegio[0]
-        fecha_mesa_final = colegio[1]
+        fecha_inicio = dict_new_partido['Date']
+        #fecha_final = ???
 
         update_command = "UPDATE partido SET siglas='{}', nombre='{}', presidente={} WHERE siglas='{}'".format(new_siglas,
                                                                                                             nombre,
@@ -543,8 +543,8 @@ def one_mesa(siglas):
     else:
         partidos_list = []
 
-        show_command = "select siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final, sys_partido_inicio, sys_partido_final, trans_id_partido from partido where siglas='{}'".format(siglas)
-        show_command_hist = "select siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final, sys_partido_inicio, sys_partido_final, trans_id_partido from hist_partido where siglas='{}'".format(siglas)
+        show_command = "SELECT siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final, sys_partido_inicio, sys_partido_final, trans_id_partido from partido where siglas='{}'".format(siglas)
+        show_command_hist = "SELECT siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final, sys_partido_inicio, sys_partido_final, trans_id_partido from hist_partido where siglas='{}'".format(siglas)
 
         cur.execute(show_command)
         partidos = cur.fetchall()
@@ -580,6 +580,8 @@ def one_mesa(siglas):
 
         return jsonify(partidos_list)
 
+########################### VOTOS FEDERALES ############################
+
 # @app.route('/votos/federales/', methods=["GET","POST"])
 # def page_votosF():
 #     cur = db.connection.cursor()
@@ -598,103 +600,9 @@ def one_mesa(siglas):
 #         )
 #
 #     return jsonify(v_federales_list)
-#
-#
-# @app.route('/votantes/', methods=["GET", "POST"])
-# def page_votantes():
-#     cur = db.connection.cursor()
-#     show_command = "SELECT ife_pasaporte, nombre, id_mesa, tipo, fecha_votante_inicio, fecha_votante_final, id_superior FROM VOTANTE"
-#     cur.execute(show_command)
-#     votantes = cur.fetchall()
-#     votantes_list = []
-#
-#     for votante in votantes:
-#         votantes_list.append(
-#             {"id": votante[0],
-#                 "nombre": votante[1],
-#                 "id_mesa": votante[2],
-#                 "tipo": votante[3],
-#                 "fecha_inicio": votante[4],
-#                 "fecha_final": votante[5],
-#                 "id_sup": votante[6]
-#             }
-#         )
-#
-#     return jsonify(votantes_list)
-#
-#
-# @app.route('/partidos/', methods=["GET", "POST"])
-# def page_partidos():
-#     cur = db.connection.cursor()
-#     show_command = "SELECT  FROM PARTIDO"
-#
-#     cur.execute(show_command)
-#     partidos = cur.fetchall()
-#     partidos_list = []
-#
-#     for partido in partidos:
-#         partidos_list.append(
-#             {"siglas": partido[0],
-#                 "nombre": partido[1],
-#                 "id_mesa": partido[2],
-#                 "tipo": partido[3],
-#                 "fecha_inicio": partido[4],
-#                 "fecha_final": partido[5],
-#                 "id_sup": partido[6]
-#             }
-#         )
-#
-#     return jsonify(partidos_list)
-#
-#
-# @app.route('/mesas/', methods=["GET", "POST"])
-# def page_mesas():
-#     cur = db.connection.cursor()
-#     show_command = ""
-#     create_command = ""
-#     if request.method == "POST":
-#         id_mesa = request.form['mesa']
-#         desc_elecc = request.form['elecciones']
-#         fecha_inicio = request.form['fecha_inicio']
-#         fecha_fin = request.form['fecha_fin']
-#         cur.execute(create_command)
-#         return redirect('/mesas/')
-#
-# @app.route('/')
-# def dashboard():
-#     cur = db.connection.cursor()
-#     show_command = "SELECT id_eleccion, descripcion, tipo, fecha_eleccion_inicio, fecha_eleccion_final FROM ELECCION"
-#     cur.execute(show_command)
-#     elecciones = cur.fetchall()
-#     elecciones_list = []
-#
-#     for eleccion in elecciones:
-#         elecciones_list.append(
-#             {"id": eleccion[0],
-#                 "descripcion": eleccion[1],
-#                 "tipo": eleccion[2],
-#                 "fecha_inicio": eleccion[3],
-#                 "fecha_final": eleccion[4]
-#             }
-#         )
-#
-#     return jsonify(elecciones_list)
 
 
 ########################################### MAIN ################################
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
-    # create_command = ""
-    # if request.method == "POST":
-    #     elecciones = request.form['elecciones']
-    #     colegio = request.form['colegio']
-    #     mesa = request.form['mesa']
-    #     nombre = request.form['nombre']
-    #     direccion = request.form['direccion']
-    #     fecha_nac = request.form['fecha']
-    #     fecha_registro = request.form['fecha_registro']
-
-    #     cur.execute(create_command)
-    #     return redirect('/votantes/')
+    app.run(host='0.0.0.0', port=5001, debug=True)

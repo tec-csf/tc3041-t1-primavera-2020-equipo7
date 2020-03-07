@@ -78,6 +78,13 @@ El framework utilizado permite el desarrollo de aplicaciones, y de la conexión 
 
 En nuestro caso, utilizamos el DBMS de db2, junto con una imagen en Docker.
 
+```sh
+pip3 install Flask
+pip3 install flask_db2
+pip3 install flask-cors
+pip3 install ibm_db
+```
+
 ```py
 from flask import Flask, jsonify, redirect
 from flask_db2 import DB2
