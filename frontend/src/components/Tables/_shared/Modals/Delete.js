@@ -53,7 +53,7 @@ const DeleteModal = props => {
 				<Message.Header>Algo salio mal..</Message.Header>
 					<p>No se puede borrar este registro, es probable que tenga dependencias</p>
 				</Message> :
-				<p> Se borrará el registro: "{props.message}" y todas sus dependencias</p>
+				<p> Se borrará el registro: "{props.message}"</p>
 		}
 	</Modal.Content>
 	{!errorDeleting ? <Modal.Actions>

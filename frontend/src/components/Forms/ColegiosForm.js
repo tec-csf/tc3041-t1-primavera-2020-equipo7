@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { es } from "date-fns/locale";
-import { format } from 'date-fns';
-import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
+import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form'
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
+import axios from '../../axios';
+import { Loader, Dimmer } from 'semantic-ui-react';
 //own
 import Mask from "../../util/GetMethod";
 //hoc
@@ -13,21 +12,38 @@ import Mask from "../../util/GetMethod";
 
 const ColegiosForm = props => {
 
-	// for dates | aqui se pone con new Date()
-	const [startDate, setStartDate] = useState();
-	const [endDate, setEndDate] = useState();
-	const [focus, setFocus] = useState(START_DATE);
-	const [isValidDate, setIsValidDate] = useState(true);
-	
-	const handleFocusChange = newFocus => {
-		setFocus(newFocus || START_DATE);
-	}
-
 	// if on edit mode
-	const getDetailsFromChild = data => {
-		console.log("load to edit", data);
-	};
+	const [colegio, setColegio] = useState();
+	const [elecciones, setElecciones] = useState();
 
+	useEffect(() => {
+		console.log('mio')
+		if(!props.isEditing){
+			axios.get('/elecciones/')
+			.then(res => {
+				setElecciones([...res.data])
+				console.log('no editing: ', res.data);
+			})
+			.catch(err => {
+				console.log('err getting elecciones in colegio', err);
+			});
+		}
+	}, [props.isEditing])
+
+	const getDetailsFromChild = data => {
+		axios.get('/elecciones/')
+		.then(res => {
+			setElecciones([...res.data])
+			//console.log('done', res.data);
+		})
+		.catch(err => {
+			console.log('err getting elecciones in colegio', err);
+		});
+
+		setColegio(data[0]);
+		console.log('editing :', data[0]);
+	};
+	
 	// Controls for show
 	const ParentComponent = props.isEditing ? Mask : React.Fragment;
 	const propsForComponent = props.isEditing
@@ -37,59 +53,55 @@ const ColegiosForm = props => {
 	// Forms Validation
 	const { register, handleSubmit, errors } = useForm()
 	const onSubmitHandler = data => {
-		setIsValidDate(startDate && endDate);
-		if (!(startDate && endDate)) return;
-		console.log(
-			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
-			);
-		console.log(data, startDate, endDate);
-		props.handleClose();
+
+		axios.post('colegios/' + (props.isEditing ? props.id + '/' : ''), data)
+			.then(res => {
+				console.log('Updating success:', res);
+				props.refresh();
+				props.handleClose();
+			})
+			.catch(err => {
+				console.log('Updating', err);
+				console.log('err response:', err.response);
+			})
 	}
 	
 	return (
 		<ParentComponent {...propsForComponent}>
+			{( (!props.isEditing) || (colegio && colegio.id && elecciones && elecciones[0]) ) ?
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
-				<Form.Group widths="4">
-					<Form.Field required>
-						<label> Identificador </label>
-						<input type='text' name='id_colegio' ref={register({ required: true })}/>
-						{ errors.id_colegio && errors.id_colegio.type === 'required' && <Message negative>
-							<Message.Header>Es necesario un identificador</Message.Header>
+				<Form.Group widths='equal'>
+					<Form.Field required >
+						<label> Dirección </label>
+						<input
+							type='text'
+							name='direccion'
+							ref={register({ required: true })}
+							defaultValue={ colegio ? colegio.direccion : null }
+						/>
+						{ errors.direccion && errors.direccion.type === 'required' && <Message negative>
+							<Message.Header>Es necesario una dirección </Message.Header>
 						</Message> }
 					</Form.Field>
 				</Form.Group>
-				<Form.Group widths="equal">
-					<Form.Field required>
+				<Form.Group >
+					<Form.Field required width='5'>
 						<label> Elecciones </label>
-						<select name='elecciones' ref={register({ required: true })}>
-							<option value=''>--seleccione--</option>
-							<option value='1'>junio 15</option>
-							<option value='2'>marzo 16</option>
-						</select>
-						{ errors.elecciones && errors.elecciones.type === 'required' && <Message negative>
+							<select
+							name='id_eleccion'
+							ref={register({ required: true })}
+							defaultValue={ (props.isEditing && colegio) && colegio.id_eleccion ? colegio.id_eleccion : null }
+							>
+								<option value=''>--seleccione--</option>
+								{
+									elecciones && elecciones.map(item => {
+										return <option value={item.id} key={item.id}> {item.descripcion} </option>
+									})
+								}
+							</select>
+						{ errors.id_eleccion && errors.id_eleccion.type === 'required' && <Message negative>
 							<Message.Header>El colegio debe pertenecer a unas elecciones</Message.Header>
 						</Message> }
-						{ (!isValidDate && !(startDate && endDate)) 
-							&& <Message negative>
-							<Message.Header>Seleccione un periodo para la elección</Message.Header>
-							<p> Para agregar una nueva elección es necesario elegir un periodo de fechas </p>
-						</Message> }
-					</Form.Field>
-					<Form.Field required>
-						<label>Periodo </label>
-						<p>Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
-						<p>Fecha de fin: {endDate ? format(endDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>
-						<i>nota: (i-e)</i>
-						<DateRangePickerCalendar
-							startDate={startDate}
-							endDate={endDate}
-							focus={focus}
-							onStartDateChange={setStartDate}
-							onEndDateChange={setEndDate}
-							onFocusChange={handleFocusChange}
-							locale={es}
-							minimumDate={new Date()}
-						/>
 					</Form.Field>
 				</Form.Group>
 				<Button
@@ -102,7 +114,7 @@ const ColegiosForm = props => {
 				/>
 				<br />
 				<br />
-			</Form>
+			</Form> : <Dimmer active> <Loader /> </Dimmer> }
 		</ParentComponent>
 	);
 };

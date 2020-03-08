@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
 import axios from '../../axios';
-import { withRouter } from 'react-router-dom';
 //own
 import Mask from "../../util/GetMethod";
 //hoc
@@ -50,7 +49,7 @@ const EleccionesForm = props => {
 
 		if(props.isEditing){
 			info_to_send =  { ...data }
-			axios.post(props.match.path + '/' + props.id + '/', info_to_send)
+			axios.post('elecciones/' + props.id + '/', info_to_send)
 				.then(res => {
 					console.log('Updating success:', res);
 					props.refresh();
@@ -62,7 +61,7 @@ const EleccionesForm = props => {
 				})
 		}else {
 			info_to_send =  { ...data, "fecha_inicio" : startDate, "fecha_fin" : endDate }
-			axios.post(props.match.path + '/', info_to_send)
+			axios.post('elecciones/', info_to_send)
 				.then(res => {
 					console.log('Creating success:', res);
 					props.refresh();
@@ -157,4 +156,4 @@ EleccionesForm.propTypes = {
 	handleClose: PropTypes.func.isRequired
 };
 
-export default withRouter(EleccionesForm);
+export default EleccionesForm;

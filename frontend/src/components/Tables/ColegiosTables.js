@@ -14,6 +14,7 @@ const ColegiosTabla = props => <Table celled padded>
 	<Table.Header>
 		<Table.Row>
 			<Table.HeaderCell>Colegio</Table.HeaderCell>
+			<Table.HeaderCell>Dirección</Table.HeaderCell>
 			<Table.HeaderCell>Eleccion</Table.HeaderCell>
 			<Table.HeaderCell>Fecha inicio</Table.HeaderCell>
 			<Table.HeaderCell>Fecha fin</Table.HeaderCell>
@@ -24,6 +25,7 @@ const ColegiosTabla = props => <Table celled padded>
 			{ props.info.map( item => {
 				return <Table.Row key={item.id}>
 					<Table.Cell>{item.id}</Table.Cell>
+					<Table.Cell>{item.direccion}</Table.Cell>
 					<Table.Cell>{item.descripcion_eleccion}</Table.Cell>
 					<Table.Cell>{item.fecha_inicio.replace('00:00:00 GMT', '')}</Table.Cell>
 					<Table.Cell>{item.fecha_final.replace('00:00:00 GMT', '')}</Table.Cell>

@@ -21,12 +21,10 @@ class GetMethod extends React.Component {
 			this.setState({ isLoading: false });
 			this.props.callback(res.data);
 		})
-		.catch(err => console.log('get' + this.props.match.path, err))
+		.catch(err => {
+			console.log('get' + this.props.match.path, err)
+		})
 
-	}
-
-	dismiss() {
-		this.props.unmountMe();
 	}
 
 	render() {

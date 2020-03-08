@@ -1,6 +1,6 @@
 --Creacion de el contenedor con la base de datos--
 
-sudo docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=password -e DBNAME=testdb ibmcom/db2 bash
+sudo docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=password -e DBNAME=testdb ibmcom/db2 bash -v <path>:/database ibmcom/db2
 
 -- ver cuando termine de crearse
 sudo docker logs -f mydb2

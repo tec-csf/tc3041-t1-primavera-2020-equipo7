@@ -72,7 +72,8 @@ def all_eleccion():
             res = make_response(jsonify({"message": "Collection created"}), 201)
         except:
             res = make_response(jsonify({"error": "Collection not found"}), 404)
-
+        
+        cur.close()
         return res
 
     else:
@@ -90,7 +91,7 @@ def all_eleccion():
                     "fecha_final": eleccion[4]
                 }
             )
-
+        cur.close()
         return jsonify(elecciones_list)
 
 @app.route('/elecciones/<int:id_eleccion>/', methods=['GET', 'POST', 'DELETE'])
@@ -112,6 +113,7 @@ def one_eleccion(id_eleccion):
         except:
             res = make_response(jsonify({"error": "Collection not found"}), 404)
 
+        cur.close()
         return res
 
     elif request.method == 'DELETE':
@@ -123,9 +125,10 @@ def one_eleccion(id_eleccion):
         except:
             res = make_response(jsonify({"error": "Collection not found"}), 404)
 
+        cur.close()
         return res
 
-    else:
+    else: # method == GET
         elecciones_list = []
         show_command = "SELECT id_eleccion, fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo, sys_eleccion_inicio, sys_eleccion_final, trans_id_eleccion FROM ELECCION WHERE id_eleccion={}".format(id_eleccion)
         show_command_hist = "SELECT id_eleccion, fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo, sys_eleccion_inicio, sys_eleccion_final, trans_id_eleccion FROM hist_eleccion WHERE id_eleccion={}".format(id_eleccion)
@@ -134,7 +137,7 @@ def one_eleccion(id_eleccion):
 
         for eleccion in elecciones:
             elecciones_list.append(
-                {"id": eleccion[0],
+                {"id_eleccion": eleccion[0],
                 "fecha_inicio": eleccion[1],
                 "fecha_final": eleccion[2],
                 "descripcion": eleccion[3],
@@ -150,7 +153,7 @@ def one_eleccion(id_eleccion):
 
         for i in range(len(elecciones_hist)-1,-1,-1):
             elecciones_list.append(
-                {"id": elecciones_hist[i][0],
+                {"id_eleccion": elecciones_hist[i][0],
                 "fecha_inicio": elecciones_hist[i][1],
                 "fecha_final": elecciones_hist[i][2],
                 "descripcion": elecciones_hist[i][3],
@@ -160,6 +163,8 @@ def one_eleccion(id_eleccion):
                 "trans_id": elecciones_hist[i][7]
                 }
             )
+
+    cur.close()
     return jsonify(elecciones_list)
 
 
@@ -194,31 +199,34 @@ def all_colegio():
         except:
             res = make_response(jsonify({"error": "Collection not found"}), 404)
 
+        cur.close()
         return res
 
     else:
-        select_colegios_command = "SELECT id_colegio, fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion FROM colegio"
+        select_colegios_command = "SELECT id_colegio, fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion FROM COLEGIO"
         cur.execute(select_colegios_command)
         colegios = cur.fetchall()
         colegios_list = []
 
         for colegio in colegios:
-            id_colegio_eleccion = colegio[3]
+            id_colegio_eleccion = colegio[4]
             get_eleccion_of_colegio_command = "SELECT descripcion FROM ELECCION WHERE id_eleccion={}".format(id_colegio_eleccion)
             cur.execute(get_eleccion_of_colegio_command)
             eleccion = cur.fetchall()[0]
 
             colegios_list.append(
-                {"id": colegio[0],
-                    "fecha_inicio": colegio[1],
-                    "fecha_final": colegio[2],
-                    "descripcion": colegio[3],
-                    "descripcion_eleccion": eleccion[0]
-                    # "id_eleccion": id_colegio_eleccion,
+                {
+                  "id": colegio[0],
+                  "fecha_inicio": colegio[1],
+                  "fecha_final": colegio[2],
+                  "direccion": colegio[3],
+                  "descripcion_eleccion": eleccion[0],
+                  #"id_eleccion": id_colegio_eleccion,
                     #                [primera tupla] [primer elemento]
                 }
             )
 
+        cur.close()
         return jsonify(colegios_list)
 
 @app.route('/colegios/<int:id_colegio>/', methods=['GET', 'POST', 'DELETE'])
@@ -251,6 +259,7 @@ def one_colegio(id_colegio):
         except:
             res = make_response(jsonify({"error": "Collection not found"}), 404)
 
+        cur.close()
         return res
 
     elif request.method == 'DELETE':
@@ -262,6 +271,7 @@ def one_colegio(id_colegio):
         except:
             res = make_response(jsonify({"error": "Collection not found"}), 404)
 
+        cur.close()
         return res
 
     else:
@@ -287,7 +297,7 @@ def one_colegio(id_colegio):
                     "sys_final": colegio[6],
                     "trans_id": colegio[7],
 
-                    # "id_eleccion": id_colegio_eleccion,
+                    "id_eleccion": id_colegio_eleccion,
                     "descripcion_eleccion": eleccion[0]
                 }
             )
@@ -314,6 +324,7 @@ def one_colegio(id_colegio):
                     "descripcion_eleccion": eleccion[0]
                 }
             )
+    
     return jsonify(colegios_list)
 
 
@@ -582,27 +593,53 @@ def one_partido(siglas):
 
 ########################### VOTOS FEDERALES ############################
 
-# @app.route('/votos/federales/', methods=["GET","POST"])
-# def page_votosF():
-#     cur = db.connection.cursor()
-#     show_command = "SELECT id_mesa, siglas, tipo_voto, fecha_hora_voto FROM V_FEDERAL"
-#     cur.execute(show_command)
-#     v_federales = cur.fetchall()
-#     v_federales_list = []
-#
-#     for voto in v_federales:
-#         v_federales_list.append(
-#             {"id_mesa": voto[0],
-#                 "siglas": voto[1],
-#                 "tipo": voto[2],
-#                 "fecha_hora": voto[3]
-#             }
-#         )
-#
-#     return jsonify(v_federales_list)
+@app.route('/votosfederales/', methods=["GET","POST"])
+def all_votosF():
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        dict_new_voto_f = request.get_json()
+        # eleccion = dict_new_voto_f['eleccion'] figure out these ones
+        mesa = dict_new_voto_f['mesa']
+        # colegio = dict_new_voto_f['colegio']
+        tipo = dict_new_voto_f['tipo']
+        siglas_partido = dict_new_voto_f['partido']
+
+        dates_mesas_query = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM MESA WHERE id_mesa='{}'".format(mesa)
+        cur.execute(dates_mesas_query)
+        mesas_dates = cur.fetchall()
+        mesas_dates_list = []
+        mesas_dates_list.append(mesas_dates[0], mesas_dates[1])
+
+        # do the same for partido
+        #   MISSING CODE
+
+        # insert_command = "INSERT INTO V_FEDERAL (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES  ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(mesa, mesas_dates_list[0], mesas_dates_list[1],siglas_partido, tipo)
+        try:
+            cur.execute(insert_command)
+            res = make_response(jsonify({"message": "Collection created"}), 201)
+        except:
+            res = make_response(jsonify({"error": "Collection not found"}), 404)
+
+        return res
+    else: #method == 'GET'
+        cur = db.connection.cursor()
+        show_command = "SELECT id_mesa, siglas, tipo_voto, fecha_hora_voto FROM V_FEDERAL"
+        cur.execute(show_command)
+        v_federales = cur.fetchall()
+        v_federales_list = []
+
+        for voto in v_federales:
+            v_federales_list.append(
+                {"id_mesa": voto[0],
+                    "siglas": voto[1],
+                    "tipo": voto[2],
+                    "fecha_hora": voto[3]
+                }
+            )
+        return jsonify(v_federales_list)
 
 
 ########################################### MAIN ################################
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

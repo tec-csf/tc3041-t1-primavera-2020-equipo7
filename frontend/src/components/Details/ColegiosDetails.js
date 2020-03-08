@@ -23,7 +23,8 @@ const ColegiosDetalles = (props) => {
 				<React.Fragment> <hr/> <Header size='huge'> Historial </Header> </React.Fragment> 
 			}
 				<p> <b> id: </b> {colegio.id} </p>
-				<p> <b> eleccion pertenenciente: </b> {colegio.descripcion_eleccion} </p>
+				<p> <b> elección pertenenciente: </b> {colegio.descripcion_eleccion} </p>
+				<p> <b> id de elección: </b> {colegio.id_eleccion} </p>
 				<p> <b> direccion: </b> {colegio.direccion} </p>
 				<p> <b> fecha de incio: </b> {colegio.fecha_inicio} </p>
 				<p> <b> fecha final: </b> {colegio.fecha_final} </p>

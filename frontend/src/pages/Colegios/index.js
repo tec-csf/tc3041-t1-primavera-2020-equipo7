@@ -23,7 +23,7 @@ class Colegios extends React.Component {
 		axios.get('/colegios/')
 		.then(res => {
 			this.setState({ loading: false, all_colegios: res.data });
-			console.log(res.data)
+			//console.log(res.data);
 		})
 		.catch(err => console.log('get /colegios', err))
 	}
