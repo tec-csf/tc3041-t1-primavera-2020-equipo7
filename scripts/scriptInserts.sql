@@ -67,9 +67,9 @@ INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_par
 INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PAN', 'Partido Accion Nacional', 'Alejandra Nissan', '1946-02-03', '2300-01-14'), ('PRI', 'Partido Revolucionario Institucional', 'Yann Le Lorier', '1930-01-24', '2067-03-22'), ('PRD', 'Partido de la Revolución Democratica', 'Roberto Gervacio', '1975-08-04', '2463-09-09'), ('MC', 'Movimiento Ciudadano', 'Isaac Harari', '1981-10-11', '2093-11-10'), ('PT', 'Partido del Trabajo', 'Alberto Anaya', '1990-12-08', '2073-12-26');
 -- Todos funcionan
 
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1946-02-03', '2300-01-14', 'PAN', 1);
+INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (1, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1);
+INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (26, '2022-06-01', '2022-06-11', '1981-10-11', '2093-11-10', 'MC', 1);
+INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (10, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 1);
 INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0);
 INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1);
 INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (18, '2022-06-01', '2022-06-11', '1930-01-24', '2067-03-22', 'PRI', 0);
@@ -158,3 +158,14 @@ INSERT INTO apod_lista (ife_pasaporte, fecha_nac, direccion, nombre, orden, fech
 -- One time command
 INSERT INTO apod_lista (ife_pasaporte, fecha_nac, direccion, nombre, orden,fecha_apod_lista_inicio, fecha_apod_lista_final, siglas) VALUES ('YLX0Y8SSAIJVX7AJLM', '1995-11-03', 'Andador Chihuahua 388 Edif. 807 , Depto. 165', 'Dana Wilson', '1946-02-03', '2300-01-14', 'PAN'),('BCHNRZ2O1H18MD0VPX', '1992-12-11', 'Pasaje Norte Contreras 662 Interior 596', 'Edward Joseph', '1946-02-03', '2300-01-14', 'PAN'),('SOO0CY9ABI5D2ZSTFD', '1964-06-08', 'Peatonal Sur Maldonado 219 Edif. 335 , Depto. 463', 'Cecile Teel', '1946-02-03', '2300-01-14', 'PAN'),('OQAA20BWKRRASUDS37', '1954-01-08', 'Ampliación Iraq 425 538', 'Otis Varian', '1930-01-24', '2067-03-22', 'PRI'),('1J18T65IIMI8KFIHJQ', '1924-07-09', 'Periférico Baja California Sur 312 440', 'Samantha Reid', '1930-01-24', '2067-03-22', 'PRI'),('3MDJ98LAB1CNZL7OEV', '1984-01-19', 'Diagonal Indonesia 234 170', 'Davis Torres', '1930-01-24', '2067-03-22', 'PRI'),('WK39AEJS6X8F3H4BUJ', '1996-08-26', 'Cerrada Yucatán 314 Interior 223', 'Ethel Brainard', '1975-08-04', '2463-09-09', 'PRD'),('CIJWKS5IRDQ6TOU7J6', '1955-01-16', 'Boulevard Norte Bravo 479 467', 'Dong Turner', '1975-08-04', '2463-09-09', 'PRD'),('05L3S0DAEQW9SW6ZUI', '1931-11-02', 'Privada Baja California 885 368', 'Sandra Arredondo', '1975-08-04', '2463-09-09', 'PRD'),('N3DT9L6H0OL2WBKASX', '1943-11-28', 'Periférico Longoria 084 Interior 484', 'Ed Whitley', '1981-10-11', '2093-11-10', 'MC'),('HPM1URTYOXD4Q5O84C', '1954-10-02', 'Continuación Camerún 146 Edif. 969 , Depto. 189', 'Norma Moriarty', '1981-10-11', '2093-11-10', 'MC'),('NNO56ARJ4VXDYO5UDF', '1921-12-06', 'Periférico Norte Benavídez 140 Edif. 795 , Depto. 041', 'Marc Watts', '1981-10-11', '2093-11-10', 'MC'),('PQX8YIJ2NY2QH0U896', '1986-10-15', 'Privada Kirguistán 115 662', 'Keri Dobbins', '1990-12-08', '2073-12-26', 'PT'),('OCPIXKADOS6W6ND1XZ', '1937-06-24', 'Avenida Zambia 904 Interior 065', 'Joshua Thomas', '1990-12-08', '2073-12-26', 'PT'),('JHMZX33TYZWH3GFC4L', '1959-08-25', 'Diagonal Norte Bétancourt 135 Edif. 106 , Depto. 409', 'Donna Tabin', '1990-12-08', '2073-12-26', 'PT')
 -- Todos funcionan
+
+
+
+select id_v_federal, tipo_voto, fecha_hora_voto, letra, id_colegio, descripcion, v_federal.siglas from v_federal inner join mesa on v_federal.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion inner join partido on v_federal.siglas=partido.siglas
+
+
+
+
+show_command = "select id_mesa, fecha_mesa_inicio, fecha_mesa_final, letra, id_colegio, descripcion from mesa 
+    inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio 
+    inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion"

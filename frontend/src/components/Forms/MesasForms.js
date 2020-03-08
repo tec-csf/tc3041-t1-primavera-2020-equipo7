@@ -83,7 +83,7 @@ const MesasForm = props => {
 			props.handleClose();
 		})
 		.catch(err => {
-			console.log('Updating', err);
+			console.log(props.isEditing ? 'Updating' : 'Creating' , err);
 			console.log('err response:', err.response);
 		})
 	}

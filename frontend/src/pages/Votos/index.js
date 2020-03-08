@@ -25,7 +25,7 @@ class Votos extends React.Component {
 		//console.log('/votos' + this.props.type.toLowerCase() + '/');
 		axios.get('/votos' + this.props.type.toLowerCase() + '/')
 		.then(res => {
-			console.log(res.data)
+			//console.log(res.data)
 			this.setState({ loading: false, all_votos: res.data });
 		})
 		.catch(err => {

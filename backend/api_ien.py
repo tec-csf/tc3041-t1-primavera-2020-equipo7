@@ -593,29 +593,98 @@ def one_partido(siglas):
 
         return jsonify(partidos_list)
 
-########################### VOTOS FEDERALES ############################
 
+################################################################
+#                     APODERADOS LISTA
+################################################################
+# def all_votosF():
+#     cur = db.connection.cursor()
+#     if request.method == 'POST':
+#         dict_new_voto_f = request.get_json()
+
+#         id_mesa = dict_new_voto_f['id_mesa']
+#         siglas = dict_new_voto_f['siglas']
+#         tipo_voto = dict_new_voto_f['tipo_voto']
+
+#         get_mesa = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM MESA WHERE id_mesa={}".format(id_mesa)
+#         cur.execute(get_mesa)
+#         mesa = cur.fetchall()[0]
+#         fecha_mesa_inicio = mesa[0]
+#         fecha_mesa_final = mesa[1]
+        
+#         get_partido = "SELECT fecha_partido_inicio, fecha_partido_final FROM PARTIDO WHERE siglas='{}'".format(siglas)
+#         cur.execute(get_partido)
+#         partido = cur.fetchall()[0]
+#         fecha_mesa_inicio = partido[0]
+#         fecha_mesa_final = partido[1]
+
+#         insert_command = "INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES ({}, '{}', '{}', '{}', '{}', '{}', {});".format(id_mesa,
+#                                                                                                                                                                                                                 fecha_mesa_inicio,
+#                                                                                                                                                                                                                 fecha_mesa_final,
+#                                                                                                                                                                                                                 fecha_partido_inicio,
+#                                                                                                                                                                                                                 fecha_partido_final,
+#                                                                                                                                                                                                                 siglas,
+#                                                                                                                                                                                                                 tipo_voto)
+#         try:
+#             cur.execute(insert_command)
+#             res = make_response(jsonify({"message": "Collection created"}), 201)
+#         except:
+#             res = make_response(jsonify({"error": "Collection not found"}), 404)
+
+#         return res
+#     else:
+#         cur = db.connection.cursor()
+#         show_command = "select id_v_federal, tipo_voto, fecha_hora_voto, letra, id_colegio, descripcion, v_federal.siglas from v_federal inner join mesa on v_federal.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion inner join partido on v_federal.siglas=partido.siglas"
+#         cur.execute(show_command)
+#         v_federales = cur.fetchall()
+#         v_federales_list = []
+
+#         for voto in v_federales:
+#             v_federales_list.append(
+#                 {"id": voto[0],
+#                     "tipo_voto": voto[1],
+#                     "fecha_hora_voto": voto[2],
+#                     "letra": voto[3],
+#                     "id_colegio": voto[4],
+#                     "descripcion": voto[5],
+#                     "siglas": voto[6],
+#                 }
+#             )
+#         return jsonify(v_federales_list)
+
+
+################################################################
+#                     VOTOS FEDERALES
+################################################################
 @app.route('/votosfederales/', methods=["GET","POST"])
 def all_votosF():
     cur = db.connection.cursor()
     if request.method == 'POST':
         dict_new_voto_f = request.get_json()
-        # eleccion = dict_new_voto_f['eleccion'] figure out these ones
-        mesa = dict_new_voto_f['mesa']
-        # colegio = dict_new_voto_f['colegio']
-        tipo = dict_new_voto_f['tipo']
-        siglas_partido = dict_new_voto_f['partido']
 
-        dates_mesas_query = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM MESA WHERE id_mesa='{}'".format(mesa)
-        cur.execute(dates_mesas_query)
-        mesas_dates = cur.fetchall()
-        mesas_dates_list = []
-        mesas_dates_list.append(mesas_dates[0], mesas_dates[1])
+        id_mesa = dict_new_voto_f['id_mesa']
+        siglas = dict_new_voto_f['siglas']
+        tipo_voto = dict_new_voto_f['tipo_voto']
 
-        # do the same for partido
-        #   MISSING CODE
+        get_mesa = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM MESA WHERE id_mesa={}".format(id_mesa)
+        cur.execute(get_mesa)
+        mesa = cur.fetchall()[0]
+        fecha_mesa_inicio = mesa[0]
+        fecha_mesa_final = mesa[1]
+        
+        get_partido = "SELECT fecha_partido_inicio, fecha_partido_final FROM PARTIDO WHERE siglas='{}'".format(siglas)
+        cur.execute(get_partido)
+        partido = cur.fetchall()[0]
+        fecha_partido_inicio = partido[0]
+        fecha_partido_final = partido[1]
 
-        # insert_command = "INSERT INTO V_FEDERAL (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES  ('{}', '{}', '{}', '{}', '{}', '{}', '{}');".format(mesa, mesas_dates_list[0], mesas_dates_list[1],siglas_partido, tipo)
+        insert_command = "INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES ({}, '{}', '{}', '{}', '{}', '{}', {});".format(id_mesa,
+                                                                                                                                                                                                                fecha_mesa_inicio,
+                                                                                                                                                                                                                fecha_mesa_final,
+                                                                                                                                                                                                                fecha_partido_inicio,
+                                                                                                                                                                                                                fecha_partido_final,
+                                                                                                                                                                                                                siglas,
+                                                                                                                                                                                                                tipo_voto)
         try:
             cur.execute(insert_command)
             res = make_response(jsonify({"message": "Collection created"}), 201)
@@ -623,25 +692,86 @@ def all_votosF():
             res = make_response(jsonify({"error": "Collection not found"}), 404)
 
         return res
-    else: #method == 'GET'
+    else:
         cur = db.connection.cursor()
-        show_command = "SELECT id_mesa, siglas, tipo_voto, fecha_hora_voto FROM V_FEDERAL"
+        show_command = "select id_v_federal, tipo_voto, fecha_hora_voto, letra, id_colegio, descripcion, v_federal.siglas from v_federal inner join mesa on v_federal.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion inner join partido on v_federal.siglas=partido.siglas"
         cur.execute(show_command)
         v_federales = cur.fetchall()
         v_federales_list = []
 
         for voto in v_federales:
             v_federales_list.append(
-                {"id_mesa": voto[0],
-                    "siglas": voto[1],
-                    "tipo": voto[2],
-                    "fecha_hora": voto[3]
+                {"id": voto[0],
+                    "tipo_voto": voto[1],
+                    "fecha_hora_voto": voto[2],
+                    "letra": voto[3],
+                    "id_colegio": voto[4],
+                    "descripcion": voto[5],
+                    "siglas": voto[6],
                 }
             )
         return jsonify(v_federales_list)
 
 
-########################################### MAIN ################################
+################################################################
+#                     VOTOS FEDERALES
+################################################################
+@app.route('/votosmunicipales/', methods=["GET","POST"])
+def all_votosM():
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        dict_new_voto_m = request.get_json()
 
+        id_mesa = dict_new_voto_m['id_mesa']
+        siglas = dict_new_voto_m['siglas']
+        tipo_voto = dict_new_voto_m['tipo_voto']
+
+        get_mesa = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM MESA WHERE id_mesa={}".format(id_mesa)
+        cur.execute(get_mesa)
+        mesa = cur.fetchall()[0]
+        fecha_mesa_inicio = mesa[0]
+        fecha_mesa_final = mesa[1]
+        
+        get_partido = "SELECT fecha_partido_inicio, fecha_partido_final FROM PARTIDO WHERE siglas='{}'".format(siglas)
+        cur.execute(get_partido)
+        partido = cur.fetchall()[0]
+        fecha_partido_inicio = partido[0]
+        fecha_partido_final = partido[1]
+
+        insert_command = "INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES ({}, '{}', '{}', '{}', '{}', '{}', {});".format(id_mesa,
+                                                                                                                                                                                                                fecha_mesa_inicio,
+                                                                                                                                                                                                                fecha_mesa_final,
+                                                                                                                                                                                                                fecha_partido_inicio,
+                                                                                                                                                                                                                fecha_partido_final,
+                                                                                                                                                                                                                siglas,
+                                                                                                                                                                                                                tipo_voto)
+        try:
+            cur.execute(insert_command)
+            res = make_response(jsonify({"message": "Collection created"}), 201)
+        except:
+            res = make_response(jsonify({"error": "Collection not found"}), 404)
+
+        return res
+    else:
+        cur = db.connection.cursor()
+        show_command = "select id_v_municipal, tipo_voto, fecha_hora_voto, letra, id_colegio, descripcion, v_municipal.siglas from v_municipal inner join mesa on v_municipal.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion inner join partido on v_municipal.siglas=partido.siglas"
+        cur.execute(show_command)
+        v_federales = cur.fetchall()
+        v_federales_list = []
+
+        for voto in v_federales:
+            v_federales_list.append(
+                {"id": voto[0],
+                    "tipo_voto": voto[1],
+                    "fecha_hora_voto": voto[2],
+                    "letra": voto[3],
+                    "id_colegio": voto[4],
+                    "descripcion": voto[5],
+                    "siglas": voto[6],
+                }
+            )
+        return jsonify(v_federales_list)
+
+########################################### MAIN ################################
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, debug=True)
