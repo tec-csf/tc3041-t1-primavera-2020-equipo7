@@ -16,12 +16,12 @@ const EleccionesTabla = props => <Table celled padded>
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
-		{ props.info.map( item => {
-					return <Table.Row key={item.id} textAlign='center'>
-						<Table.Cell>{item.mesa}</Table.Cell>
-						<Table.Cell>{item.partido}</Table.Cell>
-						<Table.Cell>{item.tipo}</Table.Cell>
-						<Table.Cell>{item.hora}</Table.Cell>
+		{ props.info.map( (item, i) => {
+					return <Table.Row key={i} textAlign='center'>
+						<Table.Cell>{item.id_mesa}</Table.Cell>
+						<Table.Cell>{item.tipo == 0 ? '~NA~' : item.siglas}</Table.Cell>
+						<Table.Cell>{item.tipo == 0 ? 'nulo' : 'ok'}</Table.Cell>
+						<Table.Cell>{item.fecha_hora}</Table.Cell>
 					</Table.Row>
 				} ) }
 	</Table.Body>

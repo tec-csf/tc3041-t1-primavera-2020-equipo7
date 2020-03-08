@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header, Container } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import axios from '../../axios';
 //own
 import Table from '../../components/Tables/VotosTable';
 import New from '../../components/Forms/_CU';
@@ -21,9 +21,11 @@ class Votos extends React.Component {
 	}
 
 	loadData = () => {
-		//console.log('votos' + this.props.type.toLowerCase());
-		axios.get('votos' + this.props.type.toLowerCase())
+		this.setState({loading : true});
+		//console.log('/votos' + this.props.type.toLowerCase() + '/');
+		axios.get('/votos' + this.props.type.toLowerCase() + '/')
 		.then(res => {
+			console.log(res.data)
 			this.setState({ loading: false, all_votos: res.data });
 		})
 		.catch(err => {
@@ -47,7 +49,7 @@ class Votos extends React.Component {
 			<Container>
 				<Header size="huge"> Votos {this.props.type} </Header>
 				<Copyright />
-				<New message='Agregar Nuevo Voto' Form={VotosForms} />
+				<New message='Agregar Nuevo Voto' Form={VotosForms} refresh={this.loadData}/>
 				<Table info={this.state.all_votos} loadInfo={this.loadData}/>
 				{ this.state.loading && <Loader/> }
 			</Container>

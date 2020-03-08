@@ -10,6 +10,7 @@ from flask import Flask, jsonify, redirect, request, url_for, make_response #req
 from flask_db2 import DB2
 import locale, time
 from flask_cors import CORS #pip3 install flask-cors
+from datetime import timedelta, datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -154,7 +155,7 @@ def one_eleccion(id_eleccion):
 
         for i in range(len(elecciones_hist)-1,-1,-1):
             elecciones_list.append(
-                {"id_eleccion": elecciones_hist[i][0],
+                {"id": elecciones_hist[i][0],
                 "fecha_inicio": elecciones_hist[i][1],
                 "fecha_final": elecciones_hist[i][2],
                 "descripcion": elecciones_hist[i][3],
@@ -428,7 +429,7 @@ def one_mesa(id_mesa):
     else:
         mesas_list = []
 
-        show_command =      "select id_mesa, letra, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa, id_colegio, descripcion, id_eleccion from mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion where mesa.id_mesa={}".format(id_mesa)
+        show_command = "select id_mesa, letra, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa, id_colegio, descripcion, id_eleccion from mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion where mesa.id_mesa={}".format(id_mesa)
         show_command_hist = "select id_mesa, letra, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa, id_colegio, descripcion, id_eleccion from hist_mesa inner join colegio on hist_mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion where hist_mesa.id_mesa={}".format(id_mesa)
         cur.execute(show_command)
         mesas = cur.fetchall()
@@ -481,8 +482,10 @@ def all_partido():
         siglas = dict_new_partido['siglas']
         nombre = dict_new_partido['nombre']
         presidente = dict_new_partido['presidente']
-        fecha_inicio = dict_new_partido['fecha_inicio']
-        fecha_final = dict_new_partido['fecha_final']
+        fecha_inicio = dict_new_partido['fecha_inicio'][:10]
+        # Se calcula la fecha final = fecha inicio + 6 anios
+        fecha_final = datetime.strptime(fecha_inicio, '%Y-%m-%d') + timedelta(weeks=52*6)
+        fecha_final = fecha_final.strftime('%Y-%m-%d')[:10]
 
         insert_command = "INSERT INTO PARTIDO (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES  ('{}', '{}', '{}', '{}', '{}');".format(siglas,
                                                                                                                                                                     nombre,
@@ -523,14 +526,10 @@ def one_partido(siglas):
         # Agarras lo que te pasan del front
         dict_new_partido = request.get_json()
         new_siglas = dict_new_partido['siglas']
-        nombre = dict_new_partido['nombre_partido']
-        presidente = dict_new_partido['presi']
+        nombre = dict_new_partido['nombre']
+        presidente = dict_new_partido['presidente']
 
-        # Obtienes las nuevas (no a la fuerza deben de ser nuevas, pueden ser las mismas) fechas
-        fecha_inicio = dict_new_partido['Date']
-        #fecha_final = ???
-
-        update_command = "UPDATE partido SET siglas='{}', nombre='{}', presidente={} WHERE siglas='{}'".format(new_siglas,
+        update_command = "UPDATE partido SET siglas='{}', nombre='{}', presidente='{}' WHERE siglas='{}'".format(new_siglas,
                                                                                                             nombre,
                                                                                                             presidente,
                                                                                                             siglas)
@@ -544,7 +543,7 @@ def one_partido(siglas):
         return res
 
     elif request.method == 'DELETE':
-        delete_command = "DELETE FROM partido WHERE siglas={}".format(siglas)
+        delete_command = "DELETE FROM partido WHERE siglas='{}'".format(siglas)
 
         try:
             cur.execute(delete_command)
@@ -645,4 +644,4 @@ def all_votosF():
 ########################################### MAIN ################################
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)

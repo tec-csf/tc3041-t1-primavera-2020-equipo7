@@ -75,11 +75,11 @@ const PartidosForm = props => {
 						<label> Nombre </label>
 						<input
 							type='text'
-							name='nombre_partido'
+							name='nombre'
 							ref={register({ required: true })}
 							defaultValue={partido && partido.nombre ? partido.nombre : null}
 						/>
-						{ errors.nombre_partido && errors.nombre_partido.type === 'required' && <Message negative>
+						{ errors.nombre && errors.nombre.type === 'required' && <Message negative>
 							<Message.Header>Se debe proporcionar el nombre del partido</Message.Header>
 						</Message> }
 					</Form.Field>
@@ -89,11 +89,11 @@ const PartidosForm = props => {
 						<label> Presidente </label>
 						<input
 							type='text'
-							name='presi'
+							name='presidente'
 							ref={register({ required: true })}
 							defaultValue={partido && partido.presidente ? partido.presidente : null}
 						/>
-						{ errors.presi && errors.presi.type === 'required' && <Message negative>
+						{ errors.presidente && errors.presidente.type === 'required' && <Message negative>
 							<Message.Header>El nombre del presidente es necesario</Message.Header>
 						</Message> }
 						{ (!isValidDate && !(startDate)) 
@@ -106,6 +106,12 @@ const PartidosForm = props => {
 						<p>
 							Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}
 						</p>
+
+						{ props.isEditing ? 
+							<p> Fecha fin: { partido.fecha_final.replace('00:00:00 GMT', '') } </p>
+							: <i>La fecha de fin es +6 años</i>
+						}
+						
 						{!props.isEditing && <DatePickerCalendar
 							date={startDate}
 							onDateChange={setStartDate}

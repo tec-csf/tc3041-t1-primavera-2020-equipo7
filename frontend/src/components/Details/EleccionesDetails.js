@@ -13,7 +13,7 @@ const EleccionesDetalles = (props) => {
 
 	const getDetailsFromChild = data => {
 		setElecciones(data);
-		// console.log('detailing:', data);
+		console.log('detailing:', data);
 	}
 
 	return <Mask callback={getDetailsFromChild} id={props.id}>
