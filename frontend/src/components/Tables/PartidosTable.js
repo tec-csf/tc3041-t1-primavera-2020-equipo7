@@ -7,9 +7,9 @@ import Details from './../Details/PartidosDetails';
 import Edit from './../Forms/PartidosForm';
 
 /**
- * Es la tabla que se usa para el index de de las elecciones
+ * Es la tabla que se usa para el index de de los partidos
 */
-const EleccionesTabla = () => <Table celled padded>
+const PartidosTabla = props => <Table celled padded>
 	<Table.Header>
 		<Table.Row>
 			<Table.HeaderCell>Siglas</Table.HeaderCell>
@@ -21,21 +21,24 @@ const EleccionesTabla = () => <Table celled padded>
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
-		<Table.Row>
-			<Table.Cell>PTM</Table.Cell>
-			<Table.Cell>Partido del Trabajo Municipal</Table.Cell>
-			<Table.Cell>Marco Marquéz</Table.Cell>
-			<Table.Cell>16-06-2018</Table.Cell>
-			<Table.Cell>16-07-2018</Table.Cell>
-			<RudButton
-				id='1'
-				onDelete='Partido del Trabajo Municipal'
-				title='PTM'
-				onShow={Details}
-				onEdit={Edit}
-			/>
-		</Table.Row>
+		{props.info.map( item => {
+				return <Table.Row key={item.siglas}>
+					<Table.Cell>{item.siglas}</Table.Cell>
+					<Table.Cell>{item.nombre}</Table.Cell>
+					<Table.Cell>{item.presidente}</Table.Cell>
+					<Table.Cell>{item.fecha_inicio.replace('00:00:00 GMT', '')}</Table.Cell>
+					<Table.Cell>{item.fecha_final.replace('00:00:00 GMT', '')}</Table.Cell>
+					<RudButton
+						id={item.siglas}
+						refresh={props.loadInfo}
+						onDelete={item.siglas}
+						title={item.nombre}
+						onShow={Details}
+						onEdit={Edit}
+					/>
+				</Table.Row>
+			} ) }
 	</Table.Body>
 </Table>;
 
-export default EleccionesTabla;
+export default PartidosTabla;

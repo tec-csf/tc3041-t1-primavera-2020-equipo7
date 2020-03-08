@@ -78,7 +78,7 @@ const MesasForm = props => {
 		console.log(data);
 		axios.post('mesas/' + (props.isEditing ? props.id + '/' : ''), data)
 		.then(res => {
-			console.log('Updating success:', res);
+			console.log(props.isEditing ? 'Updating' : 'Creating' ,' success:', res);
 			props.refresh();
 			props.handleClose();
 		})

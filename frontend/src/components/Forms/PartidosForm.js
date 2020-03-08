@@ -5,6 +5,7 @@ import { DatePickerCalendar } from "react-nice-dates";
 import { useForm } from 'react-hook-form'
 import PropTypes from "prop-types";
 import { Form, Button, Message } from "semantic-ui-react";
+import axios from '../../axios';
 //own
 import Mask from "../../util/GetMethod";
 //hoc
@@ -18,9 +19,12 @@ const PartidosForm = props => {
 	const [isValidDate, setIsValidDate] = useState(true);
 
 	// if on edit mode
+	const [partido, setPartido] = useState();
 	const getDetailsFromChild = data => {
-		console.log("load to edit", data);
-	};
+		setPartido(data[0]);
+		console.log('editing :', data[0]);
+		setStartDate(new Date(data[0].fecha_inicio.replace('00:00:00 GMT', '')));
+	}
 
 	// Controls for show
 	const ParentComponent = props.isEditing ? Mask : React.Fragment;
@@ -33,27 +37,48 @@ const PartidosForm = props => {
 	const onSubmitHandler = data => {
 		setIsValidDate(startDate);
 		if (!(startDate)) return;
-		console.log(
-			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
-			);
-		console.log(data, startDate);
-		props.handleClose();
+		const info_send = { ...data, 'fecha_inicio' : startDate }
+		console.log(info_send);
+		axios.post('partidos/' + (props.isEditing ? props.id + '/' : ''), info_send)
+		.then(res => {
+			console.log(props.isEditing ? 'Updating' : 'Creating' ,' success:', res);
+			props.refresh();
+			props.handleClose();
+		})
+		.catch(err => {
+			console.log('Updating', err);
+			console.log('err response:', err.response);
+		})
 	}
-	console.log(errors)
+
 	return (
 		<ParentComponent {...propsForComponent}>
+			{((!props.isEditing) || (partido && partido.siglas)) && 
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
 				<Form.Group widths="equal">
 					<Form.Field width='4' required>
 						<label> Siglas </label>
-						<input type='text' name='siglas' ref={register({ required: true })}/>
+						<input
+							type='text'
+							name='siglas'
+							ref={register({ required: true, maxLength: 10 })}
+							defaultValue={partido && partido.siglas ? partido.siglas : null}
+						/>
 						{ errors.siglas && errors.siglas.type === 'required' && <Message negative>
 							<Message.Header>Siglas es un campo requerido</Message.Header>
+						</Message> }
+						{ errors.siglas && errors.siglas.type === 'maxLength' && <Message negative>
+							<Message.Header>Demasiado largo</Message.Header>
 						</Message> }
 					</Form.Field>
 					<Form.Field required>
 						<label> Nombre </label>
-						<input type='text' name='nombre_partido' ref={register({ required: true })}/>
+						<input
+							type='text'
+							name='nombre_partido'
+							ref={register({ required: true })}
+							defaultValue={partido && partido.nombre ? partido.nombre : null}
+						/>
 						{ errors.nombre_partido && errors.nombre_partido.type === 'required' && <Message negative>
 							<Message.Header>Se debe proporcionar el nombre del partido</Message.Header>
 						</Message> }
@@ -62,7 +87,12 @@ const PartidosForm = props => {
 				<Form.Group widths="equal">
 					<Form.Field required>
 						<label> Presidente </label>
-						<input type='text' name='presi' ref={register({ required: true })}/>
+						<input
+							type='text'
+							name='presi'
+							ref={register({ required: true })}
+							defaultValue={partido && partido.presidente ? partido.presidente : null}
+						/>
 						{ errors.presi && errors.presi.type === 'required' && <Message negative>
 							<Message.Header>El nombre del presidente es necesario</Message.Header>
 						</Message> }
@@ -76,7 +106,12 @@ const PartidosForm = props => {
 						<p>
 							Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}
 						</p>
-						<DatePickerCalendar date={startDate} onDateChange={setStartDate} locale={es} minimunDate={new Date()}/>
+						{!props.isEditing && <DatePickerCalendar
+							date={startDate}
+							onDateChange={setStartDate}
+							locale={es}
+							minimunDate={new Date()}
+						/>}
 					</Form.Field>
 				</Form.Group>
 				<Button
@@ -89,7 +124,7 @@ const PartidosForm = props => {
 				/>
 				<br />
 				<br />
-			</Form>
+			</Form>}
 		</ParentComponent>
 	);
 };
@@ -100,7 +135,9 @@ PartidosForm.propTypes = {
 	/** Para saber si se debe hacer un request para obtener info */
 	isEditing: PropTypes.bool,
 	/** To close the modal */
-	handleClose: PropTypes.func.isRequired
+	handleClose: PropTypes.func.isRequired,
+	/** Refresher */
+	refresh: PropTypes.func.isRequired,
 };
 
 export default PartidosForm;
