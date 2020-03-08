@@ -27,31 +27,31 @@ INSERT INTO colegio (id_colegio, fecha_colegio_inicio, fecha_colegio_final, id_c
 
 
 -- MESAS
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (1, '2015-06-01', '2015-06-11', 8);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (2, '2018-05-07', '2018-05-17', 9);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (3, '2015-06-01', '2015-06-11', 3);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (4, '2025-04-02', '2025-04-08', 6);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (5, '2018-05-07', '2018-05-17', 1);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (6, '2025-04-02', '2025-04-08', 6);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (7, '2015-06-01', '2015-06-11', 3);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (8, '2025-04-02', '2025-04-08', 6);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (9, '2018-05-07', '2018-05-17', 4);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (10, '2018-05-07', '2018-05-17', 4);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (11, '2018-05-07', '2018-05-17', 1);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (12, '2022-06-01', '2022-06-11', 7);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (13, '2025-04-02', '2025-04-08', 5);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (14, '2015-06-01', '2015-06-11', 8);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (15, '2015-06-01', '2015-06-11', 8);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (16, '2015-06-01', '2015-06-11', 3);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (17, '2022-06-01', '2022-06-11', 7);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (18, '2022-06-01', '2022-06-11', 10);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (19, '2015-06-01', '2015-06-11', 3);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (20, '2015-06-01', '2015-06-11', 8);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (21, '2025-04-02', '2025-04-08', 2);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (22, '2015-06-01', '2015-06-11', 3);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (23, '2025-04-02', '2025-04-08', 5);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (24, '2015-06-01', '2015-06-11', 3);
-INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (25, '2025-04-02', '2025-04-08', 5);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'A', 8);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'B', 9);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'C', 3);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'D', 6);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'E', 1);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'F', 6);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'G', 3);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'H', 6);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'L', 4);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'M', 4);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'A', 1);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2022-06-01', '2022-06-11', 'B', 7);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'C', 5);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'D', 8);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'E', 8);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'F', 3);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2022-06-01', '2022-06-11', 'G', 7);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2022-06-01', '2022-06-11', 'K', 0);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'Z', 3);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'M', 8);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'R', 2);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'S', 3);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'T', 5);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'U', 3);
+INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'V', 5);
 -- One line command
 INSERT INTO mesa (id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_mesa_colegio) VALUES (1, '2015-06-01', '2015-06-11', 8), (2, '2018-05-07', '2018-05-17', 9), (3, '2015-06-01', '2015-06-11', 3), (4, '2025-04-02', '2025-04-08', 6), (5, '2018-05-07', '2018-05-17', 1), (6, '2025-04-02', '2025-04-08', 6), (7, '2015-06-01', '2015-06-11', 3), (8, '2025-04-02', '2025-04-08', 6), (9, '2018-05-07', '2018-05-17', 4), (10, '2018-05-07', '2018-05-17', 4), (11, '2018-05-07', '2018-05-17', 1), (12, '2022-06-01', '2022-06-11', 7), (13, '2025-04-02', '2025-04-08', 5), (14, '2015-06-01', '2015-06-11', 8), (15, '2015-06-01', '2015-06-11', 8), (16, '2015-06-01', '2015-06-11', 3), (17, '2022-06-01', '2022-06-11', 7), (18, '2022-06-01', '2022-06-11', 10), (19, '2015-06-01', '2015-06-11', 3), (20, '2015-06-01', '2015-06-11', 8), (21, '2025-04-02', '2025-04-08', 2), (22, '2015-06-01', '2015-06-11', 3), (23, '2025-04-02', '2025-04-08', 5), (24, '2015-06-01', '2015-06-11', 3), (25, '2025-04-02', '2025-04-08', 5);
 -- Todos funcionan

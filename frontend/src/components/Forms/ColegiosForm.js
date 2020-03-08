@@ -17,7 +17,6 @@ const ColegiosForm = props => {
 	const [elecciones, setElecciones] = useState();
 
 	useEffect(() => {
-		console.log('mio')
 		if(!props.isEditing){
 			axios.get('/elecciones/')
 			.then(res => {

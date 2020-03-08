@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '../../axios';
 import { Header, Container } from 'semantic-ui-react';
 //own
 import Table from '../../components/Tables/MesasTable';
@@ -19,7 +19,8 @@ class Mesas extends React.Component {
 	}
 
 	loadData = () => {
-		axios.get('mesas')
+		this.setState({loading: true});
+		axios.get('/mesas/')
 		.then(res => {
 			this.setState({ loading: false, all_mesas: res.data });
 		})
@@ -35,7 +36,7 @@ class Mesas extends React.Component {
 			<Container>
 				<Header size="huge"> Mesas </Header>
 				<Copyright />
-				<New message='Agregar Nueva Mesa' Form={MesasForms} />
+				<New message='Agregar Nueva Mesa' Form={MesasForms} refresh={this.loadData}/>
 				<Table info={this.state.all_mesas} loadInfo={this.loadData}/>
 				{ this.state.loading && <Loader/> }
 			</Container>

@@ -137,7 +137,8 @@ def one_eleccion(id_eleccion):
 
         for eleccion in elecciones:
             elecciones_list.append(
-                {"id_eleccion": eleccion[0],
+                {
+                "id": eleccion[0],
                 "fecha_inicio": eleccion[1],
                 "fecha_final": eleccion[2],
                 "descripcion": eleccion[3],
@@ -221,7 +222,7 @@ def all_colegio():
                   "fecha_final": colegio[2],
                   "direccion": colegio[3],
                   "descripcion_eleccion": eleccion[0],
-                  #"id_eleccion": id_colegio_eleccion,
+                  "id_eleccion": id_colegio_eleccion,
                     #                [primera tupla] [primer elemento]
                 }
             )
@@ -427,8 +428,8 @@ def one_mesa(id_mesa):
     else:
         mesas_list = []
 
-        show_command = "select id_mesa, letra, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa, id_colegio, descripcion from mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion where mesa.id_mesa={}".format(id_mesa)
-        show_command_hist = "select id_mesa, letra, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa, id_colegio, descripcion from hist_mesa inner join colegio on hist_mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion where hist_mesa.id_mesa={}".format(id_mesa)
+        show_command =      "select id_mesa, letra, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa, id_colegio, descripcion, id_eleccion from mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion where mesa.id_mesa={}".format(id_mesa)
+        show_command_hist = "select id_mesa, letra, fecha_mesa_inicio, fecha_mesa_final, sys_mesa_inicio, sys_mesa_final, trans_id_mesa, id_colegio, descripcion, id_eleccion from hist_mesa inner join colegio on hist_mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion where hist_mesa.id_mesa={}".format(id_mesa)
         cur.execute(show_command)
         mesas = cur.fetchall()
 
@@ -442,7 +443,8 @@ def one_mesa(id_mesa):
                     "sys_final": mesa[5],
                     "trans_id": mesa[6],
                     "id_colegio": mesa[7],
-                    "descripcion_eleccion": mesa[8]
+                    "descripcion_eleccion": mesa[8],
+                    "id_eleccion": mesa[9]
                 }
             )
 
@@ -459,7 +461,8 @@ def one_mesa(id_mesa):
                     "sys_final": mesas_hist[i][5],
                     "trans_id": mesas_hist[i][6],
                     "id_colegio": mesas_hist[i][7],
-                    "descripcion_eleccion": mesas_hist[i][8]
+                    "descripcion_eleccion": mesas_hist[i][8],
+                    "id_eleccion": mesas_hist[i][9]
                 }
             )
 

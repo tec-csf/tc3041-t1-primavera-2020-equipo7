@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table }  from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 // own
 import RudButton from './_shared/RUD_Button';
 
@@ -13,7 +14,8 @@ const EleccionesTabla = props => {
 	return <Table celled padded>
 		<Table.Header>
 			<Table.Row>
-				<Table.HeaderCell>Mesa</Table.HeaderCell>
+				<Table.HeaderCell>Letra</Table.HeaderCell>
+				<Table.HeaderCell>Colegio</Table.HeaderCell>
 				<Table.HeaderCell>Elección</Table.HeaderCell>
 				<Table.HeaderCell>Fecha inicio</Table.HeaderCell>
 				<Table.HeaderCell>Fecha fin</Table.HeaderCell>
@@ -23,15 +25,16 @@ const EleccionesTabla = props => {
 		<Table.Body>
 			{ props.info.map( item => {
 					return <Table.Row key={item.id}>
-						<Table.Cell>{item.id}</Table.Cell>
-						<Table.Cell>{item.eleccion}</Table.Cell>
+						<Table.Cell>{item.letra}</Table.Cell>
+						<Table.Cell>{item.id_colegio}</Table.Cell>
+						<Table.Cell>{item.descripcion_eleccion}</Table.Cell>
 						<Table.Cell>{item.fecha_inicio.replace('00:00:00 GMT', '')}</Table.Cell>
 						<Table.Cell>{item.fecha_final.replace('00:00:00 GMT', '')}</Table.Cell>
 						<RudButton
 							id={item.id}
 							refresh={props.loadInfo}
-							onDelete={'Mesa ' + item.id}
-							title={'Mesa ' + item.id}
+							onDelete={'Mesa ' + item.letra}
+							title={'Mesa ' + item.letra}
 							onShow={Details}
 							onEdit={Edit}
 						/>
@@ -39,6 +42,13 @@ const EleccionesTabla = props => {
 				} ) }
 		</Table.Body>
 	</Table>;
+}
+
+EleccionesTabla.propTypes = {
+	/** To show info */
+	info: PropTypes.array.isRequired,
+	/** To load info when updating or deleting */
+	loadInfo: PropTypes.func.isRequired
 }
 
 export default EleccionesTabla;

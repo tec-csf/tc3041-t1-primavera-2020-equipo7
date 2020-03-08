@@ -44,7 +44,7 @@ CUModal.propTypes = {
 	/** Para saber si se debe hacer un request para obtener info */
 	isEditing: PropTypes.bool,
 	/** Para hacer un reload de la info */
-	refresh: PropTypes.func
+	refresh: PropTypes.func.isRequired
 }
 
 export default CUModal;

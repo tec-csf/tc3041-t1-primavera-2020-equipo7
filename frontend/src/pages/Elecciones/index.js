@@ -19,7 +19,7 @@ class Elecciones extends React.Component {
 	}
 
 	loadData = () => {
-
+		this.setState({loading : true});
 		axios.get('/elecciones/')
 		.then(res => {
 			this.setState({ loading: false, all_elecciones: res.data });
