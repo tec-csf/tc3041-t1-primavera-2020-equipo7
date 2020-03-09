@@ -15,6 +15,7 @@ const MesasForm = props => {
 	const [colegios, setColegios] = useState();
 	const [mesa, setMesa] = useState();
 
+	//if not on edit mode
 	useEffect(() => {
 		if(!props.isEditing){
 			axios.get('/elecciones/')
@@ -59,7 +60,7 @@ const MesasForm = props => {
 			//console.log(res.data)
 			const afterFilter = res.data.filter(item => item.id_eleccion === parseInt(watch('id_eleccion')) )
 			//console.log('after filter: ', afterFilter)
-			setColegios(afterFilter)
+			setColegios([...afterFilter])
 		})
 		.catch(err => {
 			console.log('err getting elecciones in colegio', err);

@@ -1,17 +1,18 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Table }  from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 // own
 import RudButton from './_shared/RUD_Button';
 
-import Details from './../Details/EleccionesDetails';
-import Edit from './../Forms/EleccionesForms';
+import Details from './../Details/VotantesDetails';
+import Edit from './../Forms/VotantesForm';
 
 /**
  * Es la tabla que se usa para el index de los votantes
 */
 
-const EleccionesTabla = props => {
+const VotantesTabla = props => {
 
 	const type = props.match.path.replace('/', '');
 	
@@ -21,7 +22,7 @@ const EleccionesTabla = props => {
 				<Table.HeaderCell>IFE</Table.HeaderCell>
 				<Table.HeaderCell>Nombre</Table.HeaderCell>
 				<Table.HeaderCell>Mesa</Table.HeaderCell>
-				{type === 'votantes' && <Table.HeaderCell>Tipo</Table.HeaderCell> }
+				{type === 'votantes' && <Table.HeaderCell>Nacionalidad</Table.HeaderCell> }
 				{type !== 'votantes' &&
 					<Table.HeaderCell> Fecha Inicio - Fecha Fin </Table.HeaderCell	>
 				}
@@ -36,28 +37,45 @@ const EleccionesTabla = props => {
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			<Table.Row>
-				<Table.Cell>BLABLABLA</Table.Cell>
-				<Table.Cell>José Juan Rosales</Table.Cell>
-				<Table.Cell>A</Table.Cell>
-				<Table.Cell>Mexican</Table.Cell>
-				{ type === 'suplentes' && <Table.Cell> some one else </Table.Cell> }
-				{type === 'apoderados' &&
-					<React.Fragment>
-						<Table.Cell> PTM </Table.Cell>
-						<Table.Cell> 0 </Table.Cell>
-					</React.Fragment>
-				}
-				<RudButton
-					id='1'
-					onDelete='Elecciones de Junio 2018'
-					title='José Juan'
-					onShow={Details}
-					onEdit={Edit}
-				/>
-			</Table.Row>
+			{ props.info.map( item => {
+				return <Table.Row key={item.id}>
+					<Table.Cell>{item.id}</Table.Cell>
+					<Table.Cell>{item.nombre}</Table.Cell>
+					<Table.Cell>{item.letra}</Table.Cell>
+					<Table.Cell>
+						{
+						type === 'votantes' 
+						? item.es_mexicano ? 'Mexicano' : 'Extranjero'
+						: item.fecha_inicio.replace('00:00:00 GMT', '') + ' - ' + item.fecha_final.replace('00:00:00 GMT', '')
+						}
+					</Table.Cell>
+					{type === 'suplentes' && <Table.Cell> {item.superior} </Table.Cell>}
+					{
+						type === 'apoderados' &&
+						<React.Fragment>
+							<Table.Cell> {item.siglas} </Table.Cell>
+							<Table.Cell> {item.orden} </Table.Cell>
+						</React.Fragment>
+					}
+					<RudButton
+						id={item.id}
+						refresh={props.loadInfo}
+						onDelete={item.nombre}
+						title={item.nombre}
+						onShow={Details}
+						onEdit={Edit}
+					/>
+				</Table.Row>
+				} ) }
 		</Table.Body>
 	</Table>;
 }
 
-export default withRouter(EleccionesTabla);
+VotantesTabla.propTypes = {
+	/** To show info */
+	info: PropTypes.array.isRequired,
+	/** To load info when updating or deleting */
+	loadInfo: PropTypes.func.isRequired
+}
+
+export default withRouter(VotantesTabla);

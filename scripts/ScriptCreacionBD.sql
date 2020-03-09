@@ -5,6 +5,8 @@ sudo docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=ac
 -- ver cuando termine de crearse
 sudo docker logs -f mydb2
 
+-- si ya estaba creado
+sudo docker start mydb2
 --Conectandote a la base de datos--
 sudo docker exec -ti mydb2 bash
 

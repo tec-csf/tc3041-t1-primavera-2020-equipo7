@@ -63,6 +63,7 @@ INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_par
 INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PRD', 'Partido de la Revolución Democratica', 'Roberto Gervacio', '1975-08-04', '2463-09-09');
 INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('MC', 'Movimiento Ciudadano', 'Isaac Harari', '1981-10-11', '2093-11-10');
 INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PT', 'Partido del Trabajo', 'Alberto Anaya', '1990-12-08', '2073-12-26');
+INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('NA', 'No aplica', '----', '1990-12-08', '2073-12-26');
 -- One time command
 INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PAN', 'Partido Accion Nacional', 'Alejandra Nissan', '1946-02-03', '2300-01-14'), ('PRI', 'Partido Revolucionario Institucional', 'Yann Le Lorier', '1930-01-24', '2067-03-22'), ('PRD', 'Partido de la Revolución Democratica', 'Roberto Gervacio', '1975-08-04', '2463-09-09'), ('MC', 'Movimiento Ciudadano', 'Isaac Harari', '1981-10-11', '2093-11-10'), ('PT', 'Partido del Trabajo', 'Alberto Anaya', '1990-12-08', '2073-12-26');
 -- Todos funcionan
@@ -162,10 +163,3 @@ INSERT INTO apod_lista (ife_pasaporte, fecha_nac, direccion, nombre, orden,fecha
 
 
 select id_v_federal, tipo_voto, fecha_hora_voto, letra, id_colegio, descripcion, v_federal.siglas from v_federal inner join mesa on v_federal.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion inner join partido on v_federal.siglas=partido.siglas
-
-
-
-
-show_command = "select id_mesa, fecha_mesa_inicio, fecha_mesa_final, letra, id_colegio, descripcion from mesa 
-    inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio 
-    inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion"
