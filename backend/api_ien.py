@@ -638,6 +638,15 @@ def all_apod_lista():
 
 #one_apod missing
 
+@app.route('apoderados/<ife_pas>', methods=['GET', 'POST', 'DELETE'])
+def one_apod():
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else: #request == get
+        pass
 # def all_votosF():
 #     cur = db.connection.cursor()
 #     if request.method == 'POST':
