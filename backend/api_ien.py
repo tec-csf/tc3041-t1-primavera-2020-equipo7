@@ -597,6 +597,47 @@ def one_partido(siglas):
 ################################################################
 #                     APODERADOS LISTA
 ################################################################
+@app.route('/apoderados/', methods=['GET', 'POST'])
+def all_apod_lista():
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        dict_new_apoderado = request.get_json()
+        # ife_pas = dict_new_apoderado['id'] agregar esto en el front
+        orden = dict_new_apoderado['orden']
+        siglas = dict_new_apoderado['siglas']
+        nombre = dict_new_apoderado['nombre']
+        fecha_nac = dict_new_apoderado['fecha_nac']
+        fecha_ini = dict_new_apoderado['fecha_inicio']
+
+        insert_apod = "INSERT INTO apod_lista (ife_pasaporte, fecha_nac, direccion, nombre, orden, fecha_apod_lista_inicio, fecha_apod_lista_final, siglas) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')".format(ife_pas, fecha_nac, direccion, nombre, orden, fecha_ini, fecha_fin, siglas)
+        try:
+            cur.execute(insert_apod)
+            res = make_response(jsonify({"message": "Collection created"}), 201)
+        except:
+            res = make_response(jsonify({"error": "Collection not found"}), 404)
+        return res
+        
+    else: #request == get
+        show_command = "SELECT ife_pasaporte, direccion, nombre, orden, fecha_apod_lista_inicio, fecha_apod_lista_final, siglas FROM APOD_LISTA"
+        cur.execute(show_command)
+        apoderados = cur.fetchall()
+        apoderados_list = []
+
+        for apod in apoderados:
+            apoderados_list.append(
+                {"id": apod[0],
+                    "direccion": apod[1],
+                    "nombre": apod[2],
+                    "orden": apod[3],
+                    "fecha_ini": apod[4],
+                    "fecha_fin": apod[5],
+                    "siglas": apod[6],
+                }
+            )
+        return jsonify(apoderados_list)
+
+#one_apod missing
+
 # def all_votosF():
 #     cur = db.connection.cursor()
 #     if request.method == 'POST':
@@ -714,7 +755,7 @@ def all_votosF():
 
 
 ################################################################
-#                     VOTOS FEDERALES
+#                     VOTOS MUNICIPALES
 ################################################################
 @app.route('/votosmunicipales/', methods=["GET","POST"])
 def all_votosM():
@@ -771,7 +812,6 @@ def all_votosM():
                 }
             )
         return jsonify(v_federales_list)
-
 ########################################### MAIN ################################
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, debug=True)
