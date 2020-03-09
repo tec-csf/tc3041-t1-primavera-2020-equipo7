@@ -18,6 +18,8 @@ const PartidosForm = props => {
 	const [startDate, setStartDate] = useState();
 	const [isValidDate, setIsValidDate] = useState(true);
 
+	const [errorUpdating, setErrorUpdating] = useState(false);
+
 	// if on edit mode
 	const [partido, setPartido] = useState();
 	const getDetailsFromChild = data => {
@@ -48,11 +50,22 @@ const PartidosForm = props => {
 		.catch(err => {
 			console.log('Updating', err);
 			console.log('err response:', err.response);
+			if(err.response){
+				setErrorUpdating(err.response.data.error === 'Collection not found');
+			}
 		})
 	}
 
 	return (
 		<ParentComponent {...propsForComponent}>
+			{ errorUpdating &&
+				<Message negative>
+				<Message.Header>Algo salió mal...</Message.Header>
+					<p>
+						No se puede actualizar este registro, es probable que tenga dependencias
+						o ya exista un registro con las siglas y fecha de inicio
+					</p>
+			</Message> }
 			{((!props.isEditing) || (partido && partido.siglas)) && 
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
 				<Form.Group widths="equal">

@@ -90,12 +90,12 @@ const EleccionesForm = props => {
 				</Message> }
 				</Form.Field>
 				<Form.Group widths="equal">
-					<Form.Field required>
+					{ !props.isEditing ? <Form.Field required>
 						<label> Tipo de Elecciones </label>
 						<select
 							name='tipo_elecciones'
 							ref={register({ required: true, pattern: /^(f|m)$/ })}
-							defaultValue={eleccion ? eleccion.tipo.charAt(0).toLowerCase() : null}
+							//defaultValue={eleccion ? eleccion.tipo.charAt(0).toLowerCase() : null}
 						>
 							<option value=''>--seleccione--</option>
 							<option value='f'>Federal</option>
@@ -114,7 +114,7 @@ const EleccionesForm = props => {
 							<Message.Header>Seleccione un periodo para la elección</Message.Header>
 							<p> Para agregar una nueva elección es necesario llenar los dos campos de fecha </p>
 						</Message> }
-					</Form.Field>
+					</Form.Field> : <p> <b>Tipo :</b> {eleccion && eleccion.tipo ? eleccion.tipo : null} </p>}
 					<Form.Field required>
 						<label>Periodo </label>
 						<p>Fecha de inicio: {startDate ? format(startDate, 'dd MMM yyyy', { locale: es }) : '---'}</p>

@@ -21,8 +21,8 @@ const PartidosTabla = props => <Table celled padded>
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
-		{props.info.map( item => {
-				return <Table.Row key={item.siglas}>
+		{props.info.map( (item, i) => {
+				return <Table.Row key={i}>
 					<Table.Cell>{item.siglas}</Table.Cell>
 					<Table.Cell>{item.nombre}</Table.Cell>
 					<Table.Cell>{item.presidente}</Table.Cell>
