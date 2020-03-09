@@ -54,13 +54,18 @@ const MesasForm = props => {
 		console.log("editing", data[0]);
 	};
 
+	//when change eleccion no importa que sea edit 
 	const getColegios = () => {
 		axios.get('/colegios/')
-		.then(res => {
-			//console.log(res.data)
+		.then(res => { 
+			console.log(res.data);
 			const afterFilter = res.data.filter(item => item.id_eleccion === parseInt(watch('id_eleccion')) )
-			//console.log('after filter: ', afterFilter)
-			setColegios([...afterFilter])
+			console.log('after filter: ', afterFilter)
+			if(afterFilter.length > 0){
+				setColegios([...afterFilter])
+			}else{
+				setColegios([{id: '', direccion:'-----'}])
+			}
 		})
 		.catch(err => {
 			console.log('err getting elecciones in colegio', err);

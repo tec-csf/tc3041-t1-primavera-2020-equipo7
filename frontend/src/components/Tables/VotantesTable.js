@@ -15,6 +15,7 @@ import Edit from './../Forms/VotantesForm';
 const VotantesTabla = props => {
 
 	const type = props.match.path.replace('/', '');
+	//console.log(type)
 	
 	return <Table celled padded>
 		<Table.Header>
@@ -37,7 +38,7 @@ const VotantesTabla = props => {
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			{ props.info.map( item => {
+			{props.info.map( item => {
 				return <Table.Row key={item.id}>
 					<Table.Cell>{item.id}</Table.Cell>
 					<Table.Cell>{item.nombre}</Table.Cell>
@@ -45,7 +46,7 @@ const VotantesTabla = props => {
 					<Table.Cell>
 						{
 						type === 'votantes' 
-						? item.es_mexicano ? 'Mexicano' : 'Extranjero'
+						? item.tipo === 1 ? 'Mexicano' : 'Extranjero'
 						: item.fecha_inicio.replace('00:00:00 GMT', '') + ' - ' + item.fecha_final.replace('00:00:00 GMT', '')
 						}
 					</Table.Cell>

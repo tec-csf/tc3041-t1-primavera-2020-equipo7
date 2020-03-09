@@ -39,6 +39,15 @@ class Persona extends React.Component {
 		.catch(err => console.log('get /persona', err))
 	}
 
+	shouldComponentUpdate(nextProps) {
+		if(this.props.type !== nextProps.type){
+			this.loadData();
+			return true;
+		}
+
+		return false;
+	}
+
 	componentDidMount() {
 		this.loadData();
 	}

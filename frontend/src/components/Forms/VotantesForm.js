@@ -125,6 +125,8 @@ const VotantesForm = props => {
 	const [persona, setPersona] = useState();
 	const getDetailsFromChild = data => {
 
+		console.log('getting: ', data)
+
 		setPersona(data[0]);
 		console.log("editing", data[0]);
 		setDateBorn(new Date(data[0].fecha_nac.replace('00:00:00 GMT', '')));
@@ -141,7 +143,7 @@ const VotantesForm = props => {
 				console.log('err getting partidos in persona', err);
 			})
 		}else{
-			axios.get('/elecciones/')
+			axios.get('/elecciones/') 
 			.then(res => {
 				setElecciones([...res.data]);
 				console.log('editing elecciones: ', res.data);
@@ -211,9 +213,11 @@ const VotantesForm = props => {
 		let info_send;
 		if(type === 'apoderados'){
 			info_send = {...data, "fecha_nac" : dateBorn}
+		}else{
+			info_send = {...data, "fecha_inicio" : startDate, "fecha_nac" : dateBorn}
 		}
 
-		console.log(props.match.path + '/' + (props.isEditing ? props.id + '/' : ''), info_send)
+		console.log('posting: ', props.match.path + '/' + (props.isEditing ? props.id + '/' : ''), info_send)
 
 		axios.post(props.match.path + '/' + (props.isEditing ? props.id + '/' : ''), info_send)
 		.then(res => {

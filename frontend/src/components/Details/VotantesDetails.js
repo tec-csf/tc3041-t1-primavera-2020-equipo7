@@ -46,11 +46,11 @@ const VotantesDetalles = props => {
 				<p> <b> siglas: </b> {votante.siglas} </p>
 				</React.Fragment>}
 				{ type === 'votantes' && <React.Fragment>
-				<p> <b> Nacionalidad: </b> {votante.es_mexicano ? 'Mexicano' : 'Extranjero'} </p>
+				<p> <b> Nacionalidad: </b> {votante.tipo === 1 ? 'Mexicano' : 'Extranjero'} </p>
 				</React.Fragment>}
 				<p> <b> incio en sistema: </b> {votante.sys_inicio} </p>
 				<p> <b> fin en sistema: </b> {votante.sys_final} </p>
-				<p> <b> transación: </b> {votante.trans_id} </p>
+				<p> <b> transacción: </b> {votante.trans_id} </p>
 				{ i > 0 ? <hr/> : <br/>}
 			</div>
 			})

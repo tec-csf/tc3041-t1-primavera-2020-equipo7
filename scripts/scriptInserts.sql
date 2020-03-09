@@ -22,7 +22,7 @@ INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_co
 INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2018-05-07', '2018-05-17', 'Calle cool', 2);
 INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ( '2022-06-01', '2022-06-11', 'Calle cool', 3);
 -- One line command
-INSERT INTO colegio (id_colegio, fecha_colegio_inicio, fecha_colegio_final, id_colegio_eleccion) VALUES (1, '2018-05-07', '2018-05-17', 2), (2, '2025-04-02', '2025-04-08', 4), (3, '2015-06-01', '2015-06-11', 1), (4, '2018-05-07', '2018-05-17', 2), (5, '2025-04-02', '2025-04-08', 4), (6, '2025-04-02', '2025-04-08', 4), (7, '2022-06-01', '2022-06-11', 3), (8, '2015-06-01', '2015-06-11', 1), (9, '2018-05-07', '2018-05-17', 2), (10, '2022-06-01', '2022-06-11', 3);
+INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, id_colegio_eleccion) VALUES ('2018-05-07', '2018-05-17', 2), ('2025-04-02', '2025-04-08', 4), ('2015-06-01', '2015-06-11', 1), ('2018-05-07', '2018-05-17', 2), ('2025-04-02', '2025-04-08', 4), ('2025-04-02', '2025-04-08', 4), ('2022-06-01', '2022-06-11', 3), ('2015-06-01', '2015-06-11', 1), ('2018-05-07', '2018-05-17', 2), ('2022-06-01', '2022-06-11', 3)
 -- Todos funcionan
 
 
