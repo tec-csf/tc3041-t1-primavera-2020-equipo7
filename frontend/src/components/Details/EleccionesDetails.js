@@ -24,12 +24,13 @@ const EleccionesDetalles = (props) => {
 				<React.Fragment> <hr/> <Header size='huge'> Historial </Header> </React.Fragment> 
 			}
 				<p> <b> id: </b> {eleccion.id} </p>
+				<p> <b> tipo: </b> {eleccion.tipo} </p>
 				<p> <b> descripción: </b> {eleccion.descripcion} </p>
 				<p> <b> fecha de incio: </b> {eleccion.fecha_inicio} </p>
 				<p> <b> fecha final: </b> {eleccion.fecha_final} </p>
 				<p> <b> incio en sistema: </b> {eleccion.sys_inicio} </p>
 				<p> <b> fin en sistema: </b> {eleccion.sys_final} </p>
-				<p> <b> transación: </b> {eleccion.trans_id} </p>
+				<p> <b> transacción: </b> {eleccion.trans_id} </p>
 				{ i > 0 ? <hr/> : <br/>}
 			</div>
 			})

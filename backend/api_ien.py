@@ -103,10 +103,8 @@ def one_eleccion(id_eleccion):
         dict_new_eleccion = request.get_json()
 
         descripcion = dict_new_eleccion['descripcion']
-        tipo = "Municipal" if dict_new_eleccion['tipo_elecciones'] == 'm' else "Federal"
 
-        update_command = "UPDATE eleccion SET descripcion='{}', tipo='{}' WHERE id_eleccion = {}".format(descripcion,
-                                                                                                    tipo,
+        update_command = "UPDATE eleccion SET descripcion='{}' WHERE id_eleccion = {}".format(descripcion,
                                                                                                     id_eleccion)
         try:
             cur.execute(update_command)
@@ -400,7 +398,7 @@ def one_mesa(id_mesa):
         fecha_mesa_inicio = colegio[0]
         fecha_mesa_final = colegio[1]
 
-        update_command = "UPDATE mesa SET fecha_mesa_inicio='{}', fecha_mesa_final='{}', id_mesa_colegio={}, letra='{}' WHERE id_mesa = {}".format(fecha_mesa_inicio,
+        update_command = "UPDATE mesa SET fecha_mesa_inicio='{}', fecha_mesa_final='{}', id_mesa_colegio='{}', letra='{}' WHERE id_mesa = '{}'".format(fecha_mesa_inicio,
                                                                                                                                                 fecha_mesa_final,
                                                                                                                                                 id_colegio,
                                                                                                                                                 letra,
@@ -528,11 +526,16 @@ def one_partido(siglas):
         new_siglas = dict_new_partido['siglas']
         nombre = dict_new_partido['nombre']
         presidente = dict_new_partido['presidente']
+        fecha_ini = dict_new_partido['fecha_inicio'][:10]
+        fecha_inicio = datetime.strptime(fecha_ini, '%Y-%m-%d')
+        
 
-        update_command = "UPDATE partido SET siglas='{}', nombre='{}', presidente='{}' WHERE siglas='{}'".format(new_siglas,
+        update_command = "UPDATE partido SET siglas='{}', nombre='{}', presidente='{}' WHERE siglas='{}' AND fecha_partido_inicio='{}'".format(new_siglas,
                                                                                                             nombre,
                                                                                                             presidente,
-                                                                                                            siglas)
+                                                                                                            siglas,
+                                                                                                            fecha_inicio
+                                                                                                            )
 
         try:
             cur.execute(update_command)
@@ -882,13 +885,13 @@ def all_votante():
         tipo = dict_new_votante['tipo']
         id_mesa = dict_new_votante['id_mesa']
 
-        get_mesa = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM mesa WHERE id_mesa={}".format(id_mesa)
+        get_mesa = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM MESA WHERE MESA.id_mesa='{}'".format(id_mesa)
         cur.execute(get_mesa)
         mesa = cur.fetchall()[0]
         fecha_mesa_inicio = mesa[0]
         fecha_mesa_final = mesa[1]
 
-        insert_command = "insert into votante (ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, id_mesa, fecha_mesa_inicio, fecha_mesa_final, tipo)values('{}', '{}', '{}', '{}', '{}', '{}', {}, '{}', '{}', {})".format(ife_pas,
+        insert_command = "INSERT INTO VOTANTE ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, id_mesa, fecha_mesa_inicio, fecha_mesa_final, tipo VALUES ('{}', '{}', '{}', '{}', '{}', '{}', {}, '{}', '{}', '{}')".format(ife_pas,
                                                                                                                                                                                                                                                                 fecha_nac,
                                                                                                                                                                                                                                                                 direccion,
                                                                                                                                                                                                                                                                 nombre,
@@ -905,8 +908,8 @@ def all_votante():
             res = make_response(jsonify({"error": "Collection not found"}), 404)
         return res
 
-    else:
-        show_command = "select ife_pasaporte, nombre, letra, id_mesa, tipo from votante inner join mesa on votante.id_mesa=mesa.id_mesa where tipo in (0, 1)"
+    else: #request == get
+        show_command = "SELECT ife_pasaporte, nombre, letra, V.id_mesa, tipo FROM VOTANTE AS V INNER JOIN MESA ON V.id_mesa=MESA.id_mesa WHERE tipo in (0, 1)"
         cur.execute(show_command)
         votantes = cur.fetchall()
         votantes_list = []
@@ -987,7 +990,7 @@ def one_votante(ife_pasaporte):
     else:
         votantes_list = []
 
-        show_command = "select ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_colegio, id_eleccion, descripcion, tipo, sys_votante_inicio, sys_votante_final, trans_id_votante from votante inner join mesa on votante.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion where tipo in (0, 1)"
+        show_command = "select ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, VOTANTE.id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_colegio, id_eleccion, descripcion, tipo, sys_votante_inicio, sys_votante_final, trans_id_votante from votante inner join mesa on votante.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion where tipo in (0, 1)"
         # "select ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_colegio, id_eleccion, descripcion, tipo, sys_votante_inicio, sys_votante_final, trans_id_votante from votante
         #     inner join mesa on votante.id_mesa=mesa.id_mesa
         #     inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio
@@ -1043,6 +1046,64 @@ def one_votante(ife_pasaporte):
                 }
             )
 
+        return jsonify(votantes_list)
+
+####################################################################
+#                            PRESIDENTES
+#####################################################################
+
+@app.route('/presidentes/', methods=['GET', 'POST'])
+def all_presidentes():
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        dict_new_presi = request.get_json()
+        ife_pas = dict_new_votante['id']
+        fecha_nac = dict_new_votante['fecha_nac'][:10]
+        direccion = dict_new_votante['direccion']
+        nombre = dict_new_votante['nombre']
+        fecha_inicio_votante = dict_new_votante['fecha_inicio'][:10]
+        fecha_final_votante = dict_new_votante['fecha_final'][:10]
+        tipo = dict_new_votante['tipo']
+        id_mesa = dict_new_votante['id_mesa']
+
+        get_mesa = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM mesa WHERE id_mesa={}".format(id_mesa)
+        cur.execute(get_mesa)
+        mesa = cur.fetchall()[0]
+        fecha_mesa_inicio = mesa[0]
+        fecha_mesa_final = mesa[1]
+
+        insert_command = "insert into votante (ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, id_mesa, fecha_mesa_inicio, fecha_mesa_final, tipo)values('{}', '{}', '{}', '{}', '{}', '{}', {}, '{}', '{}', {})".format(ife_pas,
+                                                                                                                                                                                                                                                                fecha_nac,
+                                                                                                                                                                                                                                                                direccion,
+                                                                                                                                                                                                                                                                nombre,
+                                                                                                                                                                                                                                                                fecha_inicio_votante,
+                                                                                                                                                                                                                                                                fecha_final_votante,
+                                                                                                                                                                                                                                                                id_mesa,
+                                                                                                                                                                                                                                                                fecha_mesa_inicio,
+                                                                                                                                                                                                                                                                fecha_mesa_final,
+                                                                                                                                                                                                                                                                tipo)
+        try:
+            cur.execute(insert_command)
+            res = make_response(jsonify({"message": "Collection created"}), 201)
+        except:
+            res = make_response(jsonify({"error": "Collection not found"}), 404)
+        return res
+
+    else:
+        show_command = "select ife_pasaporte, nombre, letra, id_mesa, tipo from votante inner join mesa on votante.id_mesa=mesa.id_mesa where tipo in (0, 1)"
+        cur.execute(show_command)
+        votantes = cur.fetchall()
+        votantes_list = []
+
+        for votante in votantes:
+            votantes_list.append(
+                {"id": votante[0],
+                    "nombre": votante[1],
+                    "letra": votante[2],
+                    "id_mesa": votante[3],
+                    "tipo": votante[4]
+                }
+            )
         return jsonify(votantes_list)
 
 

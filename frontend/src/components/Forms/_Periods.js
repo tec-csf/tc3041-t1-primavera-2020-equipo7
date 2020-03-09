@@ -1,28 +1,71 @@
 import React, { useState } from 'react';
-import { DatePicker } from 'react-datepicker';
+import DatePicker from 'react-datepicker';
+import { registerLocale } from  "react-datepicker";
+import { Container, Form, Button, Message } from 'semantic-ui-react';
+import "react-datepicker/dist/react-datepicker.css";
+import es from 'date-fns/locale/es';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+registerLocale('es', es);
 
-const PeriodForm = () => {
-	const [startDate, setStartDate] = useState(new Date("2014/02/08"));
-  const [endDate, setEndDate] = useState(new Date("2014/02/10"));
-  return (
-    <>
-      <DatePicker
-        selected={startDate}
-        onChange={date => setStartDate(date)}
-        selectsStart
-        startDate={startDate}
-        endDate={endDate}
-      />
-      <DatePicker
-        selected={endDate}
-        onChange={date => setEndDate(date)}
-        selectsEnd
-        startDate={startDate}
-        endDate={endDate}
-        minDate={startDate}
-      />
-    </>
-  );
+const PeriodForm = props => {
+	const [startDate, setStartDate] = useState();
+	const [endDate, setEndDate] = useState();
+	const [areValidDates, setValidDates] = useState(true);
+
+	const onSubmitHandler = () => {
+		if(startDate && endDate){
+			console.log('Buscando en rango de fechas');
+			console.log(startDate, endDate)
+			props.newInfo('get a' + props.match.path )
+		}else{
+			setValidDates(false);
+			return;
+		}
+	}
+
+	return (
+		<Container textAlign='center'>
+			<br/>
+			{ !areValidDates && <Message negative>
+				<Message.Header>Ingrese un periodo válido</Message.Header>
+			</Message> }
+			<Form onSubmit={onSubmitHandler}>
+				<Form.Group widths='equal'>
+					<DatePicker
+						selected={startDate}
+						onChange={date => {setStartDate(date); setValidDates(areValidDates ? true : date && endDate)}}
+						selectsStart
+						startDate={startDate}
+						endDate={endDate}
+						locale='es'
+						placeholderText='Fecha inicio'
+					/>
+					<DatePicker
+						selected={endDate}
+						onChange={date => {setEndDate(date); setValidDates(date && startDate)}}
+						selectsEnd
+						startDate={startDate}
+						endDate={endDate}
+						minDate={startDate}
+						placeholderText='Fecha final'
+					/>
+					<Button
+						icon="search"
+						labelPosition="right"
+						content="Buscar"
+						type="submit"
+						floated="left"
+					/>
+				</Form.Group>
+			</Form>
+		</Container>
+	);
 }
 
-export default PeriodForm;
+PeriodForm.propTypes = {
+	/** search after  */
+	newInfo: PropTypes.func.isRequired
+}
+
+export default withRouter(PeriodForm);

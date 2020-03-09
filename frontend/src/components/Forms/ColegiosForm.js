@@ -16,6 +16,8 @@ const ColegiosForm = props => {
 	const [colegio, setColegio] = useState();
 	const [elecciones, setElecciones] = useState();
 
+	const [errorUpdating, setErrorUpdating] = useState(false);
+
 	useEffect(() => {
 		if(!props.isEditing){
 			axios.get('/elecciones/')
@@ -62,11 +64,21 @@ const ColegiosForm = props => {
 			.catch(err => {
 				console.log('Updating', err);
 				console.log('err response:', err.response);
+				if(err.response){
+					setErrorUpdating(err.response.data.error === 'Collection not found');
+				}
 			})
 	}
 	
 	return (
 		<ParentComponent {...propsForComponent}>
+			{ errorUpdating &&
+			<Message negative>
+			<Message.Header>Algo salió mal...</Message.Header>
+				<p>
+					No se puede actualizar este registro, es probable que tenga dependencias
+				</p>
+			</Message> }
 			{( (!props.isEditing) || (colegio && colegio.id && elecciones && elecciones[0]) ) ?
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='false'>
 				<Form.Group widths='equal'>

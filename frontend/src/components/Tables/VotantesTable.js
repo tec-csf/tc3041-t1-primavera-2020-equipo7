@@ -19,7 +19,7 @@ const VotantesTabla = props => {
 	return <Table celled padded>
 		<Table.Header>
 			<Table.Row>
-				<Table.HeaderCell>IFE</Table.HeaderCell>
+				<Table.HeaderCell>ID</Table.HeaderCell>
 				<Table.HeaderCell>Nombre</Table.HeaderCell>
 				{type !== 'apoderados' && <Table.HeaderCell>Mesa</Table.HeaderCell>}
 				{type === 'votantes' && <Table.HeaderCell>Nacionalidad</Table.HeaderCell> }

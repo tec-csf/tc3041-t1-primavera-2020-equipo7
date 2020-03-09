@@ -26,7 +26,7 @@ const CUModal = props => {
 		>
 		<Header
 			icon={props.isEditing ? 'edit' : 'add square'}
-			content={props.isEditing ? '¿Esta seguro que desea actualizar?' : props.message}
+			content={props.isEditing ? '¿Está seguro que desea actualizar?' : props.message}
 		/>
 		<Modal.Content>
 			{<props.Form id={props.id} isEditing={props.isEditing} handleClose={() => handleClose()} refresh={props.refresh} />}
