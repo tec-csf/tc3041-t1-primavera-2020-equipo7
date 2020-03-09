@@ -21,7 +21,7 @@ const VotantesTabla = props => {
 			<Table.Row>
 				<Table.HeaderCell>IFE</Table.HeaderCell>
 				<Table.HeaderCell>Nombre</Table.HeaderCell>
-				<Table.HeaderCell>Mesa</Table.HeaderCell>
+				{type !== 'apoderados' && <Table.HeaderCell>Mesa</Table.HeaderCell>}
 				{type === 'votantes' && <Table.HeaderCell>Nacionalidad</Table.HeaderCell> }
 				{type !== 'votantes' &&
 					<Table.HeaderCell> Fecha Inicio - Fecha Fin </Table.HeaderCell	>
@@ -41,7 +41,7 @@ const VotantesTabla = props => {
 				return <Table.Row key={item.id}>
 					<Table.Cell>{item.id}</Table.Cell>
 					<Table.Cell>{item.nombre}</Table.Cell>
-					<Table.Cell>{item.letra}</Table.Cell>
+					{type !== 'apoderados' && <Table.Cell>{item.letra}</Table.Cell>}
 					<Table.Cell>
 						{
 						type === 'votantes' 

@@ -7,6 +7,7 @@ import New from '../../components/Forms/_CU';
 import ElectionsForms from '../../components/Forms/EleccionesForms';
 import Copyright from '../../components/Credits';
 import Loader from '../../components/Loader';
+//import Periods from '../../components/Forms/_Periods';
 //hoc
 //context
 //css
@@ -37,6 +38,7 @@ class Elecciones extends React.Component {
 				<Header size="huge"> Elecciones </Header>
 				<Copyright />
 				<New message='Crear Nuevas Elecciones' Form={ElectionsForms} refresh={this.loadData}/>
+				{/* <Periods /> */}
 				<Table info={this.state.all_elecciones} loadInfo={this.loadData}/>
 				{ this.state.loading && <Loader/> }
 			</Container>
