@@ -44,25 +44,30 @@ const VotantesForm = props => {
 
 	//if on create mode, only need to load eleccion info.
 	useEffect(() => {
+
+		
 		if(!props.isEditing){
-			axios.get('/elecciones/')
-			.then(res => {
-				setElecciones([...res.data])
-				console.log('creating | elecciones', res.data);
-				if(type === 'apoderados'){
-					axios.get('/partidos/')
-					.then(res => {
-						setPartidos([...res.data])
-						console.log('creating | partidos', res.data);
-					})
-					.catch(err => {
-						console.log('err getting partidos in persona', err);
-					})
-				}
-			})
-			.catch(err => {
-				console.log('err getting elecciones in persona', err);
-			});
+
+			if(type === 'apoderados'){
+				axios.get('/partidos/')
+				.then(res => {
+					setPartidos([...res.data])
+					console.log('creating | partidos', res.data);
+				})
+				.catch(err => {
+					console.log('err getting partidos in persona', err);
+				})
+			}else{
+				axios.get('/elecciones/')
+				.then(res => {
+					setElecciones([...res.data])
+					console.log('creating | elecciones', res.data);
+				})
+				.catch(err => {
+					console.log('err getting elecciones in persona', err);
+				});
+			}
+
 		}
 	}, [props.isEditing, type])
 
@@ -125,63 +130,65 @@ const VotantesForm = props => {
 		setDateBorn(new Date(data[0].fecha_nac.replace('00:00:00 GMT', '')));
 		setStartDate(new Date(data[0].fecha_inicio.replace('00:00:00 GMT', '')));
 
-		//get elecciones, colegios and mesas
-		axios.get('/elecciones/')
-		.then(res => {
-			setElecciones([...res.data]);
-			console.log('editing elecciones: ', res.data);
-			axios.get('/colegios/')
+		//get elecciones, colegios, mesas and partidos
+		if(type === 'apoderados'){
+			axios.get('/partidos/')
 			.then(res => {
-				//console.log(res.data)
-				const afterFilter = res.data.filter(item => item.id_eleccion === data[0].id_eleccion )
-				console.log('after filter: colegios ', afterFilter)
-				setColegios([...afterFilter]);
-				axios.get('/mesas/')
+				setPartidos([...res.data])
+				console.log('editing | partidos', res.data);
+			})
+			.catch(err => {
+				console.log('err getting partidos in persona', err);
+			})
+		}else{
+			axios.get('/elecciones/')
+			.then(res => {
+				setElecciones([...res.data]);
+				console.log('editing elecciones: ', res.data);
+				axios.get('/colegios/')
 				.then(res => {
-					const afterFilter = res.data.filter(item => item.id_colegio === data[0].id_colegio );
-					console.log('after filter: mesas', afterFilter);
-					setMesas([...afterFilter]);
-					if(type === 'apoderados'){
-						axios.get('/partidos/')
-						.then(res => {
-							setPartidos([...res.data])
-							console.log('editing | partidos', res.data);
-						})
-						.catch(err => {
-							console.log('err getting partidos in persona', err);
-						})
-					}else{
-						axios.get('/presidentes/')
-						.then(res => {
-							const afterFilterPresidente = res.data.filter(item => item.id_mesa === parseInt(watch('id_mesa')) );
-							console.log('after filter: presidentes', afterFilterPresidente);
-							axios.get('/suplentes/')
+					//console.log(res.data)
+					const afterFilter = res.data.filter(item => item.id_eleccion === data[0].id_eleccion )
+					console.log('after filter: colegios ', afterFilter)
+					setColegios([...afterFilter]);
+					axios.get('/mesas/')
+					.then(res => {
+						const afterFilter = res.data.filter(item => item.id_colegio === data[0].id_colegio );
+						console.log('after filter: mesas', afterFilter);
+						setMesas([...afterFilter]);
+						//else{
+							axios.get('/presidentes/')
 							.then(res => {
-								const afterFilterSuplente = res.data.filter(item => item.id_mesa === parseInt(watch('id_mesa')) );
-								console.log('after filter: presidentes', afterFilterSuplente);
-								setSuperior([...afterFilterPresidente, ...afterFilterSuplente]);
+								const afterFilterPresidente = res.data.filter(item => item.id_mesa === parseInt(watch('id_mesa')) );
+								console.log('after filter: presidentes', afterFilterPresidente);
+								axios.get('/suplentes/')
+								.then(res => {
+									const afterFilterSuplente = res.data.filter(item => item.id_mesa === parseInt(watch('id_mesa')) );
+									console.log('after filter: presidentes', afterFilterSuplente);
+									setSuperior([...afterFilterPresidente, ...afterFilterSuplente]);
+								})
+								.catch(err => {
+									console.log('err getting presidentes in persona', err);
+								});
 							})
 							.catch(err => {
 								console.log('err getting presidentes in persona', err);
 							});
-						})
-						.catch(err => {
-							console.log('err getting presidentes in persona', err);
-						});
-					}
+						//}
+					})
+					.catch(err => {
+						console.log('err getting mesas in persona', err);
+					});
 				})
 				.catch(err => {
-					console.log('err getting mesas in persona', err);
+					console.log('err getting elecciones in persona', err);
 				});
 			})
 			.catch(err => {
 				console.log('err getting elecciones in persona', err);
 			});
-		})
-		.catch(err => {
-			console.log('err getting elecciones in persona', err);
-		});
-	};
+		} // del else
+	}; //de la funcion
 
 	// Controls for show
 	const ParentComponent = props.isEditing ? Mask : React.Fragment;
@@ -192,23 +199,47 @@ const VotantesForm = props => {
 	// Forms Validation
 	const { register, handleSubmit, errors, watch } = useForm()
 	const onSubmitHandler = data => {
-		setIsValidDate(startDate);
+
+		if(type !== 'apoderados'){
+			setIsValidDate(startDate);
+			if (!(startDate)) return;
+		}
+
 		setValidBornDate(dateBorn);
-		if (!(startDate)) return;
 		if( !(dateBorn) ) return;
 
-		console.log(
-			props.isEditing ? "mandando form edeiting" : "mandandolo a new"
-			);
-		console.log(data, startDate, dateBorn, type);
-		props.handleClose();
+		let info_send;
+		if(type === 'apoderados'){
+			info_send = {...data, "fecha_nac" : dateBorn}
+		}
+
+		console.log(props.match.path + '/' + (props.isEditing ? props.id + '/' : ''), info_send)
+
+		axios.post(props.match.path + '/' + (props.isEditing ? props.id + '/' : ''), info_send)
+		.then(res => {
+			console.log(props.isEditing ? 'Updating' : 'Creating' ,' success:', res);
+			props.refresh();
+			props.handleClose();
+		})
+		.catch(err => {
+			console.log(props.isEditing ? 'Updating' : 'Creating' , err);
+			console.log('err response:', err.response);
+		})
+
+		//console.log(data, startDate, dateBorn, type);
 	}
 	
 	return (
 		<ParentComponent {...propsForComponent}>
-			{( (!props.isEditing) || (persona && persona.id && mesas && mesas[0] && elecciones && elecciones[0] && colegios && colegios[0]) ) ?
+			{
+			(
+				(!props.isEditing) ||
+				(persona && persona.id && 
+					( partidos && partidos[0].siglas/*&& mesas && mesas[0] && elecciones && elecciones[0] && colegios && colegios[0]*/) 
+				)
+			) ?
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='off'>
-				<Form.Group widths="equal">
+				{ type !== 'apoderados' && <Form.Group widths="equal">
 					<Form.Field required>
 						<label> Elecciones </label>
 								<select
@@ -266,7 +297,7 @@ const VotantesForm = props => {
 							<Message.Header>Debes seleccionar una mesa</Message.Header>
 						</Message> }
 					</Form.Field>
-				</Form.Group>
+				</Form.Group>}
 				<Form.Group widths='equal'>
 					<Form.Field required >
 						<label> Nombre Completo </label>
@@ -375,7 +406,7 @@ const VotantesForm = props => {
 						</Message> }
 					</Form.Field>
 				</Form.Group> }
-				<Form.Group widths='equal'>
+				{type !== 'apoderados' && <Form.Group widths='equal'>
 					<Form.Field required>
 						<label> Periodo </label>
 						<p>
@@ -394,7 +425,7 @@ const VotantesForm = props => {
 							<Message.Header>Seleccione un periodo válido</Message.Header>
 						</Message> }
 					</Form.Field>
-				</Form.Group>
+				</Form.Group>}
 				<Button
 					positive
 					icon="checkmark"

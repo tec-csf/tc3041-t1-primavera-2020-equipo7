@@ -73,7 +73,7 @@ def all_eleccion():
             res = make_response(jsonify({"message": "Collection created"}), 201)
         except:
             res = make_response(jsonify({"error": "Collection not found"}), 404)
-        
+
         cur.close()
         return res
 
@@ -326,7 +326,7 @@ def one_colegio(id_colegio):
                     "descripcion_eleccion": eleccion[0]
                 }
             )
-    
+
     return jsonify(colegios_list)
 
 
@@ -602,23 +602,36 @@ def all_apod_lista():
     cur = db.connection.cursor()
     if request.method == 'POST':
         dict_new_apoderado = request.get_json()
-        # ife_pas = dict_new_apoderado['id'] agregar esto en el front
+        ife_pas = dict_new_apoderado['id']
+        fecha_nac = dict_new_apoderado['fecha_nac'][:10]
+        direccion = dict_new_apoderado['direccion']
+        nombre = dict_new_apoderado['nombre']
         orden = dict_new_apoderado['orden']
         siglas = dict_new_apoderado['siglas']
-        nombre = dict_new_apoderado['nombre']
-        fecha_nac = dict_new_apoderado['fecha_nac']
-        fecha_ini = dict_new_apoderado['fecha_inicio']
 
-        insert_apod = "INSERT INTO apod_lista (ife_pasaporte, fecha_nac, direccion, nombre, orden, fecha_apod_lista_inicio, fecha_apod_lista_final, siglas) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')".format(ife_pas, fecha_nac, direccion, nombre, orden, fecha_ini, fecha_fin, siglas)
+        get_partido = "SELECT fecha_partido_inicio, fecha_partido_final FROM PARTIDO WHERE siglas='{}'".format(siglas)
+        cur.execute(get_partido)
+        partido = cur.fetchall()[0]
+        fecha_partido_inicio = partido[0]
+        fecha_partido_final = partido[1]
+
+        insert_command = "INSERT INTO apod_lista (ife_pasaporte, fecha_nac, direccion, nombre, orden, fecha_apod_lista_inicio, fecha_apod_lista_final, siglas) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')".format(ife_pas,
+                                                                                                                                                                                                                    fecha_nac,
+                                                                                                                                                                                                                    direccion,
+                                                                                                                                                                                                                    nombre,
+                                                                                                                                                                                                                    orden,
+                                                                                                                                                                                                                    fecha_partido_inicio,
+                                                                                                                                                                                                                    fecha_partido_final,
+                                                                                                                                                                                                                    siglas)
         try:
-            cur.execute(insert_apod)
+            cur.execute(insert_command)
             res = make_response(jsonify({"message": "Collection created"}), 201)
         except:
             res = make_response(jsonify({"error": "Collection not found"}), 404)
         return res
-        
-    else: #request == get
-        show_command = "SELECT ife_pasaporte, direccion, nombre, orden, fecha_apod_lista_inicio, fecha_apod_lista_final, siglas FROM APOD_LISTA"
+
+    else:
+        show_command = "SELECT ife_pasaporte, fecha_nac, direccion, nombre, orden, fecha_apod_lista_inicio, fecha_apod_lista_final, siglas FROM APOD_LISTA"
         cur.execute(show_command)
         apoderados = cur.fetchall()
         apoderados_list = []
@@ -626,81 +639,113 @@ def all_apod_lista():
         for apod in apoderados:
             apoderados_list.append(
                 {"id": apod[0],
-                    "direccion": apod[1],
-                    "nombre": apod[2],
-                    "orden": apod[3],
-                    "fecha_ini": apod[4],
-                    "fecha_fin": apod[5],
-                    "siglas": apod[6],
+                    "fecha_nac": apod[1],
+                    "direccion": apod[2],
+                    "nombre": apod[3],
+                    "orden": apod[4],
+                    "fecha_inicio": apod[5],
+                    "fecha_final": apod[6],
+                    "siglas": apod[7],
                 }
             )
         return jsonify(apoderados_list)
 
-#one_apod missing
 
-@app.route('apoderados/<ife_pas>', methods=['GET', 'POST', 'DELETE'])
-def one_apod():
+@app.route('/apoderados/<ife_pasaporte>/', methods=['GET', 'POST', 'DELETE'])
+def one_apod_lista(ife_pasaporte):
     cur = db.connection.cursor()
     if request.method == 'POST':
-        pass
+        dict_new_apod = request.get_json()
+
+        new_ife_pas = dict_new_apod['id']
+        fecha_nac = dict_new_apod['fecha_nac'][:10]
+        direccion = dict_new_apod['direccion']
+        nombre = dict_new_apod['nombre']
+        orden = dict_new_apod['orden']
+        siglas = dict_new_apod['siglas']
+
+        get_partido = "SELECT fecha_partido_inicio, fecha_partido_final FROM PARTIDO WHERE siglas='{}'".format(siglas)
+        cur.execute(get_partido)
+        partido = cur.fetchall()[0]
+        fecha_apod_lista_inicio = partido[0]
+        fecha_apod_lista_final = partido[1]
+
+        update_command = "UPDATE apod_lista SET ife_pasaporte='{}', fecha_nac='{}', direccion='{}', nombre='{}', orden={}, fecha_apod_lista_inicio='{}', fecha_apod_lista_final='{}', siglas='{}' WHERE ife_pasaporte='{}'".format(new_ife_pas,
+                                                                                                                                                                                                                            fecha_nac,
+                                                                                                                                                                                                                            direccion,
+                                                                                                                                                                                                                            nombre,
+                                                                                                                                                                                                                            orden,
+                                                                                                                                                                                                                            fecha_apod_lista_inicio,
+                                                                                                                                                                                                                            fecha_apod_lista_final,
+                                                                                                                                                                                                                            siglas,
+                                                                                                                                                                                                                            ife_pasaporte)
+
+        try:
+            cur.execute(update_command)
+            res = make_response(jsonify({"message": "Collection updated"}), 200)
+        except:
+            res = make_response(jsonify({"error": "Collection not found"}), 404)
+
+        return res
+
     elif request.method == 'DELETE':
-        pass
-    else: #request == get
-        pass
-# def all_votosF():
-#     cur = db.connection.cursor()
-#     if request.method == 'POST':
-#         dict_new_voto_f = request.get_json()
+        delete_command = "DELETE FROM apod_lista WHERE ife_pasaporte='{}'".format(ife_pasaporte)
 
-#         id_mesa = dict_new_voto_f['id_mesa']
-#         siglas = dict_new_voto_f['siglas']
-#         tipo_voto = dict_new_voto_f['tipo_voto']
+        try:
+            cur.execute(delete_command)
+            res = make_response(jsonify({}), 204)
+        except:
+            res = make_response(jsonify({"error": "Collection not found"}), 404)
 
-#         get_mesa = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM MESA WHERE id_mesa={}".format(id_mesa)
-#         cur.execute(get_mesa)
-#         mesa = cur.fetchall()[0]
-#         fecha_mesa_inicio = mesa[0]
-#         fecha_mesa_final = mesa[1]
-        
-#         get_partido = "SELECT fecha_partido_inicio, fecha_partido_final FROM PARTIDO WHERE siglas='{}'".format(siglas)
-#         cur.execute(get_partido)
-#         partido = cur.fetchall()[0]
-#         fecha_mesa_inicio = partido[0]
-#         fecha_mesa_final = partido[1]
+        return res
+         
+    else:
+        apoderados_list = []
+       
+        show_command = "SELECT ife_pasaporte, fecha_nac, direccion, nombre, orden, fecha_apod_lista_inicio, fecha_apod_lista_final, siglas, sys_apod_lista_inicio, sys_apod_lista_final, trans_id_apod_lista FROM APOD_LISTA where ife_pasaporte='{}'".format(ife_pasaporte)
+        show_command_hist = "SELECT ife_pasaporte, fecha_nac, direccion, nombre, orden, fecha_apod_lista_inicio, fecha_apod_lista_final, siglas, sys_apod_lista_inicio, sys_apod_lista_final, trans_id_apod_lista FROM HIST_APOD_LISTA where ife_pasaporte='{}'".format(ife_pasaporte)
 
-#         insert_command = "INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES ({}, '{}', '{}', '{}', '{}', '{}', {});".format(id_mesa,
-#                                                                                                                                                                                                                 fecha_mesa_inicio,
-#                                                                                                                                                                                                                 fecha_mesa_final,
-#                                                                                                                                                                                                                 fecha_partido_inicio,
-#                                                                                                                                                                                                                 fecha_partido_final,
-#                                                                                                                                                                                                                 siglas,
-#                                                                                                                                                                                                                 tipo_voto)
-#         try:
-#             cur.execute(insert_command)
-#             res = make_response(jsonify({"message": "Collection created"}), 201)
-#         except:
-#             res = make_response(jsonify({"error": "Collection not found"}), 404)
+        # show_command = "select id_v_federal, tipo_voto, fecha_hora_voto, letra, id_colegio, descripcion, v_federal.siglas from v_federal inner join mesa on v_federal.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion inner join partido on v_federal.siglas=partido.siglas"
 
-#         return res
-#     else:
-#         cur = db.connection.cursor()
-#         show_command = "select id_v_federal, tipo_voto, fecha_hora_voto, letra, id_colegio, descripcion, v_federal.siglas from v_federal inner join mesa on v_federal.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion inner join partido on v_federal.siglas=partido.siglas"
-#         cur.execute(show_command)
-#         v_federales = cur.fetchall()
-#         v_federales_list = []
+        cur.execute(show_command)
+        apoderados = cur.fetchall()
 
-#         for voto in v_federales:
-#             v_federales_list.append(
-#                 {"id": voto[0],
-#                     "tipo_voto": voto[1],
-#                     "fecha_hora_voto": voto[2],
-#                     "letra": voto[3],
-#                     "id_colegio": voto[4],
-#                     "descripcion": voto[5],
-#                     "siglas": voto[6],
-#                 }
-#             )
-#         return jsonify(v_federales_list)
+        for apoderado in apoderados:
+            apoderados_list.append(
+                {"id": apoderado[0],
+                    "fecha_nac": apoderado[1],
+                    "direccion": apoderado[2],
+                    "nombre": apoderado[3],
+                    "orden": apoderado[4],
+                    "fecha_inicio": apoderado[5],
+                    "fecha_final": apoderado[6],
+                    "siglas": apoderado[7],
+                    "sys_inicio": apoderado[8],
+                    "sys_final": apoderado[9],
+                    "trans_id": apoderado[10],
+                }
+            )
+
+        cur.execute(show_command_hist)
+        apoderados_hist = cur.fetchall()
+
+        for i in range( len(apoderados_hist)-1 ,-1,-1):
+            apoderados_list.append(
+                {"id": apoderados_hist[i][0],
+                    "fecha_nac": apoderados_hist[i][1],
+                    "direccion": apoderados_hist[i][2],
+                    "nombre": apoderados_hist[i][3],
+                    "orden": apoderados_hist[i][4],
+                    "fecha_inicio": apoderados_hist[i][5],
+                    "fecha_final": apoderados_hist[i][6],
+                    "siglas": apoderados_hist[i][7],
+                    "sys_inicio": apoderados_hist[i][8],
+                    "sys_final": apoderados_hist[i][9],
+                    "trans_id": apoderados_hist[i][10],
+                }
+            )
+
+        return jsonify(apoderados_list)
 
 
 ################################################################
@@ -721,7 +766,7 @@ def all_votosF():
         mesa = cur.fetchall()[0]
         fecha_mesa_inicio = mesa[0]
         fecha_mesa_final = mesa[1]
-        
+
         get_partido = "SELECT fecha_partido_inicio, fecha_partido_final FROM PARTIDO WHERE siglas='{}'".format(siglas)
         cur.execute(get_partido)
         partido = cur.fetchall()[0]
@@ -781,7 +826,7 @@ def all_votosM():
         mesa = cur.fetchall()[0]
         fecha_mesa_inicio = mesa[0]
         fecha_mesa_final = mesa[1]
-        
+
         get_partido = "SELECT fecha_partido_inicio, fecha_partido_final FROM PARTIDO WHERE siglas='{}'".format(siglas)
         cur.execute(get_partido)
         partido = cur.fetchall()[0]

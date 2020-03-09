@@ -30,6 +30,7 @@ const VotantesDetalles = props => {
 				<p> <b> nombre: </b> {votante.nombre} </p>
 				<p> <b> dirección: </b> {votante.direccion} </p>
 				<p> <b> fecha de nacimiento: </b> {votante.fecha_nac} </p>
+				{ type !== 'apoderados' && <React.Fragment>
 				<p> <b> id mesa: </b> {votante.id_mesa} </p>
 				<p> <b> letra mesa: </b> {votante.letra} </p>
 				<p> <b> id colegio: </b> {votante.id_colegio} </p>
@@ -37,7 +38,16 @@ const VotantesDetalles = props => {
 				<p> <b> descripción eleccion: </b> {votante.descripcion} </p>
 				<p> <b> fecha de incio votante: </b> {votante.fecha_inicio} </p>
 				<p> <b> fecha final votante: </b> {votante.fecha_final} </p>
-				{ type === 'votantes' && <React.Fragment> <b> Nacionalidad: </b> <p> {votante.es_mexicano ? 'Mexicano' : 'Extranjero'} </p> </React.Fragment>}
+				</React.Fragment>}
+				{ type === 'apoderados' && <React.Fragment>
+				<p> <b> fecha de incio: </b> {votante.fecha_inicio} </p>
+				<p> <b> fecha final: </b> {votante.fecha_final} </p>
+				<p> <b> orden: </b> {votante.orden} </p>
+				<p> <b> siglas: </b> {votante.siglas} </p>
+				</React.Fragment>}
+				{ type === 'votantes' && <React.Fragment>
+				<p> <b> Nacionalidad: </b> {votante.es_mexicano ? 'Mexicano' : 'Extranjero'} </p>
+				</React.Fragment>}
 				<p> <b> incio en sistema: </b> {votante.sys_inicio} </p>
 				<p> <b> fin en sistema: </b> {votante.sys_final} </p>
 				<p> <b> transación: </b> {votante.trans_id} </p>
