@@ -32,13 +32,13 @@ const SidebarNav = props => {
 				<Menu.Item as={NavLink} to="/votosmunicipales" exact>
 					<Icon name='box' /> Votos Municipales
 				</Menu.Item>
-				<Menu.Item as={NavLink} to="/votantes" exact>
+				<Menu.Item as={"a"} href="/votantes" >
 					<Icon name='address card' /> Votantes
 				</Menu.Item>
 				<Menu.Item as={NavLink} to="/partidos" exact>
 					<Icon name='users' /> Partidos
 				</Menu.Item>
-				<Menu.Item as={NavLink} to="/apoderados" exact>
+				<Menu.Item as={"a"} href="/apoderados" >
 					<Icon name='user circle outline' /> Apoderados
 				</Menu.Item>
 				<Menu.Item as={NavLink} to="/colegios" exact>
@@ -47,13 +47,13 @@ const SidebarNav = props => {
 				<Menu.Item as={NavLink} to="/mesas" exact>
 					<Icon name='table' /> Mesas
 				</Menu.Item>
-				<Menu.Item as={NavLink} to="/presidentes" exact>
+				<Menu.Item as={"a"} href="/presidentes">
 					<Icon name='black tie' inverted/> Presidentes
 				</Menu.Item>
-				<Menu.Item as={NavLink} to="/vocales">
+				<Menu.Item as={"a"} href="/vocales">
 					<Icon name='user' /> Vocales
 				</Menu.Item>
-				<Menu.Item as={NavLink} to="/suplentes">
+				<Menu.Item as={"a"} href="/suplentes">
 					<Icon name='user outline' /> Suplentes
 				</Menu.Item>
 			</Sidebar>

@@ -33,20 +33,21 @@ class Persona extends React.Component {
 		this.setState({loading : true});
 		axios.get('/' + this.convertTypeToQuery() + '/')
 		.then(res => {
-			console.log(res.data)
+			console.log(res.data);
+			console.log('seting loading to false')
 			this.setState({ loading: false, all_personas: res.data });
 		})
 		.catch(err => console.log('get /persona', err))
 	}
 
-	shouldComponentUpdate(nextProps) {
-		if(this.props.type !== nextProps.type){
-			this.loadData();
-			return true;
-		}
-
-		return false;
-	}
+	// shouldComponentUpdate(prevProps){
+	// 	console.log(prevProps.type, 'vs', this.props.type)
+	// 	if(prevProps.type !== this.props.type && !this.state.loading){
+	// 		this.loadData();
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 
 	componentDidMount() {
 		this.loadData();
@@ -58,8 +59,8 @@ class Persona extends React.Component {
 				<Header size="huge"> {this.convertTypeToHeader()} </Header>
 				<Copyright />
 				<New message={'Agregar un nuevo ' + this.props.type} Form={VotantesForms} refresh={this.loadData}/>
-				<Table info={this.state.all_personas} loadInfo={this.loadData}/>
-				{ this.state.loading && <Loader/> }
+				{ !this.state.loading ? <Table info={this.state.all_personas} loadInfo={this.loadData}/>
+				 : <Loader/> }
 			</Container>
 		);
 	}

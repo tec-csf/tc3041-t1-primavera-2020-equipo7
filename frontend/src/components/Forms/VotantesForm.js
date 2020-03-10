@@ -158,7 +158,7 @@ const VotantesForm = props => {
 						const afterFilter = res.data.filter(item => item.id_colegio === data[0].id_colegio );
 						console.log('after filter: mesas', afterFilter);
 						setMesas([...afterFilter]);
-						//else{
+						if(type === 'suplentes'){
 							axios.get('/presidentes/')
 							.then(res => {
 								const afterFilterPresidente = res.data.filter(item => item.id_mesa === parseInt(watch('id_mesa')) );
@@ -176,7 +176,7 @@ const VotantesForm = props => {
 							.catch(err => {
 								console.log('err getting presidentes in persona', err);
 							});
-						//}
+						}
 					})
 					.catch(err => {
 						console.log('err getting mesas in persona', err);
@@ -238,8 +238,12 @@ const VotantesForm = props => {
 			{
 			(
 				(!props.isEditing) ||
-				(persona && persona.id && 
-					( partidos && partidos[0].siglas/*&& mesas && mesas[0] && elecciones && elecciones[0] && colegios && colegios[0]*/) 
+				(persona && persona.id &&
+					(
+						(type === 'apoderados' && partidos && partidos[0].siglas) ||
+						((type === 'votantes' || type === 'presidentes' || type === 'vocales') && mesas && mesas[0] && elecciones && elecciones[0] && colegios && colegios[0]) ||
+						false//(type === 'suplenet')
+					)
 				)
 			) ?
 			<Form onSubmit={handleSubmit(onSubmitHandler)} autoComplete='off'>
@@ -358,7 +362,7 @@ const VotantesForm = props => {
 							type='checkbox'
 							name='es_extranjero'
 							ref={register()}
-							defaultChecked={persona && !persona.es_mexicano ? true : false}
+							defaultChecked={persona && !persona.tipo === 1 ? true : false}
 						/>
 					</Form.Field> }
 					{ type === 'suplentes' && <Form.Field>

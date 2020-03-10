@@ -38,7 +38,7 @@ class Elecciones extends React.Component {
 				<Header size="huge"> Elecciones </Header>
 				<Copyright />
 				<New message='Crear Nuevas Elecciones' Form={ElectionsForms} refresh={this.loadData}/>
-				<Periods newInfo={(newData) => console.log(newData)}/>
+				<Periods newInfo={(newData) => this.setState({all_elecciones:[...newData]})}/>
 				<Table info={this.state.all_elecciones} loadInfo={this.loadData}/>
 				{ this.state.loading && <Loader/> }
 			</Container>
