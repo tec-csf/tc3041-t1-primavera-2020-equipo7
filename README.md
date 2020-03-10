@@ -54,36 +54,65 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 
 ### 2.1 Modelo de la *base de datos*
 
-*[Incluya aquí el Diagrama Entidad-Relación Extendido y explique las jerarquías modeladas así como las restricciones existentes*
+![Modelo relacional de la BD](Readme_images/relacional.png)
+
+![Modelo EER extendido](Readme_images/eer.png)
 
 ### 2.2 Arquitectura de la solución
 
-*[Incluya aquí un diagrama donde se aprecie la arquitectura de la solución propuesta, así como la interacción entre los diferentes componentes de la misma.]*
+![Arquitectura del sistema](/Readme_images/architecturediagram.png)
 
 ### 2.3 Frontend
+&nbsp;https://jamstack.org/
 
-*[Incluya aquí una explicación de la solución utilizada para el frontend de la tarea. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
+JamSTACK es una forma de desarrollar aplicaciones que permite mayor flexibilidad al momento de realizar el deploy, en donde no depende la aplicación de cosas como de un sólo servidor, sino que también usa CDN (Channel Deployment Network), y está todo en algún repositorio Git.
+
+Cualquier persona podría hacerle *clone* al proyecto, con instalaciones mínimas para incrementar el número de potenciales colaboradores al proyecto.
 
 #### 2.3.1 Lenguaje de programación
+El lenguaje de programación que se utilizó para el frontend es JavaScript, junto con el *runtime environment* de Node.js
+
 #### 2.3.2 Framework
+
+El framework utilizado es React, una librería de JavaScript que permite crear interfaces de usuario de forma fácil, permite el desarrollo de aplicaciones en una sóla página. Está mantenido por Facebook, y es open source.
+
 #### 2.3.3 Librerías de funciones o dependencias
+
+```js
+"dependencies": {
+		"@stardust-ui/docs-components": "^0.40.0",
+		"@stardust-ui/react": "^0.40.4",
+		"@testing-library/jest-dom": "^4.2.4",
+		"@testing-library/react": "^9.3.2",
+		"@testing-library/user-event": "^7.1.2",
+		"axios": "^0.19.2",
+		"chartist": "^0.11.4",
+		"date-fns": "^2.10.0",
+		"prop-types": "^15.7.2",
+		"react": "^16.12.0",
+		"react-chartist": "^0.14.3",
+		"react-datepicker": "^2.14.0",
+		"react-dom": "^16.12.0",
+		"react-hook-form": "^4.10.1",
+		"react-nice-dates": "^2.0.0",
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "3.3.1",
+		"semantic-ui-react": "^0.88.2"
+	},
+```
 
 ### 2.4 Backend
 
 El backend utilizado es la combinación del framework de Flask y Python. Dentro de Python, se instalaron dos módulos para la conexión con db2: flask_db2 y ibm_db2.
 
 #### 2.4.1 Lenguaje de programación
+El lenguaje de programación utilizado es Python, ya que es un lenguaje que tiene frameworks optimizados para su utilización con bases de datos, y múltiples DBMSs, lo escojimos porque flask es una buena y simple opción para conectar la base de datos.
+
+Entre los DBMSs que manipula, está DB2, el DBMS de nuestra elección.
 #### 2.4.2 Framework
 El framework utilizado permite el desarrollo de aplicaciones, y de la conexión con alguna base de datos.
 
 En nuestro caso, utilizamos el DBMS de db2, junto con una imagen en Docker.
-
-```sh
-pip3 install Flask
-pip3 install flask_db2
-pip3 install flask-cors
-pip3 install ibm_db
-```
 
 ```py
 from flask import Flask, jsonify, redirect
@@ -94,13 +123,92 @@ app = Flask(__name__)
 ```
 
 #### 2.4.3 Librerías de funciones o dependencias
-Las dependencias del sistema se pueden ver en el siguiente diagrama:
 
-
+```py
+Flask==1.1.1
+Flask-Cors==3.0.8
+Flask-DB2==0.0.10
+gunicorn==20.0.4
+httplib2==0.9.2
+ibm-db==3.0.1
+unidiff==0.5.4
+urllib3==1.22
+virtualenv==20.0.4
+```
 
 ## 2.5 Pasos a seguir para utilizar la aplicación
 
-*[Incluya aquí una guía paso a paso para poder utilizar la aplicación, desde la clonación del repositorio hasta el despliegue de la solución en una plataforma en la nube.]*
+Para correr la aplicación, se debe de tener instalado python3 y npm
+
+
+### Correr la aplicación de forma local
+clonar el repositorio de git usando https:
+```sh
+git clone https://github.com/tec-csf/tc3041-t1-primavera-2020-equipo7.git
+```
+
+En el repositorio encontrará carpetas llamadas backend y frontend.
+
+#### Lanzando una imagen de docker localmente
+
+```sh
+#Creacion del contenedor con la base de datos
+
+sudo docker run -itd --name mydb2 --privileged=true -p 50000:50000 -e LICENSE=accept -e DB2INST1_PASSWORD=password -e DBNAME=testdb ibmcom/db2 bash -v <path>:/database ibmcom/db2
+
+#si ya estaba creado
+sudo docker start mydb2
+
+#ver cuando termine de crearse
+sudo docker logs -f mydb2
+
+#Conectandose a la base de datos
+sudo docker exec -ti mydb2 bash
+
+su - db2inst1
+
+#ya en el bash de la imagen:
+db2
+```
+
+#### Carpeta backend
+Es posible correr el programa con o sin un ambiente virtual (este paso asume que ya se creó la instancia de docker).
+
+Primero necesitará instalar las dependencias:
+```sh
+pip3 install Flask
+pip3 install ibm_db
+pip3 install Flask-db2
+```
+En la carpeta, con el ambiente virtual activado (o no), correr:
+
+```sh
+python3 api_ien.py
+```
+
+Esto abrirá el puerto de su computadora de su elección (si no cambió nada se abrirá el puerto 5001)
+
+#### Carpeta frontend
+
+Dentro de la carpeta de frontend:
+
+Instalemos las dependencias (debian-ubuntu):
+```sh
+sudo apt-get update
+sudo apt-get install npm
+```
+
+Para correrlo:
+```sh
+npm install
+npm start
+```
+Esto abrirá un puerto en su computadora (3000)
+
+Aquí el API se encarga de cargar la base de datos al frontend, y ya puede correr las operaciones CRUD en el frontend
+
+### Lanzar la aplicación a la nube
+
 
 ## 3. Referencias
 
