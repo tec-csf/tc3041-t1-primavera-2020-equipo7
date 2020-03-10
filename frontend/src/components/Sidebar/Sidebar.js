@@ -26,10 +26,10 @@ const SidebarNav = props => {
 				<Menu.Item as={NavLink} to="/elecciones" exact>
 					<Icon name='check square' /> Elecciones
 				</Menu.Item>
-				<Menu.Item as={NavLink} to="/votosfederales" exact>
+				<Menu.Item as={"a"} href="/votosfederales" >
 					<Icon name='box' /> Votos Federales
 				</Menu.Item>
-				<Menu.Item as={NavLink} to="/votosmunicipales" exact>
+				<Menu.Item as={"a"} href="/votosmunicipales" >
 					<Icon name='box' /> Votos Municipales
 				</Menu.Item>
 				<Menu.Item as={"a"} href="/votantes" >

@@ -108,10 +108,14 @@ class Votos extends React.Component {
 			const afterFilter = res.data.filter(item => item.id_colegio === parseInt(idColegio));
 			this.setState({all_votos: [...afterFilter]});
 			//console.log('after filter votos', afterFilter);
-			const conteo = {}
+			const conteo = {'Nulo' : 0}
 			afterFilter.forEach(element => {
 				//console.log('actual', conteo[element.siglas])
-				conteo[element.siglas] = conteo[element.siglas] ? conteo[element.siglas] + 1 : 1
+				if(parseInt(element.tipo_voto) === 0){
+					conteo['Nulo'] += 1;
+				}else{
+					conteo[element.siglas] = conteo[element.siglas] ? conteo[element.siglas] + 1 : 1
+				}
 			});
 			//console.log('conteo', conteo)
 			//console.log(Object.keys(conteo))

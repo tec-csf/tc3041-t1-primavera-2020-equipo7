@@ -1,133 +1,133 @@
 -- ELECCIONES
-INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2015-06-01', '2015-06-11', 'Junio 2015', 'Federal');
-INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2018-05-07', '2018-05-17', 'Mayo 2018', 'Municipal');
-INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2022-06-01', '2022-06-11', 'Junio 2022', 'Municipal');
-INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2025-04-02', '2025-04-08', 'Abril 2025', 'Federal');
+-- INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2015-06-01', '2015-06-11', 'Junio 2015', 'Federal');
+-- INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2018-05-07', '2018-05-17', 'Mayo 2018', 'Municipal');
+-- INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2022-06-01', '2022-06-11', 'Junio 2022', 'Municipal');
+-- INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2025-04-02', '2025-04-08', 'Abril 2025', 'Federal');
 -- One line command
 INSERT INTO eleccion (fecha_eleccion_inicio, fecha_eleccion_final, descripcion, tipo) VALUES ('2015-06-01', '2015-06-11', 'Junio 2015', 'Federal'), ('2018-05-07', '2018-05-17', 'Mayo 2018', 'Municipal'), ('2022-06-01', '2022-06-11', 'Junio 2022', 'Municipal'), ('2025-04-02', '2025-04-08', 'Abril 2025', 'Federal')
 
 
 -- COLEGIOS
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2025-04-02', '2025-04-08', 'Calle cool', 4);
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2015-06-01', '2015-06-11', 'Calle cool', 1);
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2018-05-07', '2018-05-17', 'Calle cool', 2);
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2018-05-07', '2018-05-17', 'Calle cool', 2);
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2025-04-02', '2025-04-08', 'Calle cool', 4);
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2025-04-02', '2025-04-08', 'Calle cool', 4);
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2022-06-01', '2022-06-11', 'Calle cool', 3);
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2015-06-01', '2015-06-11', 'Calle cool', 1);
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2018-05-07', '2018-05-17', 'Calle cool', 2);
-INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2022-06-01', '2022-06-11', 'Calle cool', 3);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2025-04-02', '2025-04-08', 'Calle cool', 4);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2015-06-01', '2015-06-11', 'Calle cool', 1);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2018-05-07', '2018-05-17', 'Calle cool', 2);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2018-05-07', '2018-05-17', 'Calle cool', 2);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2025-04-02', '2025-04-08', 'Calle cool', 4);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2025-04-02', '2025-04-08', 'Calle cool', 4);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2022-06-01', '2022-06-11', 'Calle cool', 3);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2015-06-01', '2015-06-11', 'Calle cool', 1);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2018-05-07', '2018-05-17', 'Calle cool', 2);
+-- INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2022-06-01', '2022-06-11', 'Calle cool', 3);
 -- One line command
 INSERT INTO colegio (fecha_colegio_inicio, fecha_colegio_final, direccion, id_colegio_eleccion) VALUES ('2025-04-02', '2025-04-08', 'Calle cool', 4), ('2015-06-01', '2015-06-11', 'Calle cool', 1), ('2018-05-07', '2018-05-17', 'Calle cool', 2), ('2018-05-07', '2018-05-17', 'Calle cool', 2), ('2025-04-02', '2025-04-08', 'Calle cool', 4), ('2025-04-02', '2025-04-08', 'Calle cool', 4), ('2022-06-01', '2022-06-11', 'Calle cool', 3), ('2015-06-01', '2015-06-11', 'Calle cool', 1), ('2018-05-07', '2018-05-17', 'Calle cool', 2), ('2022-06-01', '2022-06-11', 'Calle cool', 3)
 -- Todos funcionan
 
 
 -- MESAS
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'A', 8);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'B', 9);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'C', 3);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'D', 6);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'E', 1);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'F', 6);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'G', 3);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'H', 6);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'L', 4);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'M', 4);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'A', 1);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2022-06-01', '2022-06-11', 'B', 7);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'C', 5);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'D', 8);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'E', 8);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'F', 3);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2022-06-01', '2022-06-11', 'G', 7);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2022-06-01', '2022-06-11', 'K', 10);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'Z', 3);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'M', 8);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'R', 2);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'S', 3);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'T', 5);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'U', 3);
-INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'V', 5);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'A', 8);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'B', 9);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'C', 3);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'D', 6);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'E', 1);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'F', 6);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'G', 3);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'H', 6);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'L', 4);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'M', 4);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'A', 1);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2022-06-01', '2022-06-11', 'B', 7);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'C', 5);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'D', 8);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'E', 8);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'F', 3);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2022-06-01', '2022-06-11', 'G', 7);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2022-06-01', '2022-06-11', 'K', 10);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'Z', 3);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'M', 8);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'R', 2);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'S', 3);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'T', 5);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2018-05-07', '2018-05-17', 'U', 3);
+-- INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2025-04-02', '2025-04-08', 'V', 5);
 -- One line command
 INSERT INTO mesa (fecha_mesa_inicio, fecha_mesa_final, letra, id_mesa_colegio) VALUES ('2015-06-01', '2015-06-11', 'A', 8), ('2018-05-07', '2018-05-17', 'B', 9), ('2018-05-07', '2018-05-17', 'C', 3), ('2025-04-02', '2025-04-08', 'D', 6), ('2025-04-02', '2025-04-08', 'E', 1), ('2025-04-02', '2025-04-08', 'F', 6), ('2018-05-07', '2018-05-17', 'G', 3), ('2025-04-02', '2025-04-08', 'H', 6), ('2018-05-07', '2018-05-17', 'L', 4), ('2018-05-07', '2018-05-17', 'M', 4), ('2025-04-02', '2025-04-08', 'A', 1), ('2022-06-01', '2022-06-11', 'B', 7), ('2025-04-02', '2025-04-08', 'C', 5), ('2015-06-01', '2015-06-11', 'D', 8), ('2015-06-01', '2015-06-11', 'E', 8), ('2018-05-07', '2018-05-17', 'F', 3), ('2022-06-01', '2022-06-11', 'G', 7), ('2022-06-01', '2022-06-11', 'K', 10), ('2018-05-07', '2018-05-17', 'Z', 3), ('2015-06-01', '2015-06-11', 'M', 8), ('2015-06-01', '2015-06-11', 'R', 2), ('2018-05-07', '2018-05-17', 'S', 3), ('2025-04-02', '2025-04-08', 'T', 5), ('2018-05-07', '2018-05-17', 'U', 3), ('2025-04-02', '2025-04-08', 'V', 5)
 -- Todos funcionan
 
 -- PARTIDO
-INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PAN', 'Partido Accion Nacional', 'Alejandra Nissan', '1946-02-03', '2300-01-14');
-INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PRI', 'Partido Revolucionario Institucional', 'Yann Le Lorier', '1930-01-24', '2067-03-22');
-INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PRD', 'Partido de la Revolución Democratica', 'Roberto Gervacio', '1975-08-04', '2463-09-09');
-INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('MC', 'Movimiento Ciudadano', 'Isaac Harari', '1981-10-11', '2093-11-10');
-INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PT', 'Partido del Trabajo', 'Alberto Anaya', '1990-12-08', '2073-12-26');
-INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('NA', 'No aplica', '----', '1990-12-08', '2073-12-26');
+-- INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PAN', 'Partido Accion Nacional', 'Alejandra Nissan', '1946-02-03', '2300-01-14');
+-- INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PRI', 'Partido Revolucionario Institucional', 'Yann Le Lorier', '1930-01-24', '2067-03-22');
+-- INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PRD', 'Partido de la Revolución Democratica', 'Roberto Gervacio', '1975-08-04', '2463-09-09');
+-- INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('MC', 'Movimiento Ciudadano', 'Isaac Harari', '1981-10-11', '2093-11-10');
+-- INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PT', 'Partido del Trabajo', 'Alberto Anaya', '1990-12-08', '2073-12-26');
+-- INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('NA', 'No aplica', '----', '1990-12-08', '2073-12-26');
 -- One time command
 INSERT INTO partido (siglas, nombre, presidente, fecha_partido_inicio, fecha_partido_final) VALUES ('PAN', 'Partido Accion Nacional', 'Alejandra Nissan', '1946-02-03', '2300-01-14'), ('PRI', 'Partido Revolucionario Institucional', 'Yann Le Lorier', '1930-01-24', '2067-03-22'), ('PRD', 'Partido de la Revolución Democratica', 'Roberto Gervacio', '1975-08-04', '2463-09-09'), ('MC', 'Movimiento Ciudadano', 'Isaac Harari', '1981-10-11', '2093-11-10'), ('PT', 'Partido del Trabajo', 'Alberto Anaya', '1990-12-08', '2073-12-26'), ('NA', 'No aplica', '----', '1990-12-08', '2073-12-26');
 -- Todos funcionan
 
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1946-02-03', '2300-01-14', 'PAN', 2);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (18, '2022-06-01', '2022-06-11', '1930-01-24', '2067-03-22', 'PRI', 2);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (13, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (25, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (13, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (19, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 2);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (5, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 2);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 1);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (21, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (20, '2015-06-01', '2015-06-11', '1990-12-08', '2073-12-26', 'PT', 2);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (6, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (7, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 1);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (20, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 2);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (23, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1975-08-04', '2463-09-09', 'PRD', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (2, '2018-05-07', '2018-05-17', '1975-08-04', '2463-09-09', 'PRD', 2);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (25, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1930-01-24', '2067-03-22', 'PRI', 1);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 2);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (8, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (24, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (22, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 2);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (23, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 0);
-INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1946-02-03', '2300-01-14', 'PAN', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (18, '2022-06-01', '2022-06-11', '1930-01-24', '2067-03-22', 'PRI', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (13, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (25, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (13, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (19, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (5, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 1);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (21, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (20, '2015-06-01', '2015-06-11', '1990-12-08', '2073-12-26', 'PT', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (6, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (7, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 1);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (20, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (23, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1975-08-04', '2463-09-09', 'PRD', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (2, '2018-05-07', '2018-05-17', '1975-08-04', '2463-09-09', 'PRD', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (25, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1930-01-24', '2067-03-22', 'PRI', 1);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (8, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (24, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (22, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 2);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (23, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 0);
+-- INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 2);
 -- One time command
 INSERT INTO v_federal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1), (9, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 0), (4, '2025-04-02', '2025-04-08', '1946-02-03', '2300-01-14', 'PAN', 2), (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0), (4, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1), (18, '2022-06-01', '2022-06-11', '1930-01-24', '2067-03-22', 'PRI', 2), (13, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 0), (3, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 0), (25, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1), (13, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 0), (19, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 2), (5, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 2), (3, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 1), (21, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1), (20, '2015-06-01', '2015-06-11', '1990-12-08', '2073-12-26', 'PT', 2), (6, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 0), (9, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 0), (7, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 1), (20, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 2), (23, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1), (3, '2015-06-01', '2015-06-11', '1975-08-04', '2463-09-09', 'PRD', 0), (2, '2018-05-07', '2018-05-17', '1975-08-04', '2463-09-09', 'PRD', 2), (25, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 0), (9, '2018-05-07', '2018-05-17', '1930-01-24', '2067-03-22', 'PRI', 1), (4, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 2), (8, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 0), (24, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 0), (22, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 2), (23, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 0), (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 2);
 
 -- V_MUNICIPAL
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1975-08-04', '2463-09-09', 'PRD', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 2);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 1);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1946-02-03', '2300-01-14', 'PAN', 2);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (18, '2022-06-01', '2022-06-11', '1975-08-04', '2463-09-09', 'PRD',2);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (13, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (25, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (13, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 2);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (19, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 1);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (5, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 2);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (21, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (20, '2015-06-01', '2015-06-11', '1990-12-08', '2073-12-26', 'PT', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (6, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 2);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (7, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 2);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (20, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (23, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 2);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (2, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (25, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (8, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 1);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (24, '2015-06-01', '2015-06-11', '1975-08-04', '2463-09-09', 'PRD', 2);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (22, '2015-06-01', '2015-06-11', '1990-12-08', '2073-12-26', 'PT', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (23, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 0);
-INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1975-08-04', '2463-09-09', 'PRD', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 1);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1946-02-03', '2300-01-14', 'PAN', 2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (18, '2022-06-01', '2022-06-11', '1975-08-04', '2463-09-09', 'PRD',2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (13, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (25, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (13, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (19, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 1);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (5, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (21, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (20, '2015-06-01', '2015-06-11', '1990-12-08', '2073-12-26', 'PT', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (6, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (7, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (20, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (23, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (3, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (2, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (25, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (4, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (8, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 1);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (24, '2015-06-01', '2015-06-11', '1975-08-04', '2463-09-09', 'PRD', 2);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (22, '2015-06-01', '2015-06-11', '1990-12-08', '2073-12-26', 'PT', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (23, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 0);
+-- INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 2);
 -- One time command
 INSERT INTO v_municipal (id_mesa, fecha_mesa_inicio, fecha_mesa_final, fecha_partido_inicio, fecha_partido_final, siglas, tipo_voto) VALUES (16, '2015-06-01', '2015-06-11', '1975-08-04', '2463-09-09', 'PRD', 0), (9, '2018-05-07', '2018-05-17', '1981-10-11', '2093-11-10', 'MC', 2), (4, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 1), (9, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 1), (4, '2025-04-02', '2025-04-08', '1946-02-03', '2300-01-14', 'PAN', 2), (18, '2022-06-01', '2022-06-11', '1975-08-04', '2463-09-09', 'PRD',2), (13, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1), (3, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 0), (25, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 0), (13, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 2), (19, '2015-06-01', '2015-06-11', '1930-01-24', '2067-03-22', 'PRI', 1), (5, '2018-05-07', '2018-05-17', '1946-02-03', '2300-01-14', 'PAN', 2), (3, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1), (21, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 0), (20, '2015-06-01', '2015-06-11', '1990-12-08', '2073-12-26', 'PT', 0), (6, '2025-04-02', '2025-04-08', '1975-08-04', '2463-09-09', 'PRD', 2), (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0), (7, '2015-06-01', '2015-06-11', '1946-02-03', '2300-01-14', 'PAN', 2), (20, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 1), (23, '2025-04-02', '2025-04-08', '1990-12-08', '2073-12-26', 'PT', 2), (3, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 0), (2, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0), (25, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 0), (9, '2018-05-07', '2018-05-17', '1990-12-08', '2073-12-26', 'PT', 0), (4, '2025-04-02', '2025-04-08', '1930-01-24', '2067-03-22', 'PRI', 1), (8, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 1), (24, '2015-06-01', '2015-06-11', '1975-08-04', '2463-09-09', 'PRD', 2), (22, '2015-06-01', '2015-06-11', '1990-12-08', '2073-12-26', 'PT', 0), (23, '2025-04-02', '2025-04-08', '1981-10-11', '2093-11-10', 'MC', 0), (16, '2015-06-01', '2015-06-11', '1981-10-11', '2093-11-10', 'MC', 2);
 
