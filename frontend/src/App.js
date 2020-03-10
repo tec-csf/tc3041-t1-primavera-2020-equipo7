@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 // ui
 import { Segment, Sidebar, Button, Icon, Container } from 'semantic-ui-react';
 // own
 import SidebarNav from './components/Sidebar/Sidebar';
 // own containers
 // -- dashboard
-import Dashboard from './pages/Dashboard';
+//import Dashboard from './pages/Dashboard';
 // -- elecciones
 import Elecciones from './pages/Elecciones/index';
 // -- votos
@@ -26,8 +26,7 @@ import 'react-nice-dates/build/style.css';
 const App = () => {
 
 	/** Controla, el **Sidebar** en App */
-	const [sideBarIsVisible, setSideBarVisible] = useState(false);
-	// tmp usser, will be in react context
+	const [sideBarIsVisible, setSideBarVisible] = useState(true);
 
 	return (
 	<Router>
@@ -35,11 +34,13 @@ const App = () => {
 			<SidebarNav sideBarStatus={sideBarIsVisible} hideSideBar={() => setSideBarVisible(false)}/>
 			<Sidebar.Pusher>
 				<Segment basic>
-					<Button icon onClick={() => setSideBarVisible(prev => !prev)}>
+					<Button icon onClick={() => setSideBarVisible(prev => !prev)} labelPosition='left'>
 						<Icon name={sideBarIsVisible ? 'close' : 'bars'} />
+						Menú
 					</Button>
 						<Switch>
-							<Route path='/' exact component={Dashboard}/>
+							{/* <Route path='/' exact component={Dashboard}/> */}
+							<Redirect from='/' exact to='/elecciones'/>
 
 							<Route path='/elecciones' exact component={Elecciones}/>
 

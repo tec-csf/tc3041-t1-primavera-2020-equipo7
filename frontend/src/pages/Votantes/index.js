@@ -8,6 +8,7 @@ import New from '../../components/Forms/_CU';
 import VotantesForms from '../../components/Forms/VotantesForm';
 import Copyright from '../../components/Credits';
 import Loader from '../../components/Loader';
+//import Periods from '../../components/Forms/_Periods';
 //hoc
 //context
 //css
@@ -56,9 +57,11 @@ class Persona extends React.Component {
 	render(){
 		return (
 			<Container>
+				<br/>
 				<Header size="huge"> {this.convertTypeToHeader()} </Header>
 				<Copyright />
 				<New message={'Agregar un nuevo ' + this.props.type} Form={VotantesForms} refresh={this.loadData}/>
+				{/* <Periods newInfo={(newData) => this.setState({all_personas:[...newData]})}/> */}
 				{ !this.state.loading ? <Table info={this.state.all_personas} loadInfo={this.loadData}/>
 				 : <Loader/> }
 			</Container>

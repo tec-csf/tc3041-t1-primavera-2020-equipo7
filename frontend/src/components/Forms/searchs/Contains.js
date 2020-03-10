@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/es';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-//import axios from '../../../axios';
+import axios from '../../../axios';
 registerLocale('es', es);
 
 const PeriodForm = props => {
@@ -15,15 +15,15 @@ const PeriodForm = props => {
 
 	const onSubmitHandler = () => {
 		if(startDate){
-			console.log('Buscando por fecha exacata');
-			console.log(startDate);
-			props.newInfo('get a' + props.match.path );
-			/*axios.get('/partidos')
-				.then(res => {
-					console.log('getting in cointains:', res.data);
-					props.newInfo(res.data);
-				})
-				.catch(err => console.log('err contains:', err))*/
+			//console.log('Buscando por fecha exacata');
+			//console.log(startDate);
+			//props.newInfo('get a' + props.match.path );
+			axios.post(props.match.path + '/fecha_ex/', {"fecha" : startDate})
+			.then(res => {
+				props.newInfo(res.data);
+				console.log('getting periods', res.data);
+			})
+			.catch(err => console.log('err getting periods', props.match.path, err))
 		}else{
 			setIsValidDate(false);
 			return;

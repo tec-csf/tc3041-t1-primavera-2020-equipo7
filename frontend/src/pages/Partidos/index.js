@@ -7,6 +7,7 @@ import New from '../../components/Forms/_CU';
 import PartidosForms from '../../components/Forms/PartidosForm';
 import Copyright from '../../components/Credits';
 import Loader from '../../components/Loader';
+//import Periods from '../../components/Forms/_Periods';
 //hoc
 //context
 //css
@@ -35,9 +36,11 @@ class Partidos extends React.Component {
 	render(){
 		return (
 			<Container>
+				<br/>
 				<Header size="huge"> Partidos </Header>
 				<Copyright />
 				<New message='Agregar Nuevo Partido' Form={PartidosForms} refresh={this.loadData}/>
+				{/* <Periods newInfo={(newData) => this.setState({all_partidos:[...newData]})}/> */}
 				<Table info={this.state.all_partidos} loadInfo={this.loadData} />
 				{ this.state.loading && <Loader/> }
 			</Container>

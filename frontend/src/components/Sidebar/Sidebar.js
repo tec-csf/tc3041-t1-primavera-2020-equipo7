@@ -20,9 +20,9 @@ const SidebarNav = props => {
 				visible={props.sideBarStatus}
 				width='thin'
 			>
-				<Menu.Item as={NavLink} to="/" exact>
+				{/* <Menu.Item as={NavLink} to="/" exact>
 					<Icon name='line graph' /> Inicio
-				</Menu.Item>
+				</Menu.Item> */}
 				<Menu.Item as={NavLink} to="/elecciones" exact>
 					<Icon name='check square' /> Elecciones
 				</Menu.Item>

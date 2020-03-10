@@ -7,6 +7,7 @@ import New from '../../components/Forms/_CU';
 import CoelgiosForms from '../../components/Forms/ColegiosForm';
 import Copyright from '../../components/Credits';
 import Loader from '../../components/Loader';
+//import Periods from '../../components/Forms/_Periods';
 //hoc
 //context
 //css
@@ -36,9 +37,11 @@ class Colegios extends React.Component {
 	render(){
 			return (
 			<Container>
+				<br/>
 				<Header size="huge"> Colegios </Header>
 				<Copyright />
 				<New message='Agregar Nuevo Colegios' Form={CoelgiosForms} refresh={this.loadData}/>
+				{/* <Periods newInfo={(newData) => this.setState({all_colegios:[...newData]})}/> */}
 				<Table info={this.state.all_colegios} loadInfo={this.loadData}/>
 				{ this.state.loading && <Loader/> }
 			</Container>

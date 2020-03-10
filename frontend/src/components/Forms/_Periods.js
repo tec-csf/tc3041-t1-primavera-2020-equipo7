@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 
 import Overlaps from './searchs/Overlaps';
 import Contains from './searchs/Contains';
+import Exclude from './searchs/Exclude';
 
 
 const Periods = props => {
 	return <React.Fragment>
 		<Overlaps newInfo={props.newInfo}/>
 		<Contains newInfo={props.newInfo}/>
+		<Exclude newInfo={props.newInfo}/>
 	</React.Fragment>
 }
 

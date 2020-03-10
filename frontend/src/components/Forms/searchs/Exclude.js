@@ -19,7 +19,7 @@ const PeriodForm = props => {
 			//console.log('Buscando en rango de fechas');
 			//console.log(startDate, endDate);
 			//props.newInfo([])
-			axios.post(props.match.path + '/periodos/', {"fecha_inicio" : startDate, "fecha_final" : endDate, "intervalo" : true})
+			axios.post(props.match.path + '/periodos/', {"fecha_inicio" : startDate, "fecha_final" : endDate, "intervalo" : false})
 				.then(res => {
 					props.newInfo(res.data);
 					console.log('getting periods', res.data);
@@ -33,7 +33,6 @@ const PeriodForm = props => {
 
 	return (
 		<Container textAlign='center'>
-			<br/>
 			{ !areValidDates && <Message negative>
 				<Message.Header>Ingrese un periodo válido</Message.Header>
 			</Message> }
@@ -60,7 +59,7 @@ const PeriodForm = props => {
 					<Button
 						icon="search"
 						labelPosition="right"
-						content="Buscar por periodo inclusivo"
+						content="Buscar por periodo exclusivo"
 						type="submit"
 						floated="left"
 					/>

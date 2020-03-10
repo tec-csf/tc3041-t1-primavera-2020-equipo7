@@ -7,6 +7,7 @@ import New from '../../components/Forms/_CU';
 import MesasForms from '../../components/Forms/MesasForms';
 import Copyright from '../../components/Credits';
 import Loader from '../../components/Loader';
+//import Periods from '../../components/Forms/_Periods';
 //hoc
 //context
 //css
@@ -34,9 +35,11 @@ class Mesas extends React.Component {
 	render(){
 		return (
 			<Container>
+				<br/>
 				<Header size="huge"> Mesas </Header>
 				<Copyright />
 				<New message='Agregar Nueva Mesa' Form={MesasForms} refresh={this.loadData}/>
+				{/* <Periods newInfo={(newData) => this.setState({all_mesas:[...newData]})}/> */}
 				<Table info={this.state.all_mesas} loadInfo={this.loadData}/>
 				{ this.state.loading && <Loader/> }
 			</Container>

@@ -23,6 +23,7 @@ class Elecciones extends React.Component {
 		this.setState({loading : true});
 		axios.get('/elecciones/')
 		.then(res => {
+			//console.log('getting:', res.data)
 			this.setState({ loading: false, all_elecciones: res.data });
 		})
 		.catch(err => console.log('get /elecciones', err))
@@ -35,9 +36,11 @@ class Elecciones extends React.Component {
 	render(){
 		return (
 			<Container>
+				<br/>
 				<Header size="huge"> Elecciones </Header>
 				<Copyright />
 				<New message='Crear Nuevas Elecciones' Form={ElectionsForms} refresh={this.loadData}/>
+				{/* <Periods newInfo={(newData) => console.log(newData)}/> */}
 				<Periods newInfo={(newData) => this.setState({all_elecciones:[...newData]})}/>
 				<Table info={this.state.all_elecciones} loadInfo={this.loadData}/>
 				{ this.state.loading && <Loader/> }

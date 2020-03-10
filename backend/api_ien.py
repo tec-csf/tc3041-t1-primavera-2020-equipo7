@@ -172,11 +172,51 @@ def one_eleccion(id_eleccion):
 #                 ELECCION - PERIOD LOOKUP
 ################################################################
 
-@app.route('/elecciones/', methods=['GET', 'POST'])
+@app.route('/elecciones/periodos/', methods=['POST'])
 def one_period():
-    return None
+    cur = db.connection.cursor()
+    dict_periodo = request.get_json()
+    fecha_inicio = dict_periodo['fecha_inicio'][:10]
+    fecha_final = dict_periodo['fecha_final'][:10]
+    intervalo = dict_periodo['intervalo']
+    # Si verdadero, es inclusivo que se usa el between si es falso es exclusivo y se usa from to
+    period_query = "SELECT id_eleccion, descripcion, tipo, ELECCION.fecha_eleccion_inicio, ELECCION.fecha_eleccion_final FROM ELECCION FOR BUSINESS_TIME BETWEEN '{}' AND '{}'".format(fecha_inicio, fecha_final) if intervalo else "SELECT id_eleccion, descripcion, tipo, ELECCION.fecha_eleccion_inicio, ELECCION.fecha_eleccion_final FROM ELECCION FOR BUSINESS_TIME FROM '{}' TO '{}'".format(fecha_inicio, fecha_final)
+    
+    cur.execute(period_query)
+    periodos = cur.fetchall()
+    periodos_list = []
+    for periodo in periodos:
+        periodos_list.append(
+            {"id": periodo[0],
+                "descripcion": periodo[1],
+                "tipo": periodo[2],
+                "fecha_inicio": periodo[3],
+                "fecha_final": periodo[4]
+            }
+        )
+    return jsonify(periodos_list)
 
+@app.route('/elecciones/fecha_ex/', methods=['POST'])
+def one_date():
+    cur = db.connection.cursor()
+    dict_periodo = request.get_json()
+    fecha = dict_periodo['fecha'][:10]
+    date_query = "SELECT id_eleccion, descripcion, tipo, ELECCION.fecha_eleccion_inicio, ELECCION.fecha_eleccion_final FROM ELECCION FOR BUSINESS_TIME AS OF '{}'".format(fecha)
 
+    print(date_query)
+    cur.execute(date_query)
+    fechas = cur.fetchall()
+    fechas_list = []
+    for fecha in fechas:
+        fechas_list.append(
+            {"id": fecha[0],
+                "descripcion": fecha[1],
+                "tipo": fecha[2],
+                "fecha_inicio": fecha[3],
+                "fecha_final": fecha[4]
+            }
+        )
+    return jsonify(fechas_list)
 
 ################################################################
 #                       COLEGIO
@@ -818,6 +858,58 @@ def all_votosF():
             )
         return jsonify(v_federales_list)
 
+###############################################################
+#                VOTOS FEDERALES - DATE LOOKUP
+###############################################################
+
+@app.route('/votosfederales/periodos/', methods=['POST'])
+def one_period_vf():
+    cur = db.connection.cursor()
+    dict_periodo = request.get_json()
+    fecha_inicio = dict_periodo['fecha_inicio'][:10]
+    fecha_final = dict_periodo['fecha_final'][:10]
+    intervalo = dict_periodo['intervalo']
+    period_query = "SELECT id_v_federal, tipo_voto, id_mesa, fecha_hora_voto, siglas  FROM V_FEDERAL WHERE (FECHA_HORA_VOTO BETWEEN '{}' AND '{}')".format(fecha_inicio, fecha_final) if intervalo else "SELECT descripcion, id_mesa, siglas FROM V_FEDERAL FOR BUSINESS_TIME FROM '{}' TO '{}'".format(fecha_inicio, fecha_final)
+    
+    print(period_query)
+    cur.execute(period_query)
+    periodos = cur.fetchall()
+    periodos_list = []
+    for periodo in periodos:
+        periodos_list.append(
+                {"id": voto[0],
+                    "tipo_voto": voto[1],
+                    "fecha_hora_voto": voto[2],
+                    "letra": voto[3],
+                    "id_colegio": voto[4],
+                    "descripcion": voto[5],
+                    "siglas": voto[6],
+                }
+        )
+    return jsonify(periodos_list)
+
+@app.route('/votosferales/fecha_ex/', methods=['POST'])
+def one_date_vf():
+    cur = db.connection.cursor()
+    dict_periodo = request.get_json()
+    fecha = dict_periodo['fecha'][:10]
+    date_query = "SELECT id_v_federal, tipo_voto, id_mesa, fecha_hora_voto, siglas FROM V_FEDERAL FOR SYSTEM_TIME AS OF '{}'".format(fecha)
+
+    print(date_query)
+    cur.execute(date_query)
+    fechas = cur.fetchall()
+    fechas_list = []
+    for fecha in fechas:
+        fechas_list.append(
+            {"id": fecha[0],
+                "tipo": fecha[1],
+                "id_mesa": fecha[2],
+                "fecha_hora_voto": fecha[3],
+                "siglas": fecha[4]
+            }
+        )
+    return jsonify(fechas_list)
+
 
 ################################################################
 #                     VOTOS MUNICIPALES
@@ -878,6 +970,31 @@ def all_votosM():
             )
         return jsonify(v_federales_list)
 
+@app.route('/votosmunicipales/periodos/', methods=['POST'])
+def one_period_vm():
+    cur = db.connection.cursor
+    dict_periodo = request.get_json()
+
+    fecha_inicio = dict_periodo['fecha_inicio'][:10]
+    fecha_final = dict_periodo['fecha_final'][:10]
+    intervalo = dict_periodo['intervalo']
+    period_query = "SELECT id_v_municipal, tipo_voto, fecha_hora_voto, letra, id_colegio, descripcion, v_municipal.siglas from v_municipal inner join mesa on v_municipal.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion inner join partido on v_municipal.siglas=partido.siglas WHERE (FECHA_HORA_VOTO BETWEEN '{}' AND '{}')".format(fecha_inicio, fecha_final) if intervalo else "select id_v_municipal, tipo_voto, fecha_hora_voto, letra, id_colegio, descripcion, v_municipal.siglas from v_municipal inner join mesa on v_municipal.id_mesa=mesa.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion inner join partido on v_municipal.siglas=partido.siglas WHERE (FECHA_HORA_VOTO BETWEEN '{}' AND '{}')".format(fecha_inicio, fecha_final)
+    
+    cur.execute(period_query)
+    periodos = cur.fetchall()
+    periodos_list = []
+    for periodo in periodos:
+        periodos_list.append(
+            {"id_v_municipal": periodo[0],
+                "tipo_voto": periodo[1],
+                "fecha_hora_voto": periodo[2],
+                "letra": periodo[3],
+                "id_colegio": periodo[4],
+                "descripcion": periodo[5],
+                "siglas": periodo[6]
+            }
+        )
+    return jsonify(periodos_list)
 ################################################################
 #                     VOTANTE (NO_MEX, MEX)
 ################################################################
@@ -1602,4 +1719,4 @@ def one_suplente(ife_pasaporte):
 
 ########################################### MAIN ################################
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
