@@ -169,6 +169,16 @@ def one_eleccion(id_eleccion):
 
 
 ################################################################
+#                 ELECCION - PERIOD LOOKUP
+################################################################
+
+@app.route('/elecciones/', methods=['GET', 'POST'])
+def one_period():
+    return None
+
+
+
+################################################################
 #                       COLEGIO
 ################################################################
 @app.route('/colegios/', methods=["GET", "POST"])
@@ -1162,7 +1172,6 @@ def one_presidente(ife_pasaporte):
         return res
 
     else:#request==get
-        print('aqui')
         presis_list = []
 
         show_command = "SELECT ife_pasaporte, fecha_nac, VOTANTE.direccion, nombre, letra, fecha_votante_inicio, fecha_votante_final, VOTANTE.id_mesa, VOTANTE.fecha_mesa_inicio, VOTANTE.fecha_mesa_final, id_colegio, id_eleccion, descripcion, VOTANTE.tipo, sys_votante_inicio, sys_votante_final, trans_id_votante FROM VOTANTE INNER JOIN MESA ON VOTANTE.id_mesa=MESA.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio INNER JOIN ELECCION ON COLEGIO.id_colegio_eleccion=eleccion.id_eleccion WHERE VOTANTE.tipo=2 AND ife_pasaporte='{}'".format(ife_pasaporte)
@@ -1209,8 +1218,8 @@ def one_presidente(ife_pasaporte):
                     "direccion": presis_hist[i][2],
                     "nombre": presis_hist[i][3],
                     "letra": presis_hist[i][4],
-                    "fecha_votante_inicio": presis_hist[i][5],
-                    "fecha_votante_final": presis_hist[i][6],
+                    "fecha_inicio": presis_hist[i][5],
+                    "fecha_final": presis_hist[i][6],
                     "id_mesa": presis_hist[i][7],
                     "fecha_mesa_inicio": presis_hist[i][8],
                     "fecha_mesa_final": presis_hist[i][9],
@@ -1388,8 +1397,8 @@ def one_vocal(ife_pasaporte):
                     "direccion": vocales_hist[i][2],
                     "nombre": vocales_hist[i][3],
                     "letra": vocales_hist[i][4],
-                    "fecha_votante_inicio": vocales_hist[i][5],
-                    "fecha_votante_final": vocales_hist[i][6],
+                    "fecha_inicio": vocales_hist[i][5],
+                    "fecha_final": vocales_hist[i][6],
                     "id_mesa": vocales_hist[i][7],
                     "fecha_mesa_inicio": vocales_hist[i][8],
                     "fecha_mesa_final": vocales_hist[i][9],
@@ -1432,7 +1441,7 @@ def all_suplentes():
         fecha_mesa_inicio = mesa[0]
         fecha_mesa_final = mesa[1]
 
-        insert_command = "INSERT INTO VOTANTE (ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, id_superior, id_mesa, fecha_mesa_inicio, fecha_mesa_final, tipo) values ('{}', '{}', '{}', '{}', '{}', '{}', {}, '{}', '{}', {})".format(ife_pas,
+        insert_command = "INSERT INTO VOTANTE (ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, id_superior, id_mesa, fecha_mesa_inicio, fecha_mesa_final, tipo) values ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(ife_pas,
                                                                                                                                                                                                                                                                 fecha_nac,
                                                                                                                                                                                                                                                                 direccion,
                                                                                                                                                                                                                                                                 nombre,
@@ -1549,7 +1558,7 @@ def one_suplente(ife_pasaporte):
                     "id_superior": suplente[4],
                     "letra": suplente[5],
                     "fecha_inicio": suplente[6],
-                    "fecha_final": suplente[7],
+                    "fecha_final": suplente[7],  
                     "id_mesa": suplente[8],
                     "fecha_mesa_inicio": suplente[9],
                     "fecha_mesa_final": suplente[10],
@@ -1574,8 +1583,8 @@ def one_suplente(ife_pasaporte):
                     "nombre": suplentes_hist[i][3],
                     "id_superior": suplentes_hist[i][4],
                     "letra": suplentes_hist[i][5],
-                    "fecha_votante_inicio": suplentes_hist[i][6],
-                    "fecha_votante_final": suplentes_hist[i][7],
+                    "fecha_inicio": suplentes_hist[i][6],
+                    "fecha_final": suplentes_hist[i][7],
                     "id_mesa": suplentes_hist[i][8],
                     "fecha_mesa_inicio": suplentes_hist[i][9],
                     "fecha_mesa_final": suplentes_hist[i][10],

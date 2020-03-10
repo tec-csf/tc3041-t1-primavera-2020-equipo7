@@ -105,10 +105,10 @@ const VotantesForm = props => {
 			.then(res => {
 				const afterFilterPresidente = res.data.filter(item => item.id_mesa === parseInt(watch('id_mesa')) );
 				console.log('after filter: presidentes', afterFilterPresidente);
-				axios.get('/suplentes/')
+				axios.get('/vocales/')
 				.then(res => {
 					const afterFilterSuplente = res.data.filter(item => item.id_mesa === parseInt(watch('id_mesa')) );
-					console.log('after filter: presidentes', afterFilterSuplente);
+					console.log('after filter: vocales', afterFilterSuplente);
 					setSuperior([...afterFilterPresidente, ...afterFilterSuplente]);
 				})
 				.catch(err => {
@@ -159,14 +159,15 @@ const VotantesForm = props => {
 						console.log('after filter: mesas', afterFilter);
 						setMesas([...afterFilter]);
 						if(type === 'suplentes'){
+							console.log('buscando por mesa', data[0].id_mesa)
 							axios.get('/presidentes/')
 							.then(res => {
 								const afterFilterPresidente = res.data.filter(item => item.id_mesa === data[0].id_mesa );
 								console.log('after filter: presidentes', afterFilterPresidente);
-								axios.get('/suplentes/')
+								axios.get('/vocales/')
 								.then(res => {
 									const afterFilterSuplente = res.data.filter(item => item.id_mesa === data[0].id_mesa );
-									console.log('after filter: suplentes', afterFilterSuplente);
+									console.log('after filter: vocales', afterFilterSuplente);
 									setSuperior([...afterFilterPresidente, ...afterFilterSuplente]);
 								})
 								.catch(err => {
@@ -370,11 +371,11 @@ const VotantesForm = props => {
 						<select
 							name='superior'
 							ref={register({ required: true })}
-							defaultChecked={persona && persona.id_superior ? persona.id_superior : null}
+							defaultValue={persona && persona.id_superior ? persona.id_superior : null}
 						>
 							<option value=''>--seleccione--</option>
 							{
-								superiores && superiores.map(item => {
+								superiores && superiores[0] && superiores.map(item => {
 									return <option value={item.id} key={item.id}> {item.nombre} </option>
 								})
 							}
