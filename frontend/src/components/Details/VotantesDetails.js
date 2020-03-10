@@ -45,6 +45,9 @@ const VotantesDetalles = props => {
 				<p> <b> orden: </b> {votante.orden} </p>
 				<p> <b> siglas: </b> {votante.siglas} </p>
 				</React.Fragment>}
+				{ type === 'suplentes' && <React.Fragment>
+				<p> <b> id superior </b> {votante.id_superior} </p>
+				</React.Fragment> }
 				{ type === 'votantes' && <React.Fragment>
 				<p> <b> Nacionalidad: </b> {votante.tipo === 1 ? 'Mexicano' : 'Extranjero'} </p>
 				</React.Fragment>}

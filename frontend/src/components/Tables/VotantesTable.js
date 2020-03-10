@@ -50,7 +50,7 @@ const VotantesTabla = props => {
 						: item.fecha_inicio.replace('00:00:00 GMT', '') + ' - ' + item.fecha_final.replace('00:00:00 GMT', '')
 						}
 					</Table.Cell>
-					{type === 'suplentes' && <Table.Cell> {item.superior} </Table.Cell>}
+					{type === 'suplentes' && <Table.Cell> {item.id_superior} </Table.Cell>}
 					{
 						type === 'apoderados' &&
 						<React.Fragment>

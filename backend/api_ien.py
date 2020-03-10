@@ -1288,7 +1288,7 @@ def all_vocales():
             )
         return jsonify(vocales_list)
 
-@app.route('/vocales/<ife_pasaporte>/', methods=['GET', 'POST'])
+@app.route('/vocales/<ife_pasaporte>/', methods=['GET', 'POST', 'DELETE'])
 def one_vocal(ife_pasaporte):
     cur = db.connection.cursor()
     if request.method == 'POST':
@@ -1404,6 +1404,193 @@ def one_vocal(ife_pasaporte):
             )
 
         return jsonify(vocales_list)
+
+###########################################################################
+#                           SUPLENTES
+###########################################################################
+
+@app.route('/suplentes/', methods=['GET', 'POST'])
+def all_suplentes():
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        dict_new_suplente = request.get_json()
+        ife_pas = dict_new_suplente['id']
+        fecha_nac = dict_new_suplente['fecha_nac'][:10]
+        direccion = dict_new_suplente['direccion']
+        nombre = dict_new_suplente['nombre']
+        id_superior = dict_new_suplente['superior']
+        fecha_inicio_suplente = dict_new_suplente['fecha_inicio'][:10]
+        fecha_final_suplente = datetime.strptime(fecha_inicio_suplente, '%Y-%m-%d') + timedelta(weeks=52*10)
+        fecha_final_suplente = fecha_final_suplente.strftime('%Y-%m-%d')[:10]
+        id_mesa = dict_new_suplente['id_mesa']
+        tipo = 4 #forzosamente ya que es suplente
+        id_mesa = dict_new_suplente['id_mesa']
+
+        get_mesa = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM MESA WHERE id_mesa={}".format(id_mesa)
+        cur.execute(get_mesa)
+        mesa = cur.fetchall()[0]
+        fecha_mesa_inicio = mesa[0]
+        fecha_mesa_final = mesa[1]
+
+        insert_command = "INSERT INTO VOTANTE (ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, id_superior, id_mesa, fecha_mesa_inicio, fecha_mesa_final, tipo) values ('{}', '{}', '{}', '{}', '{}', '{}', {}, '{}', '{}', {})".format(ife_pas,
+                                                                                                                                                                                                                                                                fecha_nac,
+                                                                                                                                                                                                                                                                direccion,
+                                                                                                                                                                                                                                                                nombre,
+                                                                                                                                                                                                                                                                fecha_inicio_suplente,
+                                                                                                                                                                                                                                                                fecha_final_suplente,
+                                                                                                                                                                                                                                                                id_superior,
+                                                                                                                                                                                                                                                                id_mesa,
+                                                                                                                                                                                                                                                                fecha_mesa_inicio,
+                                                                                                                                                                                                                                                                fecha_mesa_final,
+                                                                                                                                                                                                                                                                tipo)
+        try:
+            cur.execute(insert_command)
+            res = make_response(jsonify({"message": "Collection created"}), 201)
+        except:
+            res = make_response(jsonify({"error": "Collection not found"}), 404)
+        return res
+
+    else:
+        show_command = "SELECT ife_pasaporte, nombre, letra, VOTANTE.id_mesa, tipo, fecha_votante_inicio, fecha_votante_final, id_superior from votante inner join mesa on votante.id_mesa=mesa.id_mesa where tipo=4"
+        cur.execute(show_command)
+        suplentes = cur.fetchall()
+        suplentes_list = []
+
+        for suplente in suplentes:
+            suplentes_list.append(
+                {"id": suplente[0],
+                    "nombre": suplente[1],
+                    "letra": suplente[2],
+                    "id_mesa": suplente[3],
+                    "tipo": suplente[4],
+                    "fecha_inicio": suplente[5],
+                    "fecha_final": suplente[6],
+                    "id_superior": suplente[7]
+                }
+            )
+        return jsonify(suplentes_list)
+
+@app.route('/suplentes/<ife_pasaporte>/', methods=['GET', 'POST', 'DELETE'])
+def one_suplente(ife_pasaporte):
+    cur = db.connection.cursor()
+    if request.method == 'POST':
+        dict_new_suplente = request.get_json()
+
+        new_ife_pas = dict_new_suplente['id']
+        fecha_nac = dict_new_suplente['fecha_nac'][:10]
+        direccion = dict_new_suplente['direccion']
+        nombre = dict_new_suplente['nombre']
+        id_superior = dict_new_suplente['superior']
+        fecha_suplente_inicio = dict_new_suplente['fecha_inicio'][:10]
+        fecha_suplente_final = datetime.strptime(fecha_suplente_inicio, '%Y-%m-%d') + timedelta(weeks=52*10)
+        fecha_suplente_final = fecha_suplente_final.strftime('%Y-%m-%d')[:10]
+        id_mesa = dict_new_suplente['id_mesa']
+        tipo = 4
+
+        get_mesa = "SELECT fecha_mesa_inicio, fecha_mesa_final FROM MESA WHERE id_mesa={}".format(id_mesa)
+        cur.execute(get_mesa)
+        mesa = cur.fetchall()[0]
+        fecha_mesa_inicio = mesa[0]
+        fecha_mesa_final = mesa[1]
+
+        update_command = "UPDATE VOTANTE SET ife_pasaporte='{}', fecha_nac='{}', direccion='{}', nombre='{}', fecha_votante_inicio='{}', fecha_votante_final='{}', id_superior='{}', id_mesa={}, fecha_mesa_inicio='{}', fecha_mesa_final='{}', tipo={} WHERE ife_pasaporte='{}'".format(new_ife_pas,
+                                                                                                                                                                                                                                                                                    fecha_nac,
+                                                                                                                                                                                                                                                                                    direccion,
+                                                                                                                                                                                                                                                                                    nombre,
+                                                                                                                                                                                                                                                                                    fecha_suplente_inicio,
+                                                                                                                                                                                                                                                                                    fecha_suplente_final,
+                                                                                                                                                                                                                                                                                    id_superior,
+                                                                                                                                                                                                                                                                                    id_mesa,
+                                                                                                                                                                                                                                                                                    fecha_mesa_inicio,
+                                                                                                                                                                                                                                                                                    fecha_mesa_final,
+                                                                                                                                                                                                                                                                                    tipo,
+                                                                                                                                                                                                                                                                                    ife_pasaporte)
+        try:
+            print(update_command)
+            cur.execute(update_command)
+            res = make_response(jsonify({"message": "Collection updated"}), 200)
+        except:
+            res = make_response(jsonify({"error": "Collection not found"}), 404)
+
+        return res
+
+    elif request.method == 'DELETE':
+        delete_command = "DELETE FROM VOTANTE WHERE ife_pasaporte='{}'".format(ife_pasaporte)
+
+        try:
+            cur.execute(delete_command)
+            res = make_response(jsonify({}), 204)
+        except:
+            res = make_response(jsonify({"error": "Collection not found"}), 404)
+
+        return res
+
+    else:#request==get
+        suplentes_list = []
+
+        show_command = "SELECT ife_pasaporte, fecha_nac, VOTANTE.direccion, nombre, id_superior, letra, fecha_votante_inicio, fecha_votante_final, VOTANTE.id_mesa, VOTANTE.fecha_mesa_inicio, VOTANTE.fecha_mesa_final, id_colegio, id_eleccion, descripcion, VOTANTE.tipo, sys_votante_inicio, sys_votante_final, trans_id_votante FROM VOTANTE INNER JOIN MESA ON VOTANTE.id_mesa=MESA.id_mesa inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio INNER JOIN ELECCION ON COLEGIO.id_colegio_eleccion=eleccion.id_eleccion WHERE VOTANTE.tipo=4 AND ife_pasaporte='{}'".format(ife_pasaporte)
+        # "select ife_pasaporte, fecha_nac, direccion, nombre, fecha_votante_inicio, fecha_votante_final, id_mesa, fecha_mesa_inicio, fecha_mesa_final, id_colegio, id_eleccion, descripcion, tipo, sys_votante_inicio, sys_votante_final, trans_id_votante from votante
+        #     inner join mesa on votante.id_mesa=mesa.id_mesa
+        #     inner join colegio on mesa.id_mesa_colegio=colegio.id_colegio
+        #     inner join eleccion on colegio.id_colegio_eleccion=eleccion.id_eleccion
+        #     where tipo=4"
+        show_command_hist = "SELECT ife_pasaporte, fecha_nac, HIST_VOTANTE.direccion, nombre, id_superior, letra, fecha_votante_inicio, fecha_votante_final, HIST_VOTANTE.id_mesa, HIST_VOTANTE.fecha_mesa_inicio, HIST_VOTANTE.fecha_mesa_final, id_colegio, id_eleccion, descripcion, HIST_VOTANTE.tipo, sys_votante_inicio, sys_votante_final, trans_id_votante FROM HIST_VOTANTE INNER JOIN MESA on HIST_VOTANTE.id_mesa=MESA.id_mesa INNER JOIN COLEGIO on MESA.id_mesa_colegio=COLEGIO.id_colegio INNER JOIN ELECCION on COLEGIO.id_colegio_eleccion=eleccion.id_eleccion WHERE HIST_VOTANTE.tipo=4 AND ife_pasaporte='{}'".format(ife_pasaporte)
+        print(show_command_hist)
+        print(show_command)
+        cur.execute(show_command)
+        suplentes = cur.fetchall()
+
+        for suplente in suplentes:
+            suplentes_list.append(
+                {"id": suplente[0],
+                    "fecha_nac": suplente[1],
+                    "direccion": suplente[2],
+                    "nombre": suplente[3],
+                    "id_superior": suplente[4],
+                    "letra": suplente[5],
+                    "fecha_inicio": suplente[6],
+                    "fecha_final": suplente[7],
+                    "id_mesa": suplente[8],
+                    "fecha_mesa_inicio": suplente[9],
+                    "fecha_mesa_final": suplente[10],
+                    "id_colegio": suplente[11],
+                    "id_eleccion": suplente[12],
+                    "descripcion": suplente[13],
+                    "tipo": suplente[14],
+                    "sys_inicio": suplente[15],
+                    "sys_final": suplente[16],
+                    "trans_id": suplente[17]
+                }
+            )
+
+        cur.execute(show_command_hist)
+        suplentes_hist = cur.fetchall()
+
+        for i in range( len(suplentes_hist)-1 ,-1,-1):
+            suplentes_list.append(
+                {"id": suplentes_hist[i][0],
+                    "fecha_nac": suplentes_hist[i][1],
+                    "direccion": suplentes_hist[i][2],
+                    "nombre": suplentes_hist[i][3],
+                    "id_superior": suplentes_hist[i][4],
+                    "letra": suplentes_hist[i][5],
+                    "fecha_votante_inicio": suplentes_hist[i][6],
+                    "fecha_votante_final": suplentes_hist[i][7],
+                    "id_mesa": suplentes_hist[i][8],
+                    "fecha_mesa_inicio": suplentes_hist[i][9],
+                    "fecha_mesa_final": suplentes_hist[i][10],
+                    "id_colegio": suplentes_hist[i][11],
+                    "id_eleccion": suplentes_hist[i][12],
+                    "descripcion": suplentes_hist[i][13],
+                    "tipo": suplentes_hist[i][14],
+                    "sys_inicio": suplentes_hist[i][15],
+                    "sys_final": suplentes_hist[i][16],
+                    "trans_id": suplentes_hist[i][17]
+                }
+            )
+
+        return jsonify(suplentes_list)
+
 ########################################### MAIN ################################
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, debug=True)

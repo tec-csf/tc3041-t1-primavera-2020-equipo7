@@ -161,12 +161,12 @@ const VotantesForm = props => {
 						if(type === 'suplentes'){
 							axios.get('/presidentes/')
 							.then(res => {
-								const afterFilterPresidente = res.data.filter(item => item.id_mesa === parseInt(watch('id_mesa')) );
+								const afterFilterPresidente = res.data.filter(item => item.id_mesa === data[0].id_mesa );
 								console.log('after filter: presidentes', afterFilterPresidente);
 								axios.get('/suplentes/')
 								.then(res => {
-									const afterFilterSuplente = res.data.filter(item => item.id_mesa === parseInt(watch('id_mesa')) );
-									console.log('after filter: presidentes', afterFilterSuplente);
+									const afterFilterSuplente = res.data.filter(item => item.id_mesa === data[0].id_mesa );
+									console.log('after filter: suplentes', afterFilterSuplente);
 									setSuperior([...afterFilterPresidente, ...afterFilterSuplente]);
 								})
 								.catch(err => {
@@ -242,7 +242,7 @@ const VotantesForm = props => {
 					(
 						(type === 'apoderados' && partidos && partidos[0].siglas) ||
 						((type === 'votantes' || type === 'presidentes' || type === 'vocales') && mesas && mesas[0] && elecciones && elecciones[0] && colegios && colegios[0]) ||
-						false//(type === 'suplenet')
+						(type === 'suplentes' && mesas && mesas[0] && elecciones && elecciones[0] && colegios && colegios[0] && superiores )
 					)
 				)
 			) ?
