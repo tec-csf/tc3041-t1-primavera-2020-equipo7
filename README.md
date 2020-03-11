@@ -70,11 +70,11 @@ JamSTACK es una forma de desarrollar aplicaciones que permite mayor flexibilidad
 Cualquier persona podría hacerle *clone* al proyecto, con instalaciones mínimas para incrementar el número de potenciales colaboradores al proyecto.
 
 #### 2.3.1 Lenguaje de programación
-El lenguaje de programación que se utilizó para el frontend es JavaScript, junto con el *runtime environment* de npm
+El lenguaje de programación que se utilizó para el frontend es JavaScript.
 
 #### 2.3.2 Framework
 
-El framework utilizado es React, una librería de JavaScript que permite crear interfaces de usuario de forma fácil, permite el desarrollo de aplicaciones en una sóla página. Está mantenido por Facebook, y es open source.
+El framework utilizado es [React](https://en.reactjs.org/), una librería de JavaScript que permite crear interfaces de usuario de forma fácil, permite el desarrollo de aplicaciones en una sóla página. Está mantenido por Facebook, y es open source.
 
 #### 2.3.3 Librerías de funciones o dependencias
 
@@ -105,7 +105,7 @@ El framework utilizado es React, una librería de JavaScript que permite crear i
 
 ### 2.4 Backend
 
-El backend utilizado es la combinación del framework de Flask y Python.
+El backend utilizado es la combinación del framework de [Flask](https://palletsprojects.com/p/flask/) y Python.
 
 #### 2.4.1 Lenguaje de programación
 El lenguaje de programación utilizado es Python, ya que es un lenguaje que tiene frameworks optimizados para su utilización con bases de datos, y múltiples DBMSs, lo escojimos porque flask es una buena y simple opción para conectar la base de datos.
@@ -213,7 +213,7 @@ Para hacer deploy de esta Tarea. Se usaron los sigiuentes servicios:
 
 - [IBM Cloud](https://cloud.ibm.com/) | Base de Datos
 - [Heroku](https://www.heroku.com/) | API
-- [FireBase](https://firebase.google.com/) | Frontend
+- [Firebase](https://firebase.google.com/) | Frontend
 
 1. Base de Datos:
 
@@ -250,7 +250,7 @@ $ firebase init
 firebase deploy
 ```
 
-https://eleccionest.firebaseapp.com/s
+El resultado final se puede consultar en: https://eleccionest.firebaseapp.com/
 
 ## 3. Referencias
 
