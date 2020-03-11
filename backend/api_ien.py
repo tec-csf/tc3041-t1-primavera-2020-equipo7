@@ -17,12 +17,12 @@ CORS(app)
 #CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-app.config['DB2_DATABASE']='testdb'
-app.config['DB2_HOSTNAME']='localhost'
+app.config['DB2_DATABASE']= "BLUDB"#'testdb'
+app.config['DB2_HOSTNAME']="dashdb-txn-sbox-yp-dal09-03.services.dal.bluemix.net"
 app.config['DB2_PORT']='50000'
 app.config['DB2_PROTOCOL']='TCPIP'
-app.config['DB2_USER']='db2inst1'
-app.config['DB2_PASSWORD']='password'
+app.config['DB2_USER']="bxj73519"
+app.config['DB2_PASSWORD']="6p^7wjwws1pbg79l"
 
 db = DB2(app)
 
@@ -1727,4 +1727,5 @@ def one_suplente(ife_pasaporte):
 
 ########################################### MAIN ################################
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    #app.run(host='0.0.0.0', port=5000, debug=True) # for development
+    app.run(port=5000, threaded=True)# for production

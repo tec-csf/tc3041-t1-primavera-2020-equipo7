@@ -70,7 +70,7 @@ JamSTACK es una forma de desarrollar aplicaciones que permite mayor flexibilidad
 Cualquier persona podría hacerle *clone* al proyecto, con instalaciones mínimas para incrementar el número de potenciales colaboradores al proyecto.
 
 #### 2.3.1 Lenguaje de programación
-El lenguaje de programación que se utilizó para el frontend es JavaScript, junto con el *runtime environment* de Node.js
+El lenguaje de programación que se utilizó para el frontend es JavaScript, junto con el *runtime environment* de npm
 
 #### 2.3.2 Framework
 
@@ -101,9 +101,11 @@ El framework utilizado es React, una librería de JavaScript que permite crear i
 	},
 ```
 
+*nota:* Pueden consultarse en el `package.json`
+
 ### 2.4 Backend
 
-El backend utilizado es la combinación del framework de Flask y Python. Dentro de Python, se instalaron dos módulos para la conexión con db2: flask_db2 y ibm_db2.
+El backend utilizado es la combinación del framework de Flask y Python.
 
 #### 2.4.1 Lenguaje de programación
 El lenguaje de programación utilizado es Python, ya que es un lenguaje que tiene frameworks optimizados para su utilización con bases de datos, y múltiples DBMSs, lo escojimos porque flask es una buena y simple opción para conectar la base de datos.
@@ -112,10 +114,10 @@ Entre los DBMSs que manipula, está DB2, el DBMS de nuestra elección.
 #### 2.4.2 Framework
 El framework utilizado permite el desarrollo de aplicaciones, y de la conexión con alguna base de datos.
 
-En nuestro caso, utilizamos el DBMS de db2, junto con una imagen en Docker.
+En nuestro caso, utilizamos el DBMS de db2.
 
 ```py
-from flask import Flask, jsonify, redirect
+from flask import Flask, jsonify
 from flask_db2 import DB2
 
 app = Flask(__name__)
@@ -138,18 +140,17 @@ virtualenv==20.0.4
 
 ## 2.5 Pasos a seguir para utilizar la aplicación
 
-Para correr la aplicación, se debe de tener instalado python3 y npm
+Para correr la aplicación, se debe de tener instalado `python3` y `npm` (Nodejs)
 
 
 ### Correr la aplicación de forma local
-clonar el repositorio de git usando https:
+1. Clonar el repositorio de git usando https:
 ```sh
 git clone https://github.com/tec-csf/tc3041-t1-primavera-2020-equipo7.git
 ```
+2. Crear la una instancia de DB2 una imagen de docker localmente.
 
-En el repositorio encontrará carpetas llamadas backend y frontend.
-
-#### Lanzando una imagen de docker localmente
+Para más información sobre la imagen de DB2 [clic aquí](https://hub.docker.com/r/ibmcom/db2)
 
 ```sh
 #Creacion del contenedor con la base de datos
@@ -165,13 +166,14 @@ sudo docker logs -f mydb2
 #Conectandose a la base de datos
 sudo docker exec -ti mydb2 bash
 
-su - db2inst1
-
 #ya en el bash de la imagen:
+su - db2inst1
 db2
 ```
+Correr los scripts de creación y población, los cuales se encuentran en `scripts/ScriptCreacionBD.sql` y `scripts/ScriptInsertBD.sql`
 
-#### Carpeta backend
+3. Correr el API
+
 Es posible correr el programa con o sin un ambiente virtual (este paso asume que ya se creó la instancia de docker).
 
 Primero necesitará instalar las dependencias:
@@ -186,17 +188,15 @@ En la carpeta, con el ambiente virtual activado (o no), correr:
 python3 api_ien.py
 ```
 
-Esto abrirá el puerto de su computadora de su elección (si no cambió nada se abrirá el puerto 5001)
+Esto abrirá el puerto de su computadora de su elección (si no cambió nada se abrirá el puerto 5000)
+
+Ya puede hacer peticiones localmente y en su red desde el navegador.
 
 #### Carpeta frontend
 
 Dentro de la carpeta de frontend:
 
-Instalemos las dependencias (debian-ubuntu):
-```sh
-sudo apt-get update
-sudo apt-get install npm
-```
+*nota: Se asume Nodejs esta instalado*
 
 Para correrlo:
 ```sh
@@ -205,10 +205,52 @@ npm start
 ```
 Esto abrirá un puerto en su computadora (3000)
 
-Aquí el API se encarga de cargar la base de datos al frontend, y ya puede correr las operaciones CRUD en el frontend
+Aquí el frontend realiza peticiones al API, quien se encarga de comunicarse con la base de datos, y ya puede correr las operaciones CRUD en el frontend.
 
 ### Lanzar la aplicación a la nube
 
+Para hacer deploy de esta Tarea. Se usaron los sigiuentes servicios:
+
+- [IBM Cloud](https://cloud.ibm.com/) | Base de Datos
+- [Heroku](https://www.heroku.com/) | API
+- [FireBase](https://firebase.google.com/) | Frontend
+
+1. Base de Datos:
+
+Se crea la instancia gratuita de DB2 y en la consola se corren los scripts de creación y población, los cuales se encuentran en `scripts/ScriptCreacionBD.sql` y `scripts/ScriptInsertBD.sql`
+
+2. API
+
+Se crea un nueva app en heroku, donde se hace deploy del API.
+
+```sh
+$ heroku login
+
+$ heroku git:clone -a apieleccion
+$ cd apieleccion
+
+$ git add .
+$ git commit -am "make it better"
+$ git push heroku master
+```
+
+https://apieleccion.herokuapp.com/elecciones
+
+3. Frontend
+
+En un proyecto de firebase se compila todo el frontend
+
+```sh
+$ npm run build
+
+$ npm install -g firebase-tools
+
+$ firebase init
+
+firebase deploy
+```
+
+https://eleccionest.firebaseapp.com/s
 
 ## 3. Referencias
 
